@@ -1,5 +1,5 @@
 <p align="center">
-      <img width="25%" src="./.github/assets/aresui-logo-bg-white.jpg" alt="nextui" />
+      <img width="175" src="./.github/assets/aresui-logo-bg-white.jpg" alt="nextui" />
 </p>
 
 <!-- <br /> -->
@@ -12,7 +12,7 @@
   <img alt="Vunerabilities" src="https://img.shields.io/snyk/vulnerabilities/github/jefferson-calmon/aresui?color=000000">
 
   <!-- <a href="https://www.linkedin.com/in/jeffersoncalmon/">
-    <img alt="Made by jefferson-calmon" src="https://img.shields.io/badge/made%20by-Jefferson Calmon-%23000000">
+    <img alt="Made by jefferson-calmon" src="https://img.shields.io/badge/made%20by-Jefferson Calmon-%000000">
   </a> -->
 
   <a href="https://github.com/jefferson-calmon/aresui/commits/master">
