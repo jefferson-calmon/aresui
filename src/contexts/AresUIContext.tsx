@@ -20,13 +20,13 @@ export interface Theme {
 	borderWidth: string;
 }
 
-export interface NextUIContextProps {
+export interface AresUIContextProps {
 	children: React.ReactNode;
 	config: Config;
-	theme: Theme;
+	theme: DeepPartial<Theme>;
 }
 
-export interface NextUIContextData {
+export interface AresUIContextData {
 	config: Config;
 	theme: Theme;
 }
@@ -49,25 +49,25 @@ const defaultConfig: Config = {
 	},
 };
 
-export const NextUIContext = createContext({} as NextUIContextData);
+export const AresUIContext = createContext({} as AresUIContextData);
 
-export const NextUIProvider = (props: NextUIContextProps): JSX.Element => {
+export const AresUIProvider = (props: AresUIContextProps): JSX.Element => {
 	return (
-		<NextUIContext.Provider
+		<AresUIContext.Provider
 			value={{
 				config: mergeObjects(defaultConfig, props.config),
 				theme: mergeObjects(defaultTheme, props.theme),
 			}}
 		>
 			{props.children}
-		</NextUIContext.Provider>
+		</AresUIContext.Provider>
 	);
 };
 
-export const useNextUI = () => {
-	const contextData = useContext(NextUIContext);
+export const AresUI = () => {
+	const contextData = useContext(AresUIContext);
 
-	const data: NextUIContextData = {
+	const data: AresUIContextData = {
 		config: mergeObjects(defaultConfig, contextData.config || {}),
 		theme: mergeObjects(defaultTheme, contextData.theme || {}),
 	};
