@@ -15,6 +15,7 @@ export const globalStyle = (theme: Theme) => css`
 	--color-text: #333333;
 	--color-placeholder: ${theme.colors.inputPlaceholder};
 	--color-line: ${theme.colors.line};
+	--color-background: ${theme.colors.background};
 	--color-error: ${theme.colors.error};
 
 	--border-width: ${theme.borderWidth};

@@ -28,10 +28,11 @@ export function Button(props: T.ButtonProps): JSX.Element {
 			U.classBase(),
 			U.classBase('variant', props.variant),
 			U.classBase(props.className || ''),
+			props.loading && U.classBase('loading'),
 		];
 
 		return buildClassName(...classes);
-	}, [props.variant, props.className]);
+	}, [props.variant, props.className, props.loading]);
 
 	const loadingTheme = useMemo(() => {
 		let color = readableColor(theme.colors.primary);
@@ -59,6 +60,7 @@ export function Button(props: T.ButtonProps): JSX.Element {
 			disabled={props.disabled || !!props.loading}
 			{...props}
 			theme={theme}
+            loading={props.loading}
 			className={className}
 			onClick={handleClick}
 		>

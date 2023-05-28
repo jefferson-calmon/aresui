@@ -12,6 +12,7 @@ export interface Theme {
 		primary: string;
 		line: string;
 		error: string;
+		background: string;
 		text: string;
 
 		inputPlaceholder: string;
@@ -37,6 +38,7 @@ const defaultTheme: Theme = {
 		text: '#000',
 		line: '#f1f3f4',
 		inputPlaceholder: 'rgba(0, 0, 0, 0.15)',
+		background: '#fff',
 		error: 'e83f5b',
 	},
 	borderRadius: '.4rem',

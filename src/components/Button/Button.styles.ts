@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { lighten, readableColor, transparentize } from 'polished';
 
 import { globalStyle } from 'styles/global/components';
@@ -7,6 +7,7 @@ import { classBase } from './Button.utils';
 
 interface Props {
 	theme: Theme;
+	loading: boolean;
 }
 
 export const ButtonContainer = styled.button`
@@ -100,9 +101,7 @@ export const ButtonContainer = styled.button`
 				transparentize(0.8, readableColor(props.theme.colors.primary))};
 		}
 
-		&:hover {
-			transform: scale(1.02);
-		}
+		${(props) => getDefaultVariantHover(props)}
 	}
 
 	&.${classBase('variant', 'text')} {
@@ -112,13 +111,10 @@ export const ButtonContainer = styled.button`
 
 		.${classBase('ripple')} {
 			background: ${(props: Props) =>
-				lighten(0.9, props.theme.colors.primary)};
+				transparentize(0.9, props.theme.colors.primary)};
 		}
 
-		&:hover {
-			background: ${(props: Props) =>
-				lighten(0.98, props.theme.colors.primary)};
-		}
+		${(props) => getTextVariantHover(props)}
 	}
 
 	&.${classBase('variant', 'outlined')} {
@@ -133,11 +129,7 @@ export const ButtonContainer = styled.button`
 				transparentize(0.8, readableColor(props.theme.colors.primary))};
 		}
 
-		&:hover {
-			border-color: transparent;
-			background: var(--color-primary);
-			color: #fff;
-		}
+		${(props) => getOutlinedVariantHover(props)}
 	}
 
 	/* Button states */
@@ -145,7 +137,7 @@ export const ButtonContainer = styled.button`
 		cursor: not-allowed;
 		pointer-events: visible;
 		user-select: none;
-		opacity: 0.3;
+		opacity: 0.4;
 	}
 
 	@keyframes ripple-animation {
@@ -155,3 +147,36 @@ export const ButtonContainer = styled.button`
 		}
 	}
 `;
+
+function getDefaultVariantHover(props: Props) {
+	if (props.loading) return css``;
+
+	return css`
+		&:hover {
+			transform: scale(1.02);
+		}
+	`;
+}
+
+function getTextVariantHover(props: Props) {
+	if (props.loading) return css``;
+
+	return css`
+		&:hover {
+			background: ${(props: Props) =>
+				transparentize(0.97, props.theme.colors.primary)};
+		}
+	`;
+}
+
+function getOutlinedVariantHover(props: Props) {
+	if (props.loading) return css``;
+
+	return css`
+		&:hover {
+			border-color: transparent;
+			background: var(--color-primary);
+			color: #fff;
+		}
+	`;
+}
