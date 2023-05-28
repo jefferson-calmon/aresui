@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { mergeObjects } from 'pandora-tools';
 
 import * as T from './Loading.types';
+import * as U from './Loading.utils';
 import { useNextUI } from 'contexts';
 
 import { LoadingContainer } from './Loading.styles';
@@ -17,11 +18,11 @@ export function Loading(props: T.LoadingProps): JSX.Element {
 	}, [props.theme]);
 
 	return (
-		<LoadingContainer className="nextui-loading" {...props} theme={theme}>
+		<LoadingContainer className={U.classBase()} {...props} theme={theme}>
 			{!props.custom && (
 				<svg viewBox="0 0 50 50">
 					<circle
-						className="path-spinner"
+						className={U.classBase('path-spinner')}
 						cx={25}
 						cy={25}
 						r={20}
@@ -33,7 +34,7 @@ export function Loading(props: T.LoadingProps): JSX.Element {
 			)}
 
 			{props.custom && (
-				<div>
+				<div className={U.classBase('custom-loader')}>
 					<props.custom />
 				</div>
 			)}
@@ -41,7 +42,7 @@ export function Loading(props: T.LoadingProps): JSX.Element {
 	);
 }
 
-Loading.defaultProps = T.defaultProps;
+Loading.defaultProps = T.defaultPropsLoading;
 
 export * from './Loading.types';
 

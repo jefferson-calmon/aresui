@@ -1,6 +1,7 @@
 import { Theme } from 'contexts';
 
 export interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
+    type: 'spinner' | 'dots';
 	size: number;
 	speedInSeconds: number;
 	strokeWidth: number;
@@ -9,7 +10,8 @@ export interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
 	custom?: () => JSX.Element;
 }
 
-export const defaultProps: LoadingProps = {
+export const defaultPropsLoading: LoadingProps = {
+    type: 'spinner',
 	size: 25,
 	speedInSeconds: 1.5,
 	strokeWidth: 5,

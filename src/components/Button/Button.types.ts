@@ -24,7 +24,7 @@ export interface ButtonProps
 
 export type ButtonVariant = 'default' | 'text' | 'outlined';
 
-export const defaultProps: ButtonProps = {
+export const defaultPropsButton: ButtonProps = {
 	children: 'Button',
 	variant: 'default',
 	loading: false,

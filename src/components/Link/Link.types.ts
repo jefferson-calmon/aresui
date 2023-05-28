@@ -10,7 +10,7 @@ export interface LinkProps extends Omit<NextLinkProps, 'href'> {
 
 type Url = string | UrlObject;
 
-export const defaultProps: LinkProps = {
+export const defaultPropsLink: LinkProps = {
 	children: 'Link',
 	to: '#',
 };

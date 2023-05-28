@@ -3,6 +3,7 @@ import { lighten, readableColor, transparentize } from 'polished';
 
 import { globalStyle } from 'styles/global/components';
 import { Theme } from 'contexts';
+import { classBase } from './Button.utils';
 
 interface Props {
 	theme: Theme;
@@ -44,7 +45,7 @@ export const ButtonContainer = styled.button`
 		}
 	}
 
-	.link {
+	.${classBase('link')} {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -54,9 +55,17 @@ export const ButtonContainer = styled.button`
 		height: 100%;
 
 		opacity: 0;
+
+		a {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
 	}
 
-	.ripple {
+	.${classBase('ripple')} {
 		position: absolute;
 		border-radius: 50%;
 		transform: scale(0);
@@ -66,7 +75,7 @@ export const ButtonContainer = styled.button`
 		animation: ripple-animation 0.6s;
 	}
 
-	.loading-indicator {
+	.${classBase('loading-indicator')} {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -81,12 +90,12 @@ export const ButtonContainer = styled.button`
 	}
 
 	/* Variants */
-	&.default {
+	&.${classBase('variant', 'default')} {
 		background: var(--color-primary);
 		color: ${(props: Props) => readableColor(props.theme.colors.primary)};
 		transition: 0.05s;
 
-		.ripple {
+		.${classBase('ripple')} {
 			background: ${(props: Props) =>
 				transparentize(0.8, readableColor(props.theme.colors.primary))};
 		}
@@ -96,12 +105,12 @@ export const ButtonContainer = styled.button`
 		}
 	}
 
-	&.text {
+	&.${classBase('variant', 'text')} {
 		background: transparent;
 		color: var(--color-primary);
 		transition: 0.1s;
 
-		.ripple {
+		.${classBase('ripple')} {
 			background: ${(props: Props) =>
 				lighten(0.9, props.theme.colors.primary)};
 		}
@@ -112,14 +121,14 @@ export const ButtonContainer = styled.button`
 		}
 	}
 
-	&.outlined {
+	&.${classBase('variant', 'outlined')} {
 		background: transparent;
 		color: var(--color-primary);
 		transition: 0.1s;
 
 		border: var(--border-width) solid var(--color-primary);
 
-		.ripple {
+		.${classBase('ripple')} {
 			background: ${(props: Props) =>
 				transparentize(0.8, readableColor(props.theme.colors.primary))};
 		}
@@ -128,11 +137,6 @@ export const ButtonContainer = styled.button`
 			border-color: transparent;
 			background: var(--color-primary);
 			color: #fff;
-		}
-	}
-
-	&.animating-ripple-effect {
-		.ripple {
 		}
 	}
 

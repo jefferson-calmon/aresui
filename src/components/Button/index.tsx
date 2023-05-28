@@ -1,15 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo } from 'react';
 
-import { config, mergeObjects, useBoolean } from 'pandora-tools';
+import { config, mergeObjects } from 'pandora-tools';
+import { readableColor } from 'polished';
 
 import * as T from './Button.types';
+import * as U from './Button.utils';
 import Link from 'components/Link';
 import Loading from 'components/Loading';
 import { useNextUI } from 'contexts/NextUiContext';
+import { buildClassName } from 'helpers/buildClassName';
 
 import { ButtonContainer } from './Button.styles';
-import { readableColor } from 'polished';
 
 config();
 
@@ -23,12 +24,13 @@ export function Button(props: T.ButtonProps): JSX.Element {
 	}, [props.theme]);
 
 	const className = useMemo(() => {
-		const classes = ['nextui-button', props.variant, props.className]
-			.compact()
-			.uniq()
-			.join(' ');
+		const classes = [
+			U.classBase(),
+			U.classBase('variant', props.variant),
+			U.classBase(props.className || ''),
+		];
 
-		return classes;
+		return buildClassName(...classes);
 	}, [props.variant, props.className]);
 
 	const loadingTheme = useMemo(() => {
@@ -48,26 +50,7 @@ export function Button(props: T.ButtonProps): JSX.Element {
 	function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
 		props.onClick?.(event);
 
-		if (props.rippleEffect) {
-			const button = event.currentTarget;
-			const buttonRect = button.getBoundingClientRect();
-
-			const rippleSize = Math.max(buttonRect.width, buttonRect.height);
-			const rippleX = event.clientX - buttonRect.left - rippleSize / 2;
-			const rippleY = event.clientY - buttonRect.top - rippleSize / 2;
-
-			const ripple = document.createElement('div');
-
-			ripple.className = 'ripple';
-			ripple.style.top = rippleY + 'px';
-			ripple.style.left = rippleX + 'px';
-			ripple.style.width = rippleSize + 'px';
-			ripple.style.height = rippleSize + 'px';
-
-			document.querySelector('.nextui-button')?.appendChild(ripple);
-
-			setTimeout(() => ripple.remove(), 600);
-		}
+		if (props.rippleEffect) U.handleRippleEffect(event);
 	}
 
 	return (
@@ -84,7 +67,7 @@ export function Button(props: T.ButtonProps): JSX.Element {
 			</span>
 
 			{props.loading && (
-				<div className="loading-indicator">
+				<div className={U.classBase('loading-indicator')}>
 					<Loading
 						size={24}
 						theme={loadingTheme}
@@ -94,13 +77,15 @@ export function Button(props: T.ButtonProps): JSX.Element {
 			)}
 
 			{props.linkTo && !props.disabled && (
-				<Link to={props.linkTo} className="link" {...props.linkProps} />
+				<div className={U.classBase('link')}>
+					<Link to={props.linkTo} {...props.linkProps} />
+				</div>
 			)}
 		</ButtonContainer>
 	);
 }
 
-Button.defaultProps = T.defaultProps;
+Button.defaultProps = T.defaultPropsButton;
 
 export * from './Button.types';
 

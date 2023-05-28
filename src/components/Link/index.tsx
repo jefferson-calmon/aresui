@@ -4,17 +4,16 @@ import NextLink from 'next/link';
 import { config } from 'pandora-tools';
 
 import * as T from './Link.types';
+import * as U from './Link.utils';
+import { buildClassName } from 'helpers/buildClassName';
 
 config();
 export function Link(props: T.LinkProps): JSX.Element {
 	// Memo vars
 	const className = useMemo(() => {
-		const classes = ['nextui-link', props.className]
-			.compact()
-			.uniq()
-			.join(' ');
+		const classes = [U.classBase(), props.className];
 
-		return classes;
+		return buildClassName(...classes);
 	}, [props]);
 
 	return (
@@ -24,7 +23,7 @@ export function Link(props: T.LinkProps): JSX.Element {
 	);
 }
 
-Link.defaultProps = T.defaultProps;
+Link.defaultProps = T.defaultPropsLink;
 
 export * from './Link.types';
 

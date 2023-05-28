@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { Theme } from 'contexts';
 import { globalStyle } from 'styles/global/components';
+import { classBase } from './Loading.utils';
 
 interface Props {
 	theme: Theme;
@@ -36,9 +37,10 @@ export const LoadingContainer = styled.div`
 
 		animation: rotate 2s linear infinite;
 
-		.path-spinner {
+		.${classBase('path-spinner')} {
 			stroke-linecap: round;
-			animation: dash ${({ speedInSeconds }) => speedInSeconds}s ease-in-out infinite;
+			animation: dash ${({ speedInSeconds }) => speedInSeconds}s
+				ease-in-out infinite;
 		}
 	}
 
