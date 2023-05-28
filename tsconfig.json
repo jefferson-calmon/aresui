@@ -1,23 +1,17 @@
 {
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "target": "esnext",
-    "module": "commonjs",
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
-    "lib": ["es2021"],
-    "skipLibCheck": true,
-    "noEmit": true,
-		"esModuleInterop": true,
-    "outDir": "dist"
-  },
-  "files": ["src/index.tsx"]
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "declaration": true,
+        "esModuleInterop": true,
+        "jsx": "react",
+        "lib": ["es2020", "dom"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "sourceMap": true,
+        "strict": true,
+        "target": "es2020"
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "dist"]
 }
