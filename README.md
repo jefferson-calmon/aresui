@@ -1,21 +1,6 @@
 <p align="center">
-      <img width="175" src="./.github/assets/aresui-logo-black.png" alt="AresUI Logo" id="theme-image-light" />
-      <img width="175" src="./.github/assets/aresui-logo-white.png" alt="AresUI Logo" id="theme-image-dark" />
+      <img width="175" src="./.github/assets/aresui-logo.jpg" alt="AresUI Logo" />
 </p>
-
-<style>
-  @media (prefers-color-scheme: light) {
-    #theme-image-dark {
-      display: none;
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    #theme-image-light {
-      display: none;
-    }
-  }
-</style>
 
 <!-- <br /> -->
 
