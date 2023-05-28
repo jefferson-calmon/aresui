@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { LinkProps } from 'components/Link';
 import { LoadingProps } from 'components/Loading';
-import { Theme } from 'contexts/NextUiContext';
+import { Theme } from 'contexts';
 
 export interface ButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement> {

@@ -4,17 +4,17 @@ import { mergeObjects } from 'pandora-tools';
 
 import * as T from './Loading.types';
 import * as U from './Loading.utils';
-import { useNextUI } from 'contexts';
+import { useAresUI } from 'contexts';
 
 import { LoadingContainer } from './Loading.styles';
 
 export function Loading(props: T.LoadingProps): JSX.Element {
 	// Hooks
-	const nextUI = useNextUI();
+	const aresUI = useAresUI();
 
 	// Memo Vars
 	const theme = useMemo(() => {
-		return mergeObjects(nextUI.theme, props.theme);
+		return mergeObjects(aresUI.theme, props.theme);
 	}, [props.theme]);
 
 	return (

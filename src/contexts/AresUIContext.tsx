@@ -64,7 +64,7 @@ export const AresUIProvider = (props: AresUIContextProps): JSX.Element => {
 	);
 };
 
-export const AresUI = () => {
+export const useAresUI = () => {
 	const contextData = useContext(AresUIContext);
 
 	const data: AresUIContextData = {

@@ -7,7 +7,7 @@ import * as T from './Button.types';
 import * as U from './Button.utils';
 import Link from 'components/Link';
 import Loading from 'components/Loading';
-import { useNextUI } from 'contexts/NextUiContext';
+import { useAresUI } from 'contexts';
 import { buildClassName } from 'helpers/buildClassName';
 
 import { ButtonContainer } from './Button.styles';
@@ -16,11 +16,11 @@ config();
 
 export function Button(props: T.ButtonProps): JSX.Element {
 	// Hooks
-	const nextUI = useNextUI();
+	const aresUI = useAresUI();
 
 	// Memo vars
 	const theme = useMemo(() => {
-		return mergeObjects(nextUI.theme, props.theme);
+		return mergeObjects(aresUI.theme, props.theme);
 	}, [props.theme]);
 
 	const className = useMemo(() => {
