@@ -21,4 +21,6 @@ export function Redirect(props: T.RedirectProps): JSX.Element | null {
 
 Redirect.defaultProps = T.defaultPropsRedirect;
 
+export * from './Redirect.types';
+
 export default Redirect;

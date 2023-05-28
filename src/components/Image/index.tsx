@@ -30,4 +30,6 @@ export const Image = (props: T.ImageProps): JSX.Element => {
 	return <NextImage className={className} {...props} alt={altText} />;
 };
 
+export * from './Image.types';
+
 export default Image;
