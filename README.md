@@ -1,6 +1,21 @@
 <p align="center">
-      <img width="175" src="./.github/assets/aresui-logo-bg-white.jpg" alt="nextui" />
+      <img width="175" src="./.github/assets/aresui-logo-black.png" alt="AresUI Logo" id="theme-image-light" />
+      <img width="175" src="./.github/assets/aresui-logo-white.png" alt="AresUI Logo" id="theme-image-dark" />
 </p>
+
+<style>
+  @media (prefers-color-scheme: light) {
+    #theme-image-dark {
+      display: none;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    #theme-image-light {
+      display: none;
+    }
+  }
+</style>
 
 <!-- <br /> -->
 
@@ -40,6 +55,7 @@
 > 🚧 Este projeto ainda está em desenvolvimento, isso quer dizer que pode ter bugs e quebras em alguns componentes.
 
 <a id="project"></a>
+
 # AresUI
 
 AresUI é uma biblioteca de componentes para aplicações Next.js, projetada para facilitar o desenvolvimento de interfaces de usuário bonitas e responsivas. Com uma ampla gama de componentes reutilizáveis e personalizáveis, AresUI permite que você crie rapidamente interfaces modernas e elegantes.
@@ -55,6 +71,7 @@ AresUI é uma biblioteca de componentes para aplicações Next.js, projetada par
 -   **Fácil Integração**: AresUI foi projetado especificamente para ser integrado em projetos Next.js. Ele se integra perfeitamente ao fluxo de desenvolvimento padrão do Next.js, permitindo uma instalação e uso simples.
 
 <a id="install"></a>
+
 ## Instalação
 
 Para começar a usar o AresUI em sua aplicação Next.js, você pode instalar o pacote npm utilizando o seguinte comando:
@@ -70,6 +87,7 @@ yarn add aresui
 ```
 
 <a id="use"></a>
+
 ## Uso
 
 Após a instalação, você pode importar os componentes do AresUI em seus arquivos JavaScript ou TypeScript:
@@ -78,21 +96,21 @@ Após a instalação, você pode importar os componentes do AresUI em seus arqui
 import { Button, Input } from 'aresui';
 
 function MyComponent() {
-    return (
-        <div>
-            <Input label="E-mail" name="email" role="email" />
-            <Input label="Senha" name="password" role="password" />
+	return (
+		<div>
+			<Input label="E-mail" name="email" role="email" />
+			<Input label="Senha" name="password" role="password" />
 
-            <Button>Entrar</Button>
-        </div>
-    );
+			<Button>Entrar</Button>
+		</div>
+	);
 }
 ```
 
 Certifique-se de que sua aplicação esteja configurada corretamente para suportar o Next.js e seus requisitos de construção.
 
-
 <a id="docs"></a>
+
 ## Documentação
 
 Para obter mais detalhes sobre como usar os componentes do AresUI, consulte a [documentação completa](https://aresui-docs.vercel.app).
