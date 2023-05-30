@@ -20,7 +20,7 @@ export const ButtonContainer = styled.button`
 	justify-content: center;
 
 	min-width: 12rem;
-	height: 4.4rem;
+	height: var(--base-height);
 	padding: 0 2.8rem;
 
 	font-size: 1.5rem;

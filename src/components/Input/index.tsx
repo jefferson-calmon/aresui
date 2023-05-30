@@ -37,29 +37,9 @@ export function Input(props: T.InputProps): JSX.Element {
 		return error.errors.length === 0;
 	}, [error.errors]);
 
-	const inputMask = useMemo(() => {
-		return props.mask || '';
-	}, [props.mask]);
-
-	const inputName = useMemo(() => {
-		return props.name;
-	}, [props.name]);
-
-	const inputType = useMemo(() => {
-		return props.type || U.getInputType(props.role);
-	}, [props.role]);
-
-	const inputMode = useMemo(() => {
-		return props.inputMode || U.getInputMode(props.role);
-	}, [props.role]);
-
-	const inputPlaceholder = useMemo(() => {
-		return props.placeholder || U.getInputPlaceholder(props.role);
-	}, [props.role]);
-
-	const inputAutoComplete = useMemo(() => {
-		return props.autoComplete || U.getInputAutoComplete(props.role);
-	}, [props.role]);
+	const inputAttr = useMemo(() => {
+		return U.getInputAttributes(props);
+	}, [props]);
 
 	const pickerOptions = useMemo(() => {
 		return props.pickerOptions.filter((option) =>
@@ -119,7 +99,7 @@ export function Input(props: T.InputProps): JSX.Element {
 	}
 
 	function handleSelectPickerOption(option: T.InputPickerOption) {
-        if (option.disabled) return;
+		if (option.disabled) return;
 
 		const input = document.querySelector<HTMLInputElement>('input');
 
@@ -146,25 +126,30 @@ export function Input(props: T.InputProps): JSX.Element {
 				)}
 
 				<InputMask
+					inputRef={inputRef}
 					alwaysShowMask={false}
 					maskChar={null} // If you want don't show the characters, just set `null`.;
 					required
+					// --
+					aria-autocomplete={inputAttr['aria-autocomplete']}
+					// --
 					{...props}
 					{...props.maskProps}
-					inputRef={inputRef}
-					type={inputType}
-					inputMode={inputMode}
-					mask={inputMask}
-					autoComplete={inputAutoComplete}
-					placeholder={inputPlaceholder}
-					name={inputName}
+					// --
+					type={inputAttr.type}
+					inputMode={inputAttr.inputMode}
+					mask={inputAttr.mask}
+					autoComplete={inputAttr.autoComplete}
+					placeholder={inputAttr.placeholder}
+					name={inputAttr.name}
+					// --
 					onChange={handleChange}
 					onKeyUp={handleKeyUp}
 					onFocus={handleFocus}
 					onBlur={handleBlur}
 				/>
 
-				{isFocused.value && (
+				{isFocused.value && props.pickerOptions.length > 0 && (
 					<C.PickerOptions
 						options={pickerOptions}
 						onChange={handleSelectPickerOption}

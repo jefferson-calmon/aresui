@@ -5,7 +5,12 @@ import {
 	validateEmail,
 	validatePhoneNumber,
 } from 'pandora-tools';
-import { InputAutoComplete, InputRole } from './Input.types';
+import {
+	InputAttributes,
+	InputAutoComplete,
+	InputProps,
+	InputRole,
+} from './Input.types';
 import { baseClass } from 'helpers/baseClass';
 
 export const validationErrors: Record<InputRole, string> = {
@@ -22,7 +27,7 @@ export const validationErrors: Record<InputRole, string> = {
 
 export const classBase = baseClass('Input');
 
-export function getInputType(role: InputRole) {
+export function getDefaultInputType(role: InputRole) {
 	let type: React.HTMLInputTypeAttribute = 'text';
 
 	if (role === 'default') type = 'text';
@@ -38,7 +43,7 @@ export function getInputType(role: InputRole) {
 	return type;
 }
 
-export function getInputMode(role: InputRole) {
+export function getDefaultInputMode(role: InputRole) {
 	let mode: React.HTMLAttributes<HTMLInputElement>['inputMode'] = 'text';
 
 	if (role === 'default') mode = 'text';
@@ -54,7 +59,7 @@ export function getInputMode(role: InputRole) {
 	return mode;
 }
 
-export function getInputAutoComplete(role: InputRole) {
+export function getDefaultInputAutoComplete(role: InputRole) {
 	let autoComplete: InputAutoComplete = 'off';
 
 	if (role === 'default') autoComplete = 'on';
@@ -70,7 +75,7 @@ export function getInputAutoComplete(role: InputRole) {
 	return autoComplete;
 }
 
-export function getInputPlaceholder(role: InputRole) {
+export function getDefaultInputPlaceholder(role: InputRole) {
 	let placeholder = '';
 
 	if (role === 'default') placeholder = '';
@@ -84,6 +89,28 @@ export function getInputPlaceholder(role: InputRole) {
 	if (role === 'password') placeholder = '********';
 
 	return placeholder;
+}
+
+export function getInputAttributes(props: InputProps) {
+	const mask = props.mask || '';
+	const name = props.name;
+	const type = getDefaultInputType(props.role);
+	const inputMode = getDefaultInputMode(props.role);
+	const autoComplete = getDefaultInputAutoComplete(props.role);
+	const placeholder = getDefaultInputPlaceholder(props.role);
+
+	const ariaAutocomplete = autoComplete === 'off' ? 'none' : undefined;
+
+	const attributes: InputAttributes = {
+		mask,
+		type: props.type ?? type,
+		inputMode: props.inputMode ?? inputMode,
+		autoComplete: props.autoComplete ?? autoComplete,
+		placeholder: props.placeholder ?? placeholder,
+		'aria-autocomplete': ariaAutocomplete,
+	};
+
+	return attributes;
 }
 
 export function getInputValidator(role: InputRole) {

@@ -14,7 +14,7 @@ interface Props {
 export const InputContainer = styled.div`
 	${(props: Props) => globalStyle(props.theme)};
 
-	--height: 44px;
+	--height: var(--base-height);
 
 	position: relative;
 
@@ -31,7 +31,7 @@ export const InputContainer = styled.div`
 
 		color: ${H.readableColorByBackground};
 
-		margin-bottom: 8px;
+		margin-bottom: 6px;
 	}
 
 	.${classBase('input-container')} {
@@ -58,6 +58,7 @@ export const InputContainer = styled.div`
 
 			opacity: 0.9;
 
+			border-radius: var(--border-radius) 0 0 var(--border-radius);
 			background: #f9f9f9;
 			color: ${H.readableColorByBackground};
 		}
@@ -90,7 +91,7 @@ export const InputContainer = styled.div`
 
 		.${classBase('picker-options')} {
 			position: absolute;
-			bottom: -8px;
+			bottom: -2px;
 			left: 0;
 			transform: translateY(100%);
 
@@ -100,6 +101,7 @@ export const InputContainer = styled.div`
 			background: var(--color-background);
 			border: var(--border-width-focused) solid var(--color-line);
 			border-radius: var(--border-radius);
+			box-shadow: var(--shadow-smallest);
 
 			width: 100%;
 			max-height: 200px;
@@ -111,17 +113,21 @@ export const InputContainer = styled.div`
 			.${classBase('picker-option')} {
 				display: flex;
 				align-items: center;
-				height: 40px;
+				height: 38px;
+				flex-shrink: 0;
 
-				font-size: 16px;
+				font-size: 14px;
 				padding: 0 14px;
 
 				opacity: 0.6;
 
-                &.disabled {
-                    opacity: .3;
-                    cursor: not-allowed;
-                }
+				color: #000;
+				cursor: pointer;
+
+				&.disabled {
+					opacity: 0.3;
+					cursor: not-allowed;
+				}
 
 				&:hover:not(.disabled):not(.not-found) {
 					opacity: 1;
@@ -165,8 +171,10 @@ export const InputContainer = styled.div`
 		opacity: 0.4;
 	}
 
-	&.${classBase('invalid')} input {
-		outline: var(--border-width-focused) solid var(--color-error);
+	&.${classBase('invalid')} {
+		.${classBase('input-container')} {
+			outline: var(--border-width-focused) solid var(--color-error);
+		}
 	}
 
 	&:hover {

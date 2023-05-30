@@ -1,11 +1,13 @@
 import { Theme } from 'contexts';
 
-import { Props as ReactInputMaskProps } from 'react-input-mask';
+import { Props } from 'react-input-mask';
 import { MoneyArgs, validationErrors } from './Input.utils';
 import { LoadingProps } from 'components/Loading';
 
-export interface InputProps
-	extends React.InputHTMLAttributes<HTMLInputElement> {
+export type ReactInputMaskProps = Props;
+type InputHTMLProps = React.InputHTMLAttributes<HTMLInputElement>;
+
+export interface InputProps extends InputHTMLProps {
 	children?: React.ReactNode | JSX.Element;
 	name: string;
 	label?: string;
@@ -41,6 +43,8 @@ export interface InputPickerOption {
 	value: string;
 	disabled?: boolean;
 }
+
+export type InputAttributes = ReactInputMaskProps & InputHTMLProps;
 
 export type InputAutoComplete =
 	| 'on'

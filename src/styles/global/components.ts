@@ -18,9 +18,15 @@ export const globalStyle = (theme: Theme) => css`
 	--color-background: ${theme.colors.background};
 	--color-error: ${theme.colors.error};
 
+    --base-height: ${theme.baseHeight};
 	--border-width-unfocused: ${theme.borderWidthUnfocused};
 	--border-width-focused: ${theme.borderWidthFocused};
 	--border-radius: ${theme.borderRadius};
+
+    --shadow-smallest: 0px 2px 4px rgba(0,0,0,.1);
+    --shadow-extra-small: 0px 4px 8px rgba(0,0,0,.12);
+    --shadow-small: 0 5px 10px rgba(0,0,0,.12);
+    --shadow-medium: 0 8px 30px rgba(0,0,0,.12);
 
 	/* Global styles */
 	::-webkit-scrollbar {
