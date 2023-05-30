@@ -8,7 +8,7 @@ export const globalStyle = (theme: Theme) => css`
 	outline: none;
 	border: none;
 	box-sizing: border-box;
-	/* font-family: 'Roboto', Helvetica, Arial, sans-serif; */
+	font-family: 'Roboto', Helvetica, Arial, sans-serif;
 
 	/* Global variables */
 	--color-primary: ${theme.colors.primary};
@@ -18,9 +18,9 @@ export const globalStyle = (theme: Theme) => css`
 	--color-background: ${theme.colors.background};
 	--color-error: ${theme.colors.error};
 
-	--border-width: ${theme.borderWidth};
+	--border-width-unfocused: ${theme.borderWidthUnfocused};
+	--border-width-focused: ${theme.borderWidthFocused};
 	--border-radius: ${theme.borderRadius};
-	--unfocused-box-shadow: 0 0 0 var(--border-width) var(--color-line);
 
 	/* Global styles */
 	::-webkit-scrollbar {

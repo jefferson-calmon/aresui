@@ -4,3 +4,4 @@ export * from './Loading';
 export * from './Redirect';
 export * from './Image';
 export * from './Head';
+export * from './Input';

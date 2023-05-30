@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { lighten, readableColor, transparentize } from 'polished';
+import { readableColor, transparentize } from 'polished';
 
 import { globalStyle } from 'styles/global/components';
 import { Theme } from 'contexts';

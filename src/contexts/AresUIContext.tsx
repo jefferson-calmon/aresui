@@ -18,7 +18,8 @@ export interface Theme {
 		inputPlaceholder: string;
 	};
 	borderRadius: string;
-	borderWidth: string;
+	borderWidthUnfocused: string;
+	borderWidthFocused: string;
 }
 
 export interface AresUIContextProps {
@@ -39,10 +40,11 @@ const defaultTheme: Theme = {
 		line: '#f1f3f4',
 		inputPlaceholder: 'rgba(0, 0, 0, 0.15)',
 		background: '#fff',
-		error: 'e83f5b',
+		error: '#e83f5b',
 	},
-	borderRadius: '.4rem',
-	borderWidth: '1px',
+	borderRadius: '6px',
+	borderWidthUnfocused: '2px',
+	borderWidthFocused: '1px',
 };
 
 const defaultConfig: Config = {
