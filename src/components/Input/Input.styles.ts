@@ -119,6 +119,7 @@ export const InputContainer = styled.div`
 
 				font-size: 14px;
 				padding: 11px 14px;
+                text-align: left;
 
 				opacity: 0.6;
 
