@@ -40,6 +40,7 @@ export function PickerOptions(props: PickerOptionsProps) {
                         ${option.disabled ? 'disabled' : ''}
                     `}
 					onClick={() => props.onChange(option)}
+                    title={option.value}
 				>
 					{option.value}
 				</div>

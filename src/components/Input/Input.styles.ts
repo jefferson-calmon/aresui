@@ -94,6 +94,7 @@ export const InputContainer = styled.div`
 			bottom: -2px;
 			left: 0;
 			transform: translateY(100%);
+			z-index: 100;
 
 			display: flex;
 			flex-direction: column;
@@ -111,18 +112,22 @@ export const InputContainer = styled.div`
 			overflow-y: scroll;
 
 			.${classBase('picker-option')} {
-				display: flex;
-				align-items: center;
-				height: 38px;
-				flex-shrink: 0;
+				display: inline;
+				/* align-items: center; */
+				/* height: 38px; */
+				/* flex-shrink: 0; */
 
 				font-size: 14px;
-				padding: 0 14px;
+				padding: 11px 14px;
 
 				opacity: 0.6;
 
 				color: #000;
 				cursor: pointer;
+
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
 
 				&.disabled {
 					opacity: 0.3;

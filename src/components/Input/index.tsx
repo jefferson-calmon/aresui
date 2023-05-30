@@ -23,7 +23,7 @@ export function Input(props: T.InputProps): JSX.Element {
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	// States
-	const [value, setValue] = useState<string>('');
+	const [value, setValue] = useState<string>(props.value?.toString() || '');
 
 	// Boolean hooks
 	const isFocused = useBoolean();
@@ -101,10 +101,6 @@ export function Input(props: T.InputProps): JSX.Element {
 	function handleSelectPickerOption(option: T.InputPickerOption) {
 		if (option.disabled) return;
 
-		const input = document.querySelector<HTMLInputElement>('input');
-
-		if (input) input.value = option.value;
-
 		setValue(option.value);
 	}
 
@@ -142,6 +138,7 @@ export function Input(props: T.InputProps): JSX.Element {
 					autoComplete={inputAttr.autoComplete}
 					placeholder={inputAttr.placeholder}
 					name={inputAttr.name}
+                    value={value}
 					// --
 					onChange={handleChange}
 					onKeyUp={handleKeyUp}
