@@ -129,7 +129,7 @@ export function Input(props: T.InputProps): JSX.Element {
 					// --
 					aria-autocomplete={inputAttr['aria-autocomplete']}
 					// --
-					{...props}
+					{...U.filterProps(props)}
 					{...props.maskProps}
 					// --
 					type={inputAttr.type}
@@ -138,7 +138,7 @@ export function Input(props: T.InputProps): JSX.Element {
 					autoComplete={inputAttr.autoComplete}
 					placeholder={inputAttr.placeholder}
 					name={inputAttr.name}
-                    value={value}
+					value={value}
 					// --
 					onChange={handleChange}
 					onKeyUp={handleKeyUp}

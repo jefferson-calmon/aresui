@@ -114,7 +114,7 @@ export const InputContainer = styled.div`
 			.${classBase('picker-option')} {
 				display: inline;
 				/* align-items: center; */
-				/* height: 38px; */
+				min-height: 38px;
 				/* flex-shrink: 0; */
 
 				font-size: 14px;

@@ -133,4 +133,25 @@ export function getInputValidator(role: InputRole) {
 	return validator;
 }
 
+export function filterProps(props: InputProps) {
+	const newProps: Partial<typeof props> = { ...props };
+
+	delete newProps.addon;
+	delete newProps.customErrors;
+	delete newProps.pickerOptions;
+	delete newProps.width;
+	delete newProps.theme;
+	delete newProps.role;
+	delete newProps.containerClassName;
+	delete newProps.mask;
+	delete newProps.loading;
+	delete newProps.errorPrefix;
+	delete newProps.disableValidations;
+	delete newProps.maskProps;
+	delete newProps.moneyArgs;
+	delete newProps.loadingProps;
+
+	return newProps;
+}
+
 export * from './utils/moneyMask';
