@@ -92,4 +92,6 @@ export function Checkbox(props: T.CheckboxProps): JSX.Element {
 
 Checkbox.defaultProps = T.defaultPropsCheckbox;
 
+export * from './Checkbox.types';
+
 export default Checkbox;
