@@ -6,13 +6,13 @@ import { globalStyle } from 'styles/global/components';
 import { classBase } from './Loading.utils';
 
 interface Props {
-	theme: Theme;
+	UITheme: Theme;
 	size: number;
 	speedInSeconds: number;
 }
 
 export const LoadingContainer = styled.div`
-	${(props: Props) => globalStyle(props.theme)}
+	${(props: Props) => globalStyle(props.UITheme)}
 
 	position: relative;
 

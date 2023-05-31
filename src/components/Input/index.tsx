@@ -1,18 +1,18 @@
 import React, { useState, useMemo, useRef } from 'react';
 
-import { debounce, mergeObjects, useBoolean } from 'pandora-tools';
 import InputMask from 'react-input-mask';
+import { debounce, mergeObjects, useBoolean } from 'pandora-tools';
 
 import * as T from './Input.types';
 import * as U from './Input.utils';
 import * as C from './Input.components';
+import Loading from 'components/Loading';
 import { useAresUI } from 'contexts';
 import { useError } from 'hooks/useError';
 import { buildClassName } from 'helpers/buildClassName';
+import { searchInText } from 'helpers/searchInText';
 
 import { InputContainer } from './Input.styles';
-import Loading from 'components/Loading';
-import { searchInText } from 'helpers/searchInText';
 
 export function Input(props: T.InputProps): JSX.Element {
 	// Hooks
@@ -105,7 +105,7 @@ export function Input(props: T.InputProps): JSX.Element {
 	}
 
 	return (
-		<InputContainer className={className} theme={theme} width={props.width}>
+		<InputContainer className={className} UITheme={theme} width={props.width}>
 			{props.label && <label>{props.label}</label>}
 
 			<div className={U.classBase('input-container')}>

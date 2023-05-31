@@ -6,12 +6,12 @@ import { Theme } from 'contexts';
 import { classBase } from './Button.utils';
 
 interface Props {
-	theme: Theme;
+	UITheme: Theme;
 	loading: boolean;
 }
 
 export const ButtonContainer = styled.button`
-	${(props: Props) => globalStyle(props.theme)}
+	${(props: Props) => globalStyle(props.UITheme)}
 
 	position: relative;
 
@@ -93,12 +93,12 @@ export const ButtonContainer = styled.button`
 	/* Variants */
 	&.${classBase('variant', 'default')} {
 		background: var(--color-primary);
-		color: ${(props: Props) => readableColor(props.theme.colors.primary)};
+		color: ${(props: Props) => readableColor(props.UITheme.colors.primary)};
 		transition: 0.05s;
 
 		.${classBase('ripple')} {
 			background: ${(props: Props) =>
-				transparentize(0.8, readableColor(props.theme.colors.primary))};
+				transparentize(0.8, readableColor(props.UITheme.colors.primary))};
 		}
 
 		${(props) => getDefaultVariantHover(props)}
@@ -111,7 +111,7 @@ export const ButtonContainer = styled.button`
 
 		.${classBase('ripple')} {
 			background: ${(props: Props) =>
-				transparentize(0.9, props.theme.colors.primary)};
+				transparentize(0.9, props.UITheme.colors.primary)};
 		}
 
 		${(props) => getTextVariantHover(props)}
@@ -126,7 +126,7 @@ export const ButtonContainer = styled.button`
 
 		.${classBase('ripple')} {
 			background: ${(props: Props) =>
-				transparentize(0.8, readableColor(props.theme.colors.primary))};
+				transparentize(0.8, readableColor(props.UITheme.colors.primary))};
 		}
 
 		${(props) => getOutlinedVariantHover(props)}
@@ -164,7 +164,7 @@ function getTextVariantHover(props: Props) {
 	return css`
 		&:hover {
 			background: ${(props: Props) =>
-				transparentize(0.97, props.theme.colors.primary)};
+				transparentize(0.97, props.UITheme.colors.primary)};
 		}
 	`;
 }

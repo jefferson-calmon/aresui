@@ -59,7 +59,7 @@ export function Button(props: T.ButtonProps): JSX.Element {
 			type="button"
 			disabled={props.disabled || !!props.loading}
 			{...props}
-			theme={theme}
+			UITheme={theme}
             loading={props.loading}
 			className={className}
 			onClick={handleClick}

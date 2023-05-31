@@ -18,7 +18,7 @@ export function Loading(props: T.LoadingProps): JSX.Element {
 	}, [props.theme]);
 
 	return (
-		<LoadingContainer className={U.classBase()} {...props} theme={theme}>
+		<LoadingContainer className={U.classBase()} {...props} UITheme={theme}>
 			{!props.custom && (
 				<svg viewBox="0 0 50 50">
 					<circle

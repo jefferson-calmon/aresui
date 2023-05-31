@@ -7,12 +7,12 @@ import { classBase } from './Input.utils';
 import { InputProps } from './Input.types';
 
 interface Props {
-	theme: Theme;
+	UITheme: Theme;
 	width: InputProps['width'];
 }
 
 export const InputContainer = styled.div`
-	${(props: Props) => globalStyle(props.theme)};
+	${(props: Props) => globalStyle(props.UITheme)};
 
 	--height: var(--base-height);
 
@@ -41,7 +41,7 @@ export const InputContainer = styled.div`
 
 		width: 100%;
 
-		background: ${(props: Props) => props.theme.colors.background};
+		background: ${(props: Props) => props.UITheme.colors.background};
 		border-radius: var(--border-radius);
 		outline: var(--border-width-unfocused) solid var(--color-line);
 
