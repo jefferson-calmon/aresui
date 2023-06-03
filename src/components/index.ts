@@ -8,3 +8,4 @@ export * from './Input';
 export * from './Checkbox';
 export * from './Dropzone';
 export * from './UploadArea';
+export * from './HandleClickOutside';

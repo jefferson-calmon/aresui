@@ -37,8 +37,8 @@ export interface AresUIContextData {
 
 const defaultTheme: Theme = {
 	colors: {
-		// primary: '#000',
-		primary: '#1675e0',
+		primary: '#000',
+		// primary: '#1675e0',
 		text: '#000',
 		line: '#f1f3f4',
 		lineDark: '#d9d9d9',
