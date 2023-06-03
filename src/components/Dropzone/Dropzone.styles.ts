@@ -1,15 +1,6 @@
 import styled from 'styled-components';
 
-import { globalStyle } from 'styles/global/components';
-import { Theme } from 'contexts';
-
-interface Props {
-	UITheme: Theme;
-}
-
 export const DropzoneContainer = styled.div`
-	${(props: Props) => globalStyle(props.UITheme)}
-
 	position: relative;
 
 	input {

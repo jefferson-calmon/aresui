@@ -35,6 +35,7 @@ export function Dropzone(props: T.DropzoneProps): JSX.Element {
 	const className = useMemo(() => {
 		const classes = [
 			U.classBase(),
+			props.className,
 			dropzone.isDragActive && U.classBase('drag-active'),
 		];
 
@@ -52,6 +53,6 @@ export function Dropzone(props: T.DropzoneProps): JSX.Element {
 
 Dropzone.defaultProps = T.defaultPropsDropzone;
 
-export * from './Dropzone.types'
+export * from './Dropzone.types';
 
 export default Dropzone;

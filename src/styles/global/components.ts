@@ -66,4 +66,6 @@ export const globalStyle = (theme: Theme) => css`
 		text-transform: none;
 		line-height: 1;
 	}
+
+    font-size: 10px;
 `;

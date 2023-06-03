@@ -21,7 +21,7 @@ export interface Theme {
 	borderRadius: string;
 	borderWidthUnfocused: string;
 	borderWidthFocused: string;
-    baseHeight: string;
+	baseHeight: string;
 }
 
 export interface AresUIContextProps {
@@ -37,7 +37,8 @@ export interface AresUIContextData {
 
 const defaultTheme: Theme = {
 	colors: {
-		primary: '#000',
+		// primary: '#000',
+		primary: '#1675e0',
 		text: '#000',
 		line: '#f1f3f4',
 		lineDark: '#d9d9d9',
@@ -48,7 +49,7 @@ const defaultTheme: Theme = {
 	borderRadius: '6px',
 	borderWidthUnfocused: '2px',
 	borderWidthFocused: '1px',
-    baseHeight: '40px'
+	baseHeight: '40px',
 };
 
 const defaultConfig: Config = {
