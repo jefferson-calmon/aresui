@@ -3,6 +3,7 @@ import { Theme } from 'contexts';
 import { Props } from 'react-input-mask';
 import { MoneyArgs, validationErrors } from './Input.utils';
 import { LoadingProps } from 'components/Loading';
+import { DeepPartial } from 'types';
 
 export type ReactInputMaskProps = Props;
 type InputHTMLProps = React.InputHTMLAttributes<HTMLInputElement>;

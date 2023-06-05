@@ -2,6 +2,7 @@
 import { LinkProps } from 'components/Link';
 import { LoadingProps } from 'components/Loading';
 import { Theme } from 'contexts';
+import { DeepPartial } from 'types';
 
 export interface ButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement> {

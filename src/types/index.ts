@@ -4,6 +4,10 @@ interface CommonComponentProps {
 	theme: DeepPartial<Theme>;
 }
 
+export type DeepPartial<T> = {
+	[P in keyof T]?: DeepPartial<T[P]>;
+};
+
 export type InputHTMLAttributes = React.HTMLAttributes<HTMLInputElement>;
 export type DivHTMLAttributes = React.HTMLAttributes<HTMLDivElement>;
 

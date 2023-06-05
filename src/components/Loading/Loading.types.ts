@@ -1,4 +1,5 @@
 import { Theme } from 'contexts';
+import { DeepPartial } from 'types';
 
 export interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
     type: 'spinner' | 'dots';

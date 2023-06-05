@@ -1,5 +1,6 @@
-import { mergeObjects } from 'pandora-tools';
 import React, { createContext, useContext } from 'react';
+import { mergeObjects } from 'pandora-tools';
+import { DeepPartial } from 'types';
 
 export interface Config {
 	app: {
