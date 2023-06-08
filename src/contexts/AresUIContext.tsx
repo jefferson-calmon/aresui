@@ -48,7 +48,7 @@ const defaultTheme: Theme = {
 		error: '#e83f5b',
 	},
 	borderRadius: '6px',
-	borderWidthUnfocused: '2px',
+	borderWidthUnfocused: '1px',
 	borderWidthFocused: '1px',
 	baseHeight: '40px',
 };

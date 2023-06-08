@@ -11,3 +11,4 @@ export * from './UploadArea';
 export * from './HandleClickOutside';
 export * from './ModalBackdrop';
 export * from './ExternalErrors';
+export * from './TextArea';
