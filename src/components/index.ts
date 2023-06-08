@@ -8,6 +8,7 @@ export * from './Input';
 export * from './Checkbox';
 export * from './Dropzone';
 export * from './UploadArea';
+export * from './HandleClick';
 export * from './HandleClickOutside';
 export * from './ModalBackdrop';
 export * from './ExternalErrors';
