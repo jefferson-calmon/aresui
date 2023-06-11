@@ -9,21 +9,19 @@ export function HandleClickOutside(props: T.HandleClickOutsideProps) {
 		const d = document;
 
 		function handleClickOutside(event: MouseEvent) {
-			const target = event.target;
-			const isValid = !props.disabled && target instanceof HTMLElement;
+			const target = event.target as HTMLElement;
 
-			if (typeof props.elementSelectors === 'string' && isValid) {
-				!target.closest(props.elementSelectors) &&
-					setTimeout(() => props.onClickOutside(), 1);
-			}
+			if (props.disabled || !target) return;
 
-			if (Array.isArray(props.elementSelectors) && isValid) {
-				const clickedOutside = !props.elementSelectors.some(
-					(selector) => target.closest(selector)
-				);
+			const clickedOutside = !props.elementSelectors.some((selector) => {
+				const element = document.querySelector(selector);
 
-				clickedOutside && setTimeout(() => props.onClickOutside(), 1);
-			}
+				if (target.closest(selector)) return true;
+				if (element && element.contains(event.target as Node))
+					return true;
+			});
+
+			clickedOutside && setTimeout(() => props.onClickOutside(), 1);
 		}
 
 		const setup = () => d.addEventListener('click', handleClickOutside);

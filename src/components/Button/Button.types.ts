@@ -16,6 +16,7 @@ export interface ButtonProps
 	variant: ButtonVariant;
 	linkTo?: LinkProps['to'];
 	theme: DeepPartial<Theme>;
+	size: 'large' | 'normal' | 'small';
 
 	linkProps?: LinkProps;
 	loadingProps?: LoadingProps;
@@ -23,11 +24,12 @@ export interface ButtonProps
 	onClick?: React.ButtonHTMLAttributes<HTMLButtonElement>['onClick'];
 }
 
-export type ButtonVariant = 'default' | 'text' | 'outlined';
+export type ButtonVariant = 'default' | 'text' | 'outlined' | 'secondary';
 
 export const defaultPropsButton: ButtonProps = {
 	children: 'Button',
 	variant: 'default',
+    size: 'large',
 	loading: false,
 	rippleEffect: false,
 	theme: {},

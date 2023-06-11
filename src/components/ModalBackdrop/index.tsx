@@ -32,7 +32,7 @@ export function ModalBackdrop(props: T.ModalBackdropProps): JSX.Element {
 
 			{props.modalSelector && (
 				<HandleClickOutside
-					elementSelectors={props.modalSelector}
+					elementSelectors={[props.modalSelector]}
 					onClickOutside={props.onClose}
 				/>
 			)}

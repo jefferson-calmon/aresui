@@ -21,7 +21,6 @@ export const ButtonContainer = styled.button`
 
 	min-width: 12rem;
 	height: var(--base-height);
-	padding: 0 2.8rem;
 
 	font-size: 1.5rem;
 	font-weight: 500;
@@ -98,7 +97,10 @@ export const ButtonContainer = styled.button`
 
 		.${classBase('ripple')} {
 			background: ${(props: Props) =>
-				transparentize(0.8, readableColor(props.UITheme.colors.primary))};
+				transparentize(
+					0.8,
+					readableColor(props.UITheme.colors.primary)
+				)};
 		}
 
 		${(props) => getDefaultVariantHover(props)}
@@ -117,6 +119,19 @@ export const ButtonContainer = styled.button`
 		${(props) => getTextVariantHover(props)}
 	}
 
+	&.${classBase('variant', 'secondary')} {
+		background: ${() => transparentize(0.975, '#000')};
+		color: ${() => transparentize(0.2, '#000')};
+		transition: 0.1s;
+
+		.${classBase('ripple')} {
+			background: ${(props: Props) =>
+				transparentize(0.92, props.UITheme.colors.primary)};
+		}
+
+		${(props) => getSecondaryVariantHover(props)}
+	}
+
 	&.${classBase('variant', 'outlined')} {
 		background: transparent;
 		color: var(--color-primary);
@@ -126,10 +141,24 @@ export const ButtonContainer = styled.button`
 
 		.${classBase('ripple')} {
 			background: ${(props: Props) =>
-				transparentize(0.8, readableColor(props.UITheme.colors.primary))};
+				transparentize(
+					0.8,
+					readableColor(props.UITheme.colors.primary)
+				)};
 		}
 
 		${(props) => getOutlinedVariantHover(props)}
+	}
+
+	/* Sizes */
+	&.${classBase('size', 'large')} {
+		padding: 0 2.8rem;
+	}
+	&.${classBase('size', 'normal')} {
+		padding: 0 2rem;
+	}
+	&.${classBase('size', 'small')} {
+		padding: 0 1.6rem;
 	}
 
 	/* Button states */
@@ -165,6 +194,17 @@ function getTextVariantHover(props: Props) {
 		&:hover {
 			background: ${(props: Props) =>
 				transparentize(0.97, props.UITheme.colors.primary)};
+		}
+	`;
+}
+
+function getSecondaryVariantHover(props: Props) {
+	if (props.loading) return css``;
+
+	return css`
+		&:hover {
+			background: ${(props: Props) =>
+				transparentize(0.96, props.UITheme.colors.primary)};
 		}
 	`;
 }

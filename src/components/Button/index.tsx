@@ -27,12 +27,13 @@ export function Button(props: T.ButtonProps): JSX.Element {
 		const classes = [
 			U.classBase(),
 			U.classBase('variant', props.variant),
+			U.classBase('size', props.size),
 			U.classBase(props.className || ''),
 			props.loading && U.classBase('loading'),
 		];
 
 		return buildClassName(...classes);
-	}, [props.variant, props.className, props.loading]);
+	}, [props]);
 
 	const loadingTheme = useMemo(() => {
 		let color = readableColor(theme.colors.primary);
