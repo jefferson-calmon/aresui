@@ -137,7 +137,7 @@ export const ButtonContainer = styled.button`
 		color: var(--color-primary);
 		transition: 0.1s;
 
-		border: var(--border-width) solid var(--color-primary);
+		border: var(--border-width-unfocused) solid var(--color-primary);
 
 		.${classBase('ripple')} {
 			background: ${(props: Props) =>
