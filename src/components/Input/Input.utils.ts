@@ -103,6 +103,7 @@ export function getInputAttributes(props: InputProps) {
 
 	const attributes: InputAttributes = {
 		mask,
+        name,
 		type: props.type ?? type,
 		inputMode: props.inputMode ?? inputMode,
 		autoComplete: props.autoComplete ?? autoComplete,
