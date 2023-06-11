@@ -9,7 +9,7 @@ import { HandleClickOutside } from '../';
 
 import { DropdownContainer } from './Dropdown.styles';
 
-function Dropdown(props: T.DropdownProps) {
+export function Dropdown(props: T.DropdownProps) {
 	// Boolean hooks
 	const isOpen = useBoolean(false);
 
