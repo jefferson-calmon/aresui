@@ -1,3 +1,5 @@
+import { HandleClickOutsideProps } from 'components/HandleClickOutside';
+
 export interface ModalBackdropProps {
 	/**
 	 * Use query selector from modal to apply click outside event.
@@ -6,4 +8,6 @@ export interface ModalBackdropProps {
 	 */
 	modalSelector?: string;
 	onClose: () => void;
+
+	clickOutsideProps?: Partial<HandleClickOutsideProps>;
 }
