@@ -1,4 +1,5 @@
 import { Theme } from 'contexts';
+import { delay } from 'pandora-tools';
 import { DeepPartial, Width } from 'types';
 
 export interface SelectProps {
@@ -8,7 +9,7 @@ export interface SelectProps {
 	defaultOptionByValue?: string;
 
 	disabled?: boolean;
-	options: SelectOption[];
+	options: SelectOption[] | Promise<SelectOption[]>;
 
 	selectProps?: Omit<React.HTMLAttributes<HTMLSelectElement>, 'onChange'>;
 	wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
@@ -44,7 +45,7 @@ export const defaultPropsSelect: Required<SelectProps> = {
 			value: 'example2',
 		},
 	],
-	defaultOptionByValue: '',
+	defaultOptionByValue: 'example1',
 	label: 'Example label',
 	onChange: () => {},
 	placeholder: 'Selecione uma opção',

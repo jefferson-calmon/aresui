@@ -14,8 +14,8 @@ export function Dropdown(props: T.DropdownProps) {
 	const isOpen = useBoolean(false);
 
 	// Event listeners
-	useEventListener('scroll', isOpen.setFalse);
-	useEventListener('resize', isOpen.setFalse);
+	useEventListener('scroll', handleClose);
+	useEventListener('resize', handleClose);
 
 	// Common vars
 	let timeout: NodeJS.Timeout;
@@ -91,6 +91,15 @@ export function Dropdown(props: T.DropdownProps) {
 		isOpen.setValue(newValue);
 	}
 
+	function handleClose() {
+		const newValue = false;
+
+		props.onToggle?.(newValue);
+		props.onClose?.();
+
+		isOpen.setValue(newValue);
+	}
+
 	// Components
 	const DropdownMenu = props.customMenu || C.DropdownMenu;
 
@@ -111,7 +120,7 @@ export function Dropdown(props: T.DropdownProps) {
 			{isOpen.value && (
 				<HandleClickOutside
 					elementSelectors={[`.${U.classBase()}`]}
-					onClickOutside={isOpen.setFalse}
+					onClickOutside={handleClose}
 				/>
 			)}
 		</DropdownContainer>

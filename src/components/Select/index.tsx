@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 
 import { mergeObjects, useBoolean } from 'pandora-tools';
 
@@ -6,7 +6,9 @@ import * as T from './Select.types';
 import * as U from './Select.utils';
 import * as C from './Select.components';
 import Dropdown, { MenuItem } from 'components/Dropdown';
+import Loading from 'components/Loading';
 import { useAresUI } from 'contexts/AresUIContext';
+import { isPromise } from 'helpers/isPromise';
 
 import { SelectContainer } from './Select.styles';
 
@@ -15,33 +17,25 @@ export function Select(props: T.SelectProps): JSX.Element {
 	const aresUI = useAresUI();
 
 	// Defaults memo vars
+
+	// States
+	const [options, setOptions] = useState<T.SelectOption[]>([]);
+
 	const defaultOption = useMemo(() => {
 		if (!props.defaultOptionByValue) return null;
 
-		const option = props.options.find(
+		const option = options.find(
 			(o) => o.value === props.defaultOptionByValue
 		);
 
 		return option ?? null;
-	}, [props.options]);
+	}, [options]);
 
-	const dropdownItems = useMemo(() => {
-		return props.options.map<MenuItem>((option) => ({
-			id: option.value,
-			content: option.label,
-			onClick: () => {
-				setOption(option);
-				option.onClick?.(option);
-				props.onChange?.(option.value);
-			},
-		}));
-	}, [props.options]);
-
-	// States
 	const [option, setOption] = useState<T.SelectOption | null>(defaultOption);
 
 	// Boolean hooks
 	const isActiveSelectOptions = useBoolean();
+	const isLoading = useBoolean(isPromise(props.options));
 
 	// Memo vars
 	const theme = useMemo(() => {
@@ -64,6 +58,47 @@ export function Select(props: T.SelectProps): JSX.Element {
 
 		return U.buildClassName(...classes);
 	}, [props, isActiveSelectOptions.value]);
+
+	const dropdownItems = useMemo(() => {
+		if (isLoading.value)
+			return [
+				{
+					id: '',
+					content: (
+						<>
+							<Loading size={18} />
+							&nbsp;&nbsp;Loading
+						</>
+					),
+				} as MenuItem,
+			];
+
+		return options.map<MenuItem>((option) => ({
+			id: option.value,
+			content: option.label,
+			onClick: () => {
+				setOption(option);
+				option.onClick?.(option);
+				props.onChange?.(option.value);
+			},
+		}));
+	}, [options]);
+
+	// Effects
+	useEffect(() => {
+		async function loadOptions() {
+			if (Array.isArray(props.options)) {
+				setOptions(props.options);
+			} else {
+				const resolvedOptions = await props.options;
+
+				isLoading.setFalse();
+				setOptions(resolvedOptions);
+			}
+		}
+
+		loadOptions();
+	}, [props.options]);
 
 	return (
 		<SelectContainer
