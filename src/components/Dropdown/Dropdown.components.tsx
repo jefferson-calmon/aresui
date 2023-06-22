@@ -38,6 +38,7 @@ export function DropdownMenu(props: T.DropdownProps) {
 			}
 
 			item.onClick?.(item);
+			props.onChange?.(item);
 		};
 	}
 

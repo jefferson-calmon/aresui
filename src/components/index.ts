@@ -14,3 +14,4 @@ export * from './ModalBackdrop';
 export * from './ExternalErrors';
 export * from './TextArea';
 export * from './Dropdown';
+export * from './Select';

@@ -20,7 +20,8 @@ export interface DropdownProps {
 
 	onOpen?: () => void;
 	onClose?: () => void;
-	onToggle?: (open?: boolean) => void;
+	onToggle?: (open: boolean) => void;
+    onChange?: (item: MenuItem) => void;
 }
 
 export interface MenuItem {
