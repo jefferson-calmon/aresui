@@ -1,5 +1,4 @@
 import { Theme } from 'contexts';
-import { delay } from 'pandora-tools';
 import { DeepPartial, Width } from 'types';
 
 export interface SelectProps {
@@ -47,7 +46,7 @@ export const defaultPropsSelect: Required<SelectProps> = {
 	],
 	defaultOptionByValue: 'example1',
 	label: 'Example label',
-	onChange: () => {},
+	onChange: () => ({}),
 	placeholder: 'Selecione uma opção',
 	selectProps: {},
 	wrapperProps: {},

@@ -1,12 +1,11 @@
 {
 	"plugins": ["@typescript-eslint"],
 	"extends": [
-		"next",
 		"eslint:recommended",
 		"plugin:@typescript-eslint/eslint-recommended",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:storybook/recommended",
-		"plugin:eslint-plugin-react-hooks"
+		"plugin:react-hooks/recommended"
 	],
 	"rules": {
 		"quotes": ["error", "single"],
@@ -32,11 +31,11 @@
 		"prefer-const": "warn",
 		"accessor-pairs": "off",
 		"no-async-promise-executor": "off",
-		"no-unused-vars": "error",
-		"node/no-missing-require": "warn",
+		// "no-unused-vars": "error",
+		// "node/no-missing-require": "warn",
 		"no-console": "warn",
 		"@typescript-eslint/no-unused-vars": "error",
-		"@typescript-eslint/no-explicit-any": "error",
-		"react-hooks/exhaustive-deps": "error"
+		"@typescript-eslint/no-explicit-any": "error"
+		// "react-hooks/exhaustive-deps": "error"
 	}
 }

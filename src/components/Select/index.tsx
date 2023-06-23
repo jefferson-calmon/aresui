@@ -16,22 +16,9 @@ export function Select(props: T.SelectProps): JSX.Element {
 	// Hooks
 	const aresUI = useAresUI();
 
-	// Defaults memo vars
-
 	// States
 	const [options, setOptions] = useState<T.SelectOption[]>([]);
-
-	const defaultOption = useMemo(() => {
-		if (!props.defaultOptionByValue) return null;
-
-		const option = options.find(
-			(o) => o.value === props.defaultOptionByValue
-		);
-
-		return option ?? null;
-	}, [options]);
-
-	const [option, setOption] = useState<T.SelectOption | null>(defaultOption);
+	const [option, setOption] = useState<T.SelectOption | null>(null);
 
 	// Boolean hooks
 	const isActiveSelectOptions = useBoolean();
@@ -40,7 +27,7 @@ export function Select(props: T.SelectProps): JSX.Element {
 	// Memo vars
 	const theme = useMemo(() => {
 		return mergeObjects(aresUI.theme, props.theme ?? {});
-	}, [props.theme]);
+	}, [aresUI.theme, props.theme]);
 
 	const placeholder = useMemo(() => {
 		const defaultPlaceholder = T.defaultPropsSelect['placeholder'];
@@ -82,7 +69,7 @@ export function Select(props: T.SelectProps): JSX.Element {
 				props.onChange?.(option.value);
 			},
 		}));
-	}, [options]);
+	}, [isLoading.value, options, props]);
 
 	// Effects
 	useEffect(() => {
@@ -98,7 +85,17 @@ export function Select(props: T.SelectProps): JSX.Element {
 		}
 
 		loadOptions();
-	}, [props.options]);
+	}, [isLoading, props.options]);
+
+	useEffect(() => {
+		if (option || !props.defaultOptionByValue) return;
+
+		const defaultOption = options.find(
+			(o) => o.value === props.defaultOptionByValue
+		);
+
+		defaultOption && setOption(defaultOption);
+	}, [options, option, props.defaultOptionByValue]);
 
 	return (
 		<SelectContainer
