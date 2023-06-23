@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled, { StyledComponent } from 'styled-components';
 
 import * as H from 'helpers/styled';
@@ -56,7 +57,7 @@ export const SelectContainer: Styled = styled.div`
 
 		background: transparent;
 		border-radius: var(--border-radius);
-		border: var(--border-width-unfocused) solid var(--color-line);
+		outline: var(--border-width-unfocused) solid var(--color-line);
 
 		transition: 0.3s;
 
