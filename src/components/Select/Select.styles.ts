@@ -49,6 +49,10 @@ export const SelectContainer: Styled = styled.div`
 		user-select: none;
 	}
 
+    > .aresui-dropdown {
+		width: var(--width);
+    }
+
 	.${classBase('select')} {
 		position: relative;
 		width: var(--width);
@@ -69,7 +73,7 @@ export const SelectContainer: Styled = styled.div`
 			gap: 1.2rem;
 
 			height: 100%;
-			width: 100%;
+		    width: 100%;
 
 			span {
 				font-size: 16px;
