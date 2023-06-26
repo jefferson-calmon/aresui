@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled, { StyledComponent } from 'styled-components';
 
 import * as H from 'helpers/styled';
@@ -8,7 +9,7 @@ import { TextAreaProps } from './TextArea.types';
 
 interface Props {
 	UITheme: Theme;
-    width: TextAreaProps['width'];
+	width: TextAreaProps['width'];
 }
 
 export const TextAreaContainer = styled.div`
@@ -22,6 +23,8 @@ export const TextAreaContainer = styled.div`
 	align-items: flex-start;
 	flex-direction: column;
 
+	width: ${(props: Props) => props.width};
+
 	label {
 		display: inline-block;
 		font-size: 14px;
@@ -32,18 +35,20 @@ export const TextAreaContainer = styled.div`
 		margin-bottom: 6px;
 	}
 
-	.${classBase('TextArea-container')} {
+	.${classBase('textArea-container')} {
 		position: relative;
 
 		display: flex;
+
+		width: ${(props: Props) => props.width};
 
 		background: ${(props: Props) => props.UITheme.colors.background};
 		border-radius: var(--border-radius);
 		outline: var(--border-width-unfocused) solid var(--color-line);
 
-		TextArea {
+		textArea {
 			position: relative;
-            width: ${(props: Props) => props.width};
+			width: ${(props: Props) => props.width};
 			height: var(--height);
 			padding: 16px;
 

@@ -22,7 +22,7 @@ export function TextArea(props: T.TextAreaProps): JSX.Element {
 	// Memo vars
 	const theme = useMemo(() => {
 		return mergeObjects(aresUI.theme, props.theme);
-	}, [props.theme]);
+	}, [aresUI.theme, props.theme]);
 
 	const className = useMemo(() => {
 		const classes = [
