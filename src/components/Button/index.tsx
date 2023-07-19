@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { config, mergeObjects } from 'pandora-tools';
+import { config, mergeObjects } from 'codekit';
 import { readableColor } from 'polished';
 
 import * as T from './Button.types';

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import NextLink from 'next/link';
 
-import { config } from 'pandora-tools';
+import { config } from 'codekit';
 
 import * as T from './Link.types';
 import * as U from './Link.utils';

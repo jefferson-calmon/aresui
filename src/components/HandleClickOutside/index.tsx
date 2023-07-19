@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import * as T from './HandleClickOutside.types';
-import { debounce } from 'pandora-tools';
+import { debounce } from 'codekit';
 
 export function HandleClickOutside(props: T.HandleClickOutsideProps) {
 	// Effects

@@ -4,7 +4,7 @@ import * as T from './Dropdown.types';
 import * as U from './Dropdown.utils';
 import Link from 'components/Link';
 import { useAresUI } from 'contexts';
-import { mergeObjects } from 'pandora-tools';
+import { mergeObjects } from 'codekit';
 
 import { DropdownMenuContainer } from './Dropdown.styles';
 

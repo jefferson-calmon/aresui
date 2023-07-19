@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 
 import InputMask from 'react-input-mask';
-import { debounce, mergeObjects, useBoolean } from 'pandora-tools';
+import { debounce, mergeObjects, useBoolean } from 'codekit';
 
 import * as T from './Input.types';
 import * as U from './Input.utils';

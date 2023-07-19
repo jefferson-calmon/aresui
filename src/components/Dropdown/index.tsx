@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { useBoolean, useEventListener } from 'pandora-tools';
+import { useBoolean, useEventListener } from 'codekit';
 
 import * as T from './Dropdown.types';
 import * as U from './Dropdown.utils';
@@ -25,7 +25,7 @@ export function Dropdown(props: T.DropdownProps) {
 		const classes = [U.classBase(), isOpen.value && U.classBase('active')];
 
 		return U.buildClassName(...classes);
-	}, [props]);
+	}, [isOpen.value]);
 
 	// Functions
 	function handleClick() {

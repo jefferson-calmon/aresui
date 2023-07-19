@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useError } from 'pandora-tools';
+import { useError } from 'codekit';
 import { TextAreaProps } from './TextArea.types';
 import { classBase } from './TextArea.utils';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { mergeObjects } from 'pandora-tools';
+import { mergeObjects } from 'codekit';
 
 import * as T from './Checkbox.types';
 import * as U from './Checkbox.utils';

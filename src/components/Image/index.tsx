@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import NextImage from 'next/image';
 
-import { config } from 'pandora-tools';
+import { config } from 'codekit';
 
 import * as T from './Image.types';
 import * as U from './Image.utils';

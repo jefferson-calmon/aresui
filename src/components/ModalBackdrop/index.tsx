@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useKeyPress } from 'pandora-tools';
+import { useKeyPress } from 'codekit';
 
 import * as T from './ModalBackdrop.types';
 import * as U from './ModalBackdrop.utils';

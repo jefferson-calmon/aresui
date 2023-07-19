@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 
-import { mergeObjects, useBoolean } from 'pandora-tools';
+import { mergeObjects, useBoolean } from 'codekit';
 
 import * as T from './Select.types';
 import * as U from './Select.utils';

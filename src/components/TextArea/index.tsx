@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { mergeObjects, useBoolean, debounce } from 'pandora-tools';
+import { mergeObjects, useBoolean, debounce } from 'codekit';
 
 import * as T from './TextArea.types';
 import * as U from './TextArea.utils';

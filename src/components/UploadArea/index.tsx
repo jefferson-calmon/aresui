@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
-import { config, mergeObjects } from 'pandora-tools';
+import { config, mergeObjects } from 'codekit';
 
 import * as T from './UploadArea.types';
 import * as U from './UploadArea.utils';

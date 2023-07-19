@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import NextHead from 'next/head';
 
-import { config } from 'pandora-tools';
+import { config } from 'codekit';
 
 import * as T from './Head.types';
 import { useAresUI } from 'contexts';
@@ -31,6 +31,6 @@ export function Head(props: T.HeadProps): JSX.Element {
 
 Head.defaultProps = T.defaultPropsHead;
 
-export * from './Head.types'
+export * from './Head.types';
 
 export default Head;

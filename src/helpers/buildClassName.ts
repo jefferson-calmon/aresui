@@ -1,4 +1,4 @@
-import { config } from 'pandora-tools';
+import { config } from 'codekit';
 
 config();
 

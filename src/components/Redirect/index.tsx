@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { useIsomorphicLayoutEffect } from 'pandora-tools';
+import { useIsomorphicLayoutEffect } from 'codekit';
 
 import * as T from './Redirect.types';
 

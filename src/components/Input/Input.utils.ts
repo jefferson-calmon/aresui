@@ -4,7 +4,7 @@ import {
 	validateCpf,
 	validateEmail,
 	validatePhoneNumber,
-} from 'pandora-tools';
+} from 'codekit';
 import {
 	InputAttributes,
 	InputAutoComplete,

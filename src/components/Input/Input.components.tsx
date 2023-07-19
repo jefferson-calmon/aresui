@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useError } from 'pandora-tools';
+import { useError } from 'codekit';
 import { InputPickerOption, InputProps } from './Input.types';
 import { classBase } from './Input.utils';
 

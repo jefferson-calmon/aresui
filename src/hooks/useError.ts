@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { config } from 'pandora-tools';
+import { config } from 'codekit';
 
 interface Error {
 	id: string;
@@ -36,7 +36,7 @@ export function useError() {
 			const isString = typeof error === 'string';
 
 			const errorObject = isString ? createErrorFromString(error) : error;
-            
+
 			errors.push(errorObject);
 
 			setLastError(errorObject);

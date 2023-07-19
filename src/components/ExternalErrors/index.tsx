@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { mergeObjects } from 'pandora-tools';
+import { mergeObjects } from 'codekit';
 
 import * as T from './ExternalErrors.types';
 import * as U from './ExternalErrors.utils';
