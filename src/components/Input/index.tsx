@@ -31,7 +31,7 @@ export function Input(props: T.InputProps): JSX.Element {
 	// Memo vars
 	const theme = useMemo(() => {
 		return mergeObjects(aresUI.theme, props.theme);
-	}, [props.theme]);
+	}, [aresUI.theme, props.theme]);
 
 	const isValid = useMemo(() => {
 		return error.errors.length === 0;
@@ -138,7 +138,7 @@ export function Input(props: T.InputProps): JSX.Element {
 					autoComplete={inputAttr.autoComplete}
 					placeholder={inputAttr.placeholder}
 					name={inputAttr.name}
-					value={value}
+					// value={value}
 					// --
 					onChange={handleChange}
 					onKeyUp={handleKeyUp}

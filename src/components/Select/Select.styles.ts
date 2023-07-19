@@ -59,7 +59,7 @@ export const SelectContainer: Styled = styled.div`
 		height: var(--height);
 		padding: 0 16px;
 
-		background: transparent;
+		background: var(--color-background);
 		border-radius: var(--border-radius);
 		outline: var(--border-width-unfocused) solid var(--color-line);
 

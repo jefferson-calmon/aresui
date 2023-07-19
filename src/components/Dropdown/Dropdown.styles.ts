@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled, { StyledComponent } from 'styled-components';
 
 import * as H from 'helpers/styled';
@@ -37,7 +38,7 @@ export const DropdownMenuContainer: Styled = styled.div`
 	width: fit-content;
 	padding: 0.4em 0;
 
-	background: #fff;
+	background: var(--color-background);
 	border: 1px solid var(--color-line);
 	border-radius: var(--border-radius);
 	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.06);
