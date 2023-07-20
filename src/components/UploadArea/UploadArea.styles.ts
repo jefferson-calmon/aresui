@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled, { StyledComponent } from 'styled-components';
+import { transparentize } from 'polished';
 
 import * as H from 'helpers/styled';
 import { globalStyle } from 'styles/global/components';
 import { Theme } from 'contexts';
-import { UploadAreaProps } from './UploadArea.types';
 import { classBase } from './UploadArea.utils';
+import { UploadAreaProps } from './UploadArea.types';
 
 interface Props {
 	UITheme: Theme;
@@ -57,7 +59,8 @@ export const UploadAreaContainer: StyledProps = styled.div`
 
 		border-radius: var(--border-radius);
 		border: 2px dashed var(--color-line-dark);
-		background: #fcfcfc;
+		background: ${(props) =>
+			transparentize(0.99, H.readableColorByBackground(props))};
 
 		.${classBase('dz-content')} {
 			display: flex;
@@ -217,7 +220,7 @@ export const FileListPreviewContainer = styled.div`
 		overflow: hidden;
 
 		background: var(--color-line);
-        border: 1px solid var(--color-line-dark);
+		border: 1px solid var(--color-line-dark);
 
 		svg,
 		img {
