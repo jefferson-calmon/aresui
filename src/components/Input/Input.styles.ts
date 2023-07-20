@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled, { StyledComponent } from 'styled-components';
+import { transparentize } from 'polished';
 
 import * as H from 'helpers/styled';
 import { Theme } from 'contexts';
@@ -60,7 +61,9 @@ export const InputContainer = styled.div`
 			opacity: 0.9;
 
 			border-radius: var(--border-radius) 0 0 var(--border-radius);
-			background: #f9f9f9;
+			/* background: #f9f9f9; */
+			background: ${(props) =>
+				transparentize(0.98, H.readableColorByBackground(props))};
 			color: ${H.readableColorByBackground};
 		}
 
@@ -120,16 +123,16 @@ export const InputContainer = styled.div`
 
 				font-size: 14px;
 				padding: 11px 14px;
-                text-align: left;
+				text-align: left;
 
 				opacity: 0.6;
 
 				color: #000;
 				cursor: pointer;
 
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 
 				&.disabled {
 					opacity: 0.3;
