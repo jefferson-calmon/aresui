@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { readableColor, transparentize } from 'polished';
 
+import * as H from 'helpers/styled';
 import { globalStyle } from 'styles/global/components';
 import { Theme } from 'contexts';
 import { classBase } from './Button.utils';
@@ -120,8 +121,9 @@ export const ButtonContainer = styled.button`
 	}
 
 	&.${classBase('variant', 'secondary')} {
-		background: ${() => transparentize(0.975, '#000')};
-		color: ${() => transparentize(0.2, '#000')};
+		background: ${(props) =>
+			transparentize(0.975, props.UITheme.colors.primary)};
+		color: ${(props) => H.readableColorByBackground(props)};
 		transition: 0.1s;
 
 		.${classBase('ripple')} {
