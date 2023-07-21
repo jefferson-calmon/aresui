@@ -6,7 +6,7 @@ import Link from 'components/Link';
 import { useAresUI } from 'contexts';
 import { mergeObjects } from 'codekit';
 
-import { DropdownMenuContainer } from './Dropdown.styles';
+import { DropdownMenuContainer, Div } from './Dropdown.styles';
 
 export function DropdownMenu(props: T.DropdownProps) {
 	// Hooks
@@ -27,11 +27,11 @@ export function DropdownMenu(props: T.DropdownProps) {
 
 	const theme = useMemo(() => {
 		return mergeObjects(aresUI.theme, props.theme);
-	}, [props.theme]);
+	}, [aresUI.theme, props.theme]);
 
 	// Functions
-	function handleClick(item: T.MenuItem) {
-		return (event: React.MouseEvent<HTMLAnchorElement>) => {
+	function handleClick(item: T.DropdownMenuItem) {
+		return (event: React.MouseEvent) => {
 			if (item.preventDefault) {
 				event.preventDefault();
 				event.stopPropagation();
@@ -49,16 +49,28 @@ export function DropdownMenu(props: T.DropdownProps) {
 			UITheme={theme}
 		>
 			{(props.items || []).map((item) => (
-				<Link
+				<DropdownMenuItem
 					key={item.id}
-					to={item.linkTo || '#'}
-					className={U.classBase('item')}
-					onClick={handleClick(item)}
-				>
-					{item.content}
-				</Link>
+					item={item}
+					onClick={handleClick}
+				/>
 			))}
 		</DropdownMenuContainer>
+	);
+}
+
+function DropdownMenuItem(props: T.DropdownMenuItemProps) {
+	// Common vars
+	const Component = props.item.linkTo ? Link : Div;
+
+	return (
+		<Component
+			className={U.classBase('item')}
+			onClick={props.onClick(props.item)}
+			to={props.item.linkTo ? '#' : undefined}
+		>
+			{props.item.content}
+		</Component>
 	);
 }
 

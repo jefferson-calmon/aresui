@@ -193,4 +193,6 @@ export const DropdownMenuContainer: Styled = styled.div`
 	}
 ` as Styled;
 
+export const Div = styled.div``;
+
 export default DropdownContainer;

@@ -6,7 +6,7 @@ import { DeepPartial, Placement, Trigger } from 'types';
 import { ChevronDown } from 'icons';
 
 export interface DropdownProps {
-	items: MenuItem[];
+	items: DropdownMenuItem[];
 
 	menuSelector?: string;
 	menuWidth?: '100%' | 'auto' | `${number}px`;
@@ -21,15 +21,20 @@ export interface DropdownProps {
 	onOpen?: () => void;
 	onClose?: () => void;
 	onToggle?: (open: boolean) => void;
-    onChange?: (item: MenuItem) => void;
+	onChange?: (item: DropdownMenuItem) => void;
 }
 
-export interface MenuItem {
+export interface DropdownMenuItem {
 	id: string;
 	content: string | JSX.Element;
 	preventDefault?: boolean;
-	onClick?: (item: MenuItem) => void;
+	onClick?: (item: DropdownMenuItem) => void;
 	linkTo?: string;
+}
+
+export interface DropdownMenuItemProps {
+	item: DropdownMenuItem;
+	onClick: (item: DropdownMenuItem) => (event: React.MouseEvent) => void;
 }
 
 export const defaultPropsDropdown: DropdownProps = {

@@ -5,7 +5,7 @@ import { mergeObjects, useBoolean } from 'codekit';
 import * as T from './Select.types';
 import * as U from './Select.utils';
 import * as C from './Select.components';
-import Dropdown, { MenuItem } from 'components/Dropdown';
+import Dropdown, { DropdownMenuItem } from 'components/Dropdown';
 import Loading from 'components/Loading';
 import { useAresUI } from 'contexts/AresUIContext';
 import { isPromise } from 'helpers/isPromise';
@@ -57,10 +57,10 @@ export function Select(props: T.SelectProps): JSX.Element {
 							&nbsp;&nbsp;Loading
 						</>
 					),
-				} as MenuItem,
+				} as DropdownMenuItem,
 			];
 
-		return options.map<MenuItem>((option) => ({
+		return options.map<DropdownMenuItem>((option) => ({
 			id: option.value,
 			content: option.label,
 			onClick: () => {
