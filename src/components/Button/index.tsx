@@ -21,7 +21,7 @@ export function Button(props: T.ButtonProps): JSX.Element {
 	// Memo vars
 	const theme = useMemo(() => {
 		return mergeObjects(aresUI.theme, props.theme);
-	}, [props.theme]);
+	}, [aresUI.theme, props.theme]);
 
 	const className = useMemo(() => {
 		const classes = [
@@ -46,7 +46,7 @@ export function Button(props: T.ButtonProps): JSX.Element {
 				primary: color,
 			},
 		};
-	}, [props.variant]);
+	}, [props.variant, theme.colors.primary]);
 
 	// Functions
 	function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
@@ -61,7 +61,7 @@ export function Button(props: T.ButtonProps): JSX.Element {
 			disabled={props.disabled || !!props.loading}
 			{...props}
 			UITheme={theme}
-            loading={props.loading}
+            loading={props.loading ? 'true' : undefined}
 			className={className}
 			onClick={handleClick}
 		>

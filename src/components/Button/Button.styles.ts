@@ -8,7 +8,7 @@ import { classBase } from './Button.utils';
 
 interface Props {
 	UITheme: Theme;
-	loading: boolean;
+	loading?: string;
 }
 
 export const ButtonContainer = styled.button`
