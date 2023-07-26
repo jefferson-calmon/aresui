@@ -47,9 +47,9 @@ export function Checkbox(props: T.CheckboxProps): JSX.Element {
 
 	// Functions
 	function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-		if (props.disabled || typeof props.checked !== 'undefined') return;
-
 		props.onChange?.(event.target.checked, event);
+
+		if (props.disabled || typeof props.checked !== 'undefined') return;
 
 		setChecked(event.target.checked);
 	}
