@@ -20,7 +20,7 @@ export function Checkbox(props: T.CheckboxProps): JSX.Element {
 	// Memo Vars
 	const theme = useMemo(() => {
 		return mergeObjects(aresUI.theme, props.theme);
-	}, [props.theme]);
+	}, [aresUI.theme, props.theme]);
 
 	const className = useMemo(() => {
 		const classes = [
@@ -34,7 +34,7 @@ export function Checkbox(props: T.CheckboxProps): JSX.Element {
 
 	const checkboxId = useMemo(() => {
 		return props.label?.slugify();
-	}, []);
+	}, [props.label]);
 
 	// Effects
 	useEffect(() => {
@@ -47,7 +47,7 @@ export function Checkbox(props: T.CheckboxProps): JSX.Element {
 
 	// Functions
 	function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-		if (props.disabled) return;
+		if (props.disabled || typeof props.checked !== 'undefined') return;
 
 		props.onChange?.(event.target.checked, event);
 
