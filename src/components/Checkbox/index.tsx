@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { mergeObjects } from 'codekit';
+import { mergeObjects, uuid } from 'codekit';
 
 import * as T from './Checkbox.types';
 import * as U from './Checkbox.utils';
@@ -33,8 +33,8 @@ export function Checkbox(props: T.CheckboxProps): JSX.Element {
 	}, [props, checked]);
 
 	const checkboxId = useMemo(() => {
-		return props.label?.slugify();
-	}, [props.label]);
+		return 'checkbox_id:' + uuid();
+	}, []);
 
 	// Effects
 	useEffect(() => {
@@ -83,7 +83,13 @@ export function Checkbox(props: T.CheckboxProps): JSX.Element {
 				</div>
 
 				{props.label && (
-					<span className={U.classBase('label')}>{props.label}</span>
+					<span className={U.classBase('label')}>
+						{typeof props.label === 'string' ? (
+							props.label
+						) : (
+							<props.label />
+						)}
+					</span>
 				)}
 			</label>
 		</CheckboxContainer>
