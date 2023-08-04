@@ -71,8 +71,13 @@ function DropdownMenuItem(props: T.DropdownMenuItemProps) {
 
 	return (
 		<>
-			{isLink && <Link {...baseProps} to={props.item.linkTo} />}
-			{!isLink && <Div {...baseProps} />}
+			{isLink && (
+				<Link {...baseProps} to={props.item.linkTo}>
+					{props.item.content}
+				</Link>
+			)}
+
+			{!isLink && <Div {...baseProps}>{props.item.content}</Div>}
 		</>
 	);
 }
