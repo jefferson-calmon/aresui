@@ -2,7 +2,10 @@ import { baseClass } from 'helpers/baseClass';
 
 export const classBase = baseClass('Button');
 
-export function handleRippleEffect(event: React.MouseEvent<HTMLButtonElement>) {
+export function handleRippleEffect(
+	event: React.MouseEvent<HTMLButtonElement>,
+	parentUniqClass: string
+) {
 	const button = event.currentTarget;
 	const buttonRect = button.getBoundingClientRect();
 
@@ -18,7 +21,7 @@ export function handleRippleEffect(event: React.MouseEvent<HTMLButtonElement>) {
 	ripple.style.width = rippleSize + 'px';
 	ripple.style.height = rippleSize + 'px';
 
-	const parentClass = '.' + classBase();
+	const parentClass = '.' + parentUniqClass;
 
 	document.querySelector(parentClass)?.appendChild(ripple);
 

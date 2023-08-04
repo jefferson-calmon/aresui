@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { config, mergeObjects } from 'codekit';
+import { config, mergeObjects, randomString } from 'codekit';
 import { readableColor } from 'polished';
 
 import * as T from './Button.types';
@@ -23,8 +23,16 @@ export function Button(props: T.ButtonProps): JSX.Element {
 		return mergeObjects(aresUI.theme, props.theme);
 	}, [aresUI.theme, props.theme]);
 
+	const identifier = useMemo(() => {
+		return randomString(16, {
+			useNumbers: false,
+			useSpecialCharacters: false,
+		});
+	}, []);
+
 	const className = useMemo(() => {
 		const classes = [
+			identifier,
 			U.classBase(),
 			U.classBase('variant', props.variant),
 			U.classBase('size', props.size),
@@ -33,7 +41,7 @@ export function Button(props: T.ButtonProps): JSX.Element {
 		];
 
 		return buildClassName(...classes);
-	}, [props]);
+	}, [identifier, props.className, props.loading, props.size, props.variant]);
 
 	const loadingTheme = useMemo(() => {
 		let color = readableColor(theme.colors.primary);
@@ -52,7 +60,7 @@ export function Button(props: T.ButtonProps): JSX.Element {
 	function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
 		props.onClick?.(event);
 
-		if (props.rippleEffect) U.handleRippleEffect(event);
+		if (props.rippleEffect) U.handleRippleEffect(event, identifier);
 	}
 
 	return (
@@ -61,7 +69,7 @@ export function Button(props: T.ButtonProps): JSX.Element {
 			disabled={props.disabled || !!props.loading}
 			{...props}
 			UITheme={theme}
-            loading={props.loading ? 'true' : undefined}
+			loading={props.loading ? 'true' : undefined}
 			className={className}
 			onClick={handleClick}
 		>
