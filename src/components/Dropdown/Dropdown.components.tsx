@@ -61,16 +61,19 @@ export function DropdownMenu(props: T.DropdownProps) {
 
 function DropdownMenuItem(props: T.DropdownMenuItemProps) {
 	// Common vars
-	const Component = props.item.linkTo ? Link : Div;
+	const baseProps = {
+		className: U.classBase('item'),
+		onClick: props.onClick(props.item),
+	};
+
+	// Memo vars
+	const isLink = useMemo(() => !!props.item.linkTo, [props.item.linkTo]);
 
 	return (
-		<Component
-			className={U.classBase('item')}
-			onClick={props.onClick(props.item)}
-			to={props.item.linkTo ? '#' : undefined}
-		>
-			{props.item.content}
-		</Component>
+		<>
+			{isLink && <Link {...baseProps} to={props.item.linkTo} />}
+			{!isLink && <Div {...baseProps} />}
+		</>
 	);
 }
 
