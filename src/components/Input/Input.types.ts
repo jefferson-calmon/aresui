@@ -20,6 +20,9 @@ export interface InputProps extends InputHTMLProps {
 	autoComplete?: InputAutoComplete;
 	width: 'auto' | '100%' | `${number}px`;
 
+	value?: InputHTMLProps['value'];
+	defaultValue?: InputHTMLProps['defaultValue'];
+
 	theme: DeepPartial<Theme>;
 	pickerOptions: InputPickerOption[];
 	addon?: () => JSX.Element;
@@ -30,11 +33,15 @@ export interface InputProps extends InputHTMLProps {
 	errorPrefix: string;
 	disableValidations?: boolean;
 	customErrors: Partial<typeof validationErrors>;
+	money?: {
+		trigger?: 'focus' | 'render';
+		args?: MoneyArgs;
+	};
 
 	maskProps?: Omit<ReactInputMaskProps, 'mask'>;
-	moneyArgs?: MoneyArgs;
 	loadingProps?: LoadingProps;
 
+	onChangeValue?: (value: string) => void;
 	onChange?: React.ChangeEventHandler<HTMLInputElement>;
 	onFocus?: React.FocusEventHandler<HTMLInputElement>;
 	onKeyUp?: React.KeyboardEventHandler<HTMLInputElement>;
@@ -114,11 +121,14 @@ export type InputError = any;
 
 export const defaultPropsInput: InputProps = {
 	name: 'input',
-	label: 'Input',
+	label: '',
 	role: 'default',
-	width: '280px',
+	width: '100%',
 	errorPrefix: '',
 	theme: {},
 	customErrors: {},
 	pickerOptions: [],
+	money: {
+		trigger: 'focus',
+	},
 };

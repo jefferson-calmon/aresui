@@ -18,5 +18,9 @@ type Story = StoryObj<typeof Input>;
 export const Default: Story = {
 	args: {
 		...defaultPropsInput,
+		name: 'input',
+		label: 'Input',
+		role: 'default',
+		width: '280px',
 	},
 };

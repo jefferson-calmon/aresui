@@ -115,7 +115,7 @@ export function getInputAttributes(props: InputProps) {
 }
 
 export function getInputValidator(role: InputRole) {
-	let validator = (value: string) => true;
+	let validator = (value: string) => !!value;
 
 	const urlRegex = new RegExp('^(https?|ftp)://[^s/$.?#].[^s]*$');
 
@@ -149,7 +149,7 @@ export function filterProps(props: InputProps) {
 	delete newProps.errorPrefix;
 	delete newProps.disableValidations;
 	delete newProps.maskProps;
-	delete newProps.moneyArgs;
+	delete newProps.money;
 	delete newProps.loadingProps;
 
 	return newProps;

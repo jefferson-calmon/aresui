@@ -67,7 +67,7 @@ export function inputMask(
 	input.setSelectionRange(cursor, cursor);
 }
 
-export function moneyMask(
+export function maskInputMoneyByEvent(
 	event:
 		| React.KeyboardEvent<HTMLInputElement>
 		| React.FocusEvent<HTMLInputElement>,
@@ -80,9 +80,26 @@ export function moneyMask(
 	// --
 
 	const input = event.target as Input;
-    const { setMask } = MoneyMask(args);
+	const { setMask } = MoneyMask(args);
 
-    setMask(input);
+	setMask(input);
+}
+
+export function maskInputMoneyByElement(
+	element: HTMLInputElement,
+	args: MoneyArgs = {}
+) {
+	// Verify if key pressed is a number
+	// const reg = new RegExp('^[0-9]$'),
+	//   isNumber = reg.test(event.key);
+	// if (!isNumber) return;
+	// --
+
+	const input = element as Input;
+
+	const { setMask } = MoneyMask(args);
+
+	setMask(input);
 }
 
 export const MoneyMask = (options: MoneyArgs = {}): MoneyMaskResponse => {

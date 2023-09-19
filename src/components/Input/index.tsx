@@ -1,7 +1,7 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 
 import InputMask from 'react-input-mask';
-import { debounce, mergeObjects, useBoolean } from 'codekit';
+import { debounce, mergeObjects, randomString, useBoolean } from 'codekit';
 
 import * as T from './Input.types';
 import * as U from './Input.utils';
@@ -11,6 +11,7 @@ import { useAresUI } from 'contexts';
 import { useError } from 'hooks/useError';
 import { buildClassName } from 'helpers/buildClassName';
 import { searchInText } from 'helpers/searchInText';
+import { useControlledState } from 'hooks/useControlledState';
 
 import { InputContainer } from './Input.styles';
 
@@ -22,8 +23,11 @@ export function Input(props: T.InputProps): JSX.Element {
 	// Refs
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
-	// States
-	const [value, setValue] = useState<string>(props.value?.toString() || '');
+	// Controlled states
+	const [value, setValue] = useControlledState(
+		props.value || '',
+		props.defaultValue || ''
+	);
 
 	// Boolean hooks
 	const isFocused = useBoolean();
@@ -41,9 +45,11 @@ export function Input(props: T.InputProps): JSX.Element {
 		return U.getInputAttributes(props);
 	}, [props]);
 
+	const inputId = useMemo(() => randomString(16), []);
+
 	const pickerOptions = useMemo(() => {
 		return props.pickerOptions.filter((option) =>
-			searchInText(value, option.value)
+			searchInText(String(value), option.value)
 		);
 	}, [value, props.pickerOptions]);
 
@@ -59,11 +65,44 @@ export function Input(props: T.InputProps): JSX.Element {
 		return buildClassName(...classes);
 	}, [props, isValid, isFocused.value]);
 
-	// Functions
-	function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-		props.onChange?.(event);
+	// Effects
+	useEffect(() => {
+		const isMoney = props.role === 'money';
+		const isRenderTrigger = props.money?.trigger === 'render';
+		const args = props.money?.args;
 
-		setValue(event.target.value);
+		const element = document.querySelector(`input#${inputId}`);
+		const input = element as HTMLInputElement;
+
+		if (!isMoney || !isRenderTrigger || !input) return;
+
+		U.maskInputMoneyByElement(input, args);
+	}, [inputId, props.money, props.role, value]);
+
+	// Functions
+	function handleChange(type: 'change' | 'input', isValid?: boolean) {
+		if (!isValid && typeof isValid !== 'undefined') return () => null;
+
+		const change = (event: React.ChangeEvent<HTMLInputElement>) => {
+			props.onChange?.(event);
+
+			setValue(event.target.value);
+			props.onChangeValue?.(event.target.value);
+		};
+
+		const input = (event: React.FormEvent<HTMLInputElement>) => {
+			props.onInput?.(event);
+
+			const input = event.target as HTMLInputElement;
+
+			setValue(input.value);
+			props.onChangeValue?.(input.value);
+		};
+
+		if (type === 'input') return input;
+		if (type === 'change') return change;
+
+		return () => null;
 	}
 
 	function handleKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -74,14 +113,16 @@ export function Input(props: T.InputProps): JSX.Element {
 		props.onFocus?.(event);
 		isFocused.setTrue();
 
-		if (props.role === 'money') U.moneyMask(event, props.moneyArgs);
+		if (props.role === 'money' && props.money?.trigger === 'focus') {
+			U.maskInputMoneyByEvent(event, props.money?.args);
+		}
 	}
 
 	function handleBlur(event: React.FocusEvent<HTMLInputElement>) {
 		props.onBlur?.(event);
 		debounce(isFocused.setFalse, 50);
 
-		value && handleValidation(value);
+		value && handleValidation(String(value));
 	}
 
 	function handleValidation(value: string) {
@@ -105,7 +146,11 @@ export function Input(props: T.InputProps): JSX.Element {
 	}
 
 	return (
-		<InputContainer className={className} UITheme={theme} width={props.width}>
+		<InputContainer
+			className={className}
+			UITheme={theme}
+			width={props.width}
+		>
 			{props.label && <label>{props.label}</label>}
 
 			<div className={U.classBase('input-container')}>
@@ -122,6 +167,7 @@ export function Input(props: T.InputProps): JSX.Element {
 				)}
 
 				<InputMask
+					id={inputId}
 					inputRef={inputRef}
 					alwaysShowMask={false}
 					maskChar={null} // If you want don't show the characters, just set `null`.;
@@ -138,9 +184,10 @@ export function Input(props: T.InputProps): JSX.Element {
 					autoComplete={inputAttr.autoComplete}
 					placeholder={inputAttr.placeholder}
 					name={inputAttr.name}
-					// value={value}
+					// value={value as string}
 					// --
-					onChange={handleChange}
+					onChange={handleChange('change', props.role !== 'money')}
+					onInput={handleChange('input', props.role === 'money')}
 					onKeyUp={handleKeyUp}
 					onFocus={handleFocus}
 					onBlur={handleBlur}
