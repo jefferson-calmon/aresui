@@ -40,7 +40,7 @@ export function useError() {
 			errors.push(errorObject);
 
 			setLastError(errorObject);
-			return errors.uniqByKey('id');
+			return errors.uniqBy('id');
 		});
 	}
 
@@ -74,6 +74,10 @@ export function useError() {
 		});
 	}
 
+	function build(error: string) {
+		return createErrorFromString(error);
+	}
+
 	return {
 		exists,
 		errors,
@@ -83,6 +87,7 @@ export function useError() {
 		clear,
 		add,
 		get,
+		build,
 		remove,
 		update,
 	};

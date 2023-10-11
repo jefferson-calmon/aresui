@@ -25,6 +25,7 @@ export interface InputProps extends InputHTMLProps {
 
 	theme: DeepPartial<Theme>;
 	pickerOptions: InputPickerOption[];
+	error?: string;
 	addon?: () => JSX.Element;
 
 	loading?: boolean;

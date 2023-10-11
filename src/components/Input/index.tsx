@@ -1,12 +1,7 @@
 import React, { useMemo, useRef, useEffect } from 'react';
 
 import InputMask from 'react-input-mask';
-import {
-	debounce,
-	mergeObjects,
-	randomString,
-	useBoolean
-} from 'codekit';
+import { debounce, mergeObjects, randomString, useBoolean } from 'codekit';
 
 import * as T from './Input.types';
 import * as U from './Input.utils';
@@ -57,6 +52,12 @@ export function Input(props: T.InputProps): JSX.Element {
 			searchInText(String(value), option.value)
 		);
 	}, [value, props.pickerOptions]);
+
+	const errors = useMemo(() => {
+		const externalError = props.error ? error.build(props.error) : null;
+
+		return [...error.errors, externalError].compact();
+	}, [error, props.error]);
 
 	const className = useMemo(() => {
 		const classes = [
@@ -209,7 +210,7 @@ export function Input(props: T.InputProps): JSX.Element {
 				)}
 			</div>
 
-			<C.Errors errors={error.errors} errorPrefix={props.errorPrefix} />
+			<C.Errors errors={errors} errorPrefix={props.errorPrefix} />
 
 			{props.children}
 		</InputContainer>
