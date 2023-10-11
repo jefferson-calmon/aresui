@@ -30,7 +30,7 @@ export function Input(props: T.InputProps): JSX.Element {
 
 	// Controlled states
 	const [value, setValue] = useControlledState(
-		props.value || '',
+		props.value,
 		props.defaultValue || ''
 	);
 
@@ -136,7 +136,10 @@ export function Input(props: T.InputProps): JSX.Element {
 		const validator = U.getInputValidator(props.role);
 		const isValid = validator(value);
 
-		const errors = mergeObjects(U.validationErrors, props.customErrors);
+		const errors = mergeObjects(
+			U.validationErrors,
+			props.customErrors ?? {}
+		);
 		const errorMessage = errors[props.role];
 
 		error.remove(errorMessage.slugify());
