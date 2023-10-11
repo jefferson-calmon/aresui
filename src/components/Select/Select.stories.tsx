@@ -1,7 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Select from './index';
-import { defaultPropsSelect } from './Select.types';
+import { defaultPropsSelect, SelectProps } from './Select.types';
+
+const storiesDefaultProps: Partial<SelectProps> = {
+	options: [
+		{
+			label: 'Example item 1',
+			value: 'example1',
+		},
+		{
+			label: 'Example item 2',
+			value: 'example2',
+		},
+	],
+	defaultOptionByValue: 'example1',
+	label: 'Example label',
+	width: '280px',
+};
 
 const meta: Meta<typeof Select> = {
 	title: 'Select',
@@ -9,6 +25,7 @@ const meta: Meta<typeof Select> = {
 	tags: ['autodocs'],
 	args: {
 		...defaultPropsSelect,
+		...storiesDefaultProps,
 	},
 };
 
@@ -18,5 +35,6 @@ type Story = StoryObj<typeof Select>;
 export const Default: Story = {
 	args: {
 		...defaultPropsSelect,
+		...storiesDefaultProps,
 	},
 };

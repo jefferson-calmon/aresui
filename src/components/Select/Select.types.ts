@@ -32,25 +32,9 @@ export interface SelectOption {
 	disabled?: boolean;
 }
 
-export const defaultPropsSelect: Required<SelectProps> = {
+export const defaultPropsSelect: SelectProps = {
 	name: '',
-	options: [
-		{
-			label: 'Example item 1',
-			value: 'example1',
-		},
-		{
-			label: 'Example item 2',
-			value: 'example2',
-		},
-	],
-	defaultOptionByValue: 'example1',
-	label: 'Example label',
-	onChange: () => ({}),
+	options: [],
 	placeholder: 'Selecione uma opção',
-	selectProps: {},
-	wrapperProps: {},
-	theme: {},
-	width: '280px',
-	disabled: false,
+	width: '100%',
 };

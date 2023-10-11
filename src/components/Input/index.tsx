@@ -1,14 +1,19 @@
 import React, { useMemo, useRef, useEffect } from 'react';
 
 import InputMask from 'react-input-mask';
-import { debounce, mergeObjects, randomString, useBoolean } from 'codekit';
+import {
+	debounce,
+	mergeObjects,
+	randomString,
+	useBoolean,
+	useError,
+} from 'codekit';
 
 import * as T from './Input.types';
 import * as U from './Input.utils';
 import * as C from './Input.components';
 import Loading from 'components/Loading';
 import { useAresUI } from 'contexts';
-import { useError } from 'hooks/useError';
 import { buildClassName } from 'helpers/buildClassName';
 import { searchInText } from 'helpers/searchInText';
 import { useControlledState } from 'hooks/useControlledState';
@@ -136,7 +141,7 @@ export function Input(props: T.InputProps): JSX.Element {
 
 		error.remove(errorMessage.slugify());
 
-		if (!isValid) error.add(errorMessage);
+		if (!isValid) error.set(errorMessage);
 	}
 
 	function handleSelectPickerOption(option: T.InputPickerOption) {

@@ -1,7 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Input from './index';
-import { defaultPropsInput } from './Input.types';
+import { defaultPropsInput, InputProps } from './Input.types';
+
+const storiesDefaultProps: Partial<InputProps> = {
+	name: 'input',
+	label: 'Input',
+	role: 'default',
+	width: '280px',
+};
 
 const meta: Meta<typeof Input> = {
 	title: 'Input',
@@ -9,6 +16,7 @@ const meta: Meta<typeof Input> = {
 	tags: ['autodocs'],
 	args: {
 		...defaultPropsInput,
+		...storiesDefaultProps,
 	},
 };
 
@@ -18,9 +26,6 @@ type Story = StoryObj<typeof Input>;
 export const Default: Story = {
 	args: {
 		...defaultPropsInput,
-		name: 'input',
-		label: 'Input',
-		role: 'default',
-		width: '280px',
+		...storiesDefaultProps,
 	},
 };
