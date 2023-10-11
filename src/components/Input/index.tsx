@@ -5,18 +5,18 @@ import {
 	debounce,
 	mergeObjects,
 	randomString,
-	useBoolean,
-	useError,
+	useBoolean
 } from 'codekit';
 
 import * as T from './Input.types';
 import * as U from './Input.utils';
 import * as C from './Input.components';
 import Loading from 'components/Loading';
+import { useControlledState } from 'hooks/useControlledState';
+import { useError } from 'hooks/useError';
 import { useAresUI } from 'contexts';
 import { buildClassName } from 'helpers/buildClassName';
 import { searchInText } from 'helpers/searchInText';
-import { useControlledState } from 'hooks/useControlledState';
 
 import { InputContainer } from './Input.styles';
 
@@ -144,7 +144,7 @@ export function Input(props: T.InputProps): JSX.Element {
 
 		error.remove(errorMessage.slugify());
 
-		if (!isValid) error.set(errorMessage);
+		if (!isValid) error.add(errorMessage);
 	}
 
 	function handleSelectPickerOption(option: T.InputPickerOption) {
