@@ -12,6 +12,7 @@ export interface TextAreaProps extends TextAreaHTMLProps {
 	width: 'auto' | '100%' | `${number}px`;
 
 	disabled?: boolean;
+	required?: boolean;
 	errorPrefix?: string;
 }
 

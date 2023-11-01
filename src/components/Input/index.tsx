@@ -31,15 +31,26 @@ export function Input(props: T.InputProps): JSX.Element {
 
 	// Boolean hooks
 	const isFocused = useBoolean();
+	const isAlreadyFocused = useBoolean();
 
 	// Memo vars
 	const theme = useMemo(() => {
 		return mergeObjects(aresUI.theme, props.theme);
 	}, [aresUI.theme, props.theme]);
 
+	const errors = useMemo(() => {
+		const externalError = props.error ? error.build(props.error) : null;
+		const renderExternalError = isAlreadyFocused.value && value;
+
+		return [
+			...error.errors,
+			!!renderExternalError && externalError,
+		].compact();
+	}, [props.error, error, isAlreadyFocused.value, value]);
+
 	const isValid = useMemo(() => {
-		return error.errors.length === 0;
-	}, [error.errors]);
+		return error.errors.length === 0 && errors.length === 0;
+	}, [error.errors.length, errors.length]);
 
 	const inputAttr = useMemo(() => {
 		return U.getInputAttributes(props);
@@ -52,12 +63,6 @@ export function Input(props: T.InputProps): JSX.Element {
 			searchInText(String(value), option.value)
 		);
 	}, [value, props.pickerOptions]);
-
-	const errors = useMemo(() => {
-		const externalError = props.error ? error.build(props.error) : null;
-
-		return [...error.errors, externalError].compact();
-	}, [error, props.error]);
 
 	const className = useMemo(() => {
 		const classes = [
@@ -118,6 +123,7 @@ export function Input(props: T.InputProps): JSX.Element {
 	function handleFocus(event: React.FocusEvent<HTMLInputElement>) {
 		props.onFocus?.(event);
 		isFocused.setTrue();
+		isAlreadyFocused.setTrue();
 
 		if (props.role === 'money' && props.money?.trigger === 'focus') {
 			U.maskInputMoneyByEvent(event, props.money?.args);
