@@ -20,10 +20,10 @@ export const ButtonContainer = styled.button`
 	align-items: center;
 	justify-content: center;
 
-	min-width: 12rem;
+	min-width: ${H.size(12)};
 	height: var(--base-height);
 
-	font-size: 1.5rem;
+	font-size: ${H.size(1.5)};
 	font-weight: 500;
 
 	border-radius: var(--border-radius);
@@ -37,7 +37,7 @@ export const ButtonContainer = styled.button`
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 1.2rem;
+		gap: ${H.size(1.2)};
 
 		pointer-events: none;
 
@@ -154,13 +154,13 @@ export const ButtonContainer = styled.button`
 
 	/* Sizes */
 	&.${classBase('size', 'large')} {
-		padding: 0 2.8rem;
+		padding: 0 ${H.size(2.8)};
 	}
 	&.${classBase('size', 'normal')} {
-		padding: 0 2rem;
+		padding: 0 ${H.size(2.0)};
 	}
 	&.${classBase('size', 'small')} {
-		padding: 0 1.6rem;
+		padding: 0 ${H.size(1.6)};
 	}
 
 	/* Button states */

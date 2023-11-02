@@ -19,6 +19,7 @@ export interface Theme {
 
 		inputPlaceholder: string;
 	};
+    size: number;
 	borderRadius: string;
 	borderWidthUnfocused: string;
 	borderWidthFocused: string;
@@ -47,6 +48,7 @@ const defaultTheme: Theme = {
 		background: '#fff',
 		error: '#e83f5b',
 	},
+    size: 10,
 	borderRadius: '6px',
 	borderWidthUnfocused: '1px',
 	borderWidthFocused: '1px',

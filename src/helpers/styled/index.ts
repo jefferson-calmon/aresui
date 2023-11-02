@@ -20,3 +20,7 @@ export function darkenLineColorBy5Percent(props: Props) {
 export function transparentizePrimaryColorBy97Percent(props: Props) {
 	return transparentize(0.97, props.UITheme.colors.primary);
 }
+
+export function size(sizeInRem: number) {
+	return (props: Props) => props.UITheme.size * sizeInRem + 'px';
+}
