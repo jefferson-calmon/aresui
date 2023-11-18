@@ -5,6 +5,8 @@ import { Theme } from 'contexts';
 import { DeepPartial, Placement, Trigger } from 'types';
 import { ChevronDown } from 'icons';
 
+export type AutoCloseListeners = 'scroll' | 'resize';
+
 export interface DropdownProps {
 	items: DropdownMenuItem[];
 
@@ -12,6 +14,8 @@ export interface DropdownProps {
 	menuWidth?: '100%' | 'auto' | `${number}px`;
 	placement: Placement;
 	trigger: Trigger;
+
+	autoCloseListeners: AutoCloseListeners[];
 
 	theme: DeepPartial<Theme>;
 
@@ -43,6 +47,7 @@ export const defaultPropsDropdown: DropdownProps = {
 			Dropdown <ChevronDown />
 		</Button>
 	),
+	autoCloseListeners: ['resize', 'scroll'],
 	items: [
 		{
 			id: 'item1',

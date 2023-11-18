@@ -20,7 +20,7 @@ export const ButtonContainer = styled.button`
 	align-items: center;
 	justify-content: center;
 
-	min-width: ${H.size(12)};
+	/* min-width: ${H.size(12)}; */
 	height: var(--base-height);
 
 	font-size: ${H.size(1.5)};

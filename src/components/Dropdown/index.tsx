@@ -14,8 +14,8 @@ export function Dropdown(props: T.DropdownProps) {
 	const isOpen = useBoolean(false);
 
 	// Event listeners
-	useEventListener('scroll', handleClose);
-	useEventListener('resize', handleClose);
+	useEventListener('scroll', handleClose('scroll'));
+	useEventListener('resize', handleClose('resize'));
 
 	// Common vars
 	let timeout: NodeJS.Timeout;
@@ -91,13 +91,26 @@ export function Dropdown(props: T.DropdownProps) {
 		isOpen.setValue(newValue);
 	}
 
-	function handleClose() {
-		const newValue = false;
+	function handleClose(closeTrigger?: T.AutoCloseListeners) {
+		const close = () => {
+			const newValue = false;
 
-		props.onToggle?.(newValue);
-		props.onClose?.();
+			props.onToggle?.(newValue);
+			props.onClose?.();
 
-		isOpen.setValue(newValue);
+			isOpen.setValue(newValue);
+		};
+
+		// if (typeof closeTrigger === 'undefined') return close();
+		if (!closeTrigger) close();
+		if (
+			!props.autoCloseListeners.includes(
+				closeTrigger as T.AutoCloseListeners
+			)
+		)
+			return () => ({});
+
+		return close;
 	}
 
 	// Components

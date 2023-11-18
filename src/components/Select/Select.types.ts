@@ -1,3 +1,4 @@
+import { DropdownProps } from 'components/Dropdown';
 import { Theme } from 'contexts';
 import { DeepPartial, Width } from 'types';
 
@@ -12,6 +13,7 @@ export interface SelectProps {
 
 	selectProps?: Omit<React.HTMLAttributes<HTMLSelectElement>, 'onChange'>;
 	wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+	dropdownProps?: Partial<DropdownProps>;
 
 	theme?: DeepPartial<Theme>;
 	width: Width;

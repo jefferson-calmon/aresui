@@ -109,6 +109,7 @@ export function Select(props: T.SelectProps): JSX.Element {
 				items={dropdownItems}
 				menuWidth="100%"
 				onToggle={isActiveSelectOptions.setValue}
+				{...(props.dropdownProps ?? {})}
 			>
 				<div className={U.classBase('select')} {...props.wrapperProps}>
 					<div className={U.classBase('current')}>
