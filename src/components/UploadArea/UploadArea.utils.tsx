@@ -10,7 +10,7 @@ export const classBase = baseClass('UploadArea');
 export const defaultUploadText = `Arraste e solte seus arquivos aqui ou clique para
 ${'selecionar-los'}.`;
 
-export function getPreviewContentByFile(file: File) {
+export function getPreviewContentByFile(file: File | Blob) {
 	if (file.type.includes('image')) {
 		return (
 			<Image

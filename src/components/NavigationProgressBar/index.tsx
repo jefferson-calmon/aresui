@@ -10,7 +10,7 @@ import * as U from './NavigationProgressBar.utils';
 
 import { style } from './NavigationProgressBar.styles';
 
-function NavigationProgressBar(params: T.NavigationProgressBarProps) {
+export function NavigationProgressBar(params: T.NavigationProgressBarProps) {
 	// Refs
 	const timer = useRef<NodeJS.Timeout>();
 

@@ -8,13 +8,13 @@ import {
 } from './UploadArea.styles';
 
 interface FilePreviewProps {
-	file: File;
+	file: File | Blob;
 	onDelete: () => void;
 }
 
 interface FileListPreviewProps {
-	files: File[];
-	onDelete: (file: File) => void;
+	files: (File | Blob)[];
+	onDelete: (file: File | Blob) => void;
 }
 
 export function FilePreview(props: FilePreviewProps) {

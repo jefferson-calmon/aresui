@@ -2,12 +2,13 @@ import { DropzoneOptions } from 'react-dropzone';
 
 import { ComponentProps, DivHTMLAttributes, Width } from 'types';
 
-export interface UploadAreaProps extends ComponentProps<{}> {
+export interface UploadAreaProps extends ComponentProps<object> {
 	label?: string;
 
 	width: Width;
+	multiple: boolean;
+	files?: (File | Blob)[];
 	preview?: boolean;
-	multipleFiles: boolean;
 
 	uploadIcon?: JSX.Element;
 	uploadText?: JSX.Element;
@@ -16,6 +17,7 @@ export interface UploadAreaProps extends ComponentProps<{}> {
 	containerProps: DivHTMLAttributes;
 
 	onUpload?: (files: File[]) => void;
+	onChange?: (files: (File | Blob)[]) => void;
 }
 
 export interface FilePreviewProps {
@@ -29,5 +31,5 @@ export const defaultPropsUploadArea: UploadAreaProps = {
 	theme: {},
 	dropzoneOptions: {},
 	containerProps: {},
-	multipleFiles: true,
+	multiple: true,
 };

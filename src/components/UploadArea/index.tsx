@@ -7,6 +7,7 @@ import * as U from './UploadArea.utils';
 import * as C from './UploadArea.components';
 import Dropzone from 'components/Dropzone';
 import { useAresUI } from 'contexts';
+import { useControlledState } from 'hooks/useControlledState';
 
 import { UploadAreaContainer } from './UploadArea.styles';
 
@@ -18,16 +19,21 @@ export function UploadArea(props: T.UploadAreaProps) {
 
 	// States
 	const [isDragging, setIsDragging] = useState<boolean>(false);
-	const [files, setFiles] = useState<File[]>([]);
+
+	// Controlled states
+	const [files, setFiles] = useControlledState(
+		props.files,
+		[] as (File | Blob)[]
+	);
 
 	// Memo vars
 	const theme = useMemo(() => {
 		return mergeObjects(aresUI.theme, props.theme);
-	}, [props.theme]);
+	}, [aresUI.theme, props.theme]);
 
 	const className = useMemo(() => {
 		const previewMultiple =
-			props.preview && files.length > 0 && props.multipleFiles;
+			props.preview && files && files.length > 0 && props.multiple;
 
 		const classes = [
 			U.classBase(),
@@ -40,20 +46,34 @@ export function UploadArea(props: T.UploadAreaProps) {
 	}, [props, isDragging, files]);
 
 	const showDropzoneContent = useMemo(() => {
-		if (props.multipleFiles) return true;
+		if (props.multiple) return true;
 
-		return !props.preview || files.length === 0;
-	}, []);
+		return !props.preview || files?.length === 0;
+	}, [files?.length, props.multiple, props.preview]);
 
 	// Functions
 	function handleUpload(files: File[]) {
-		setFiles((prev) => [...prev, ...files]);
+        props.onUpload?.(files);
 
-		props.onUpload?.(files);
+		setFiles((prev) => {
+			const newPrev = prev ?? [];
+			const newFiles = [...newPrev, ...files];
+
+			props.onChange?.(newFiles);
+
+			return [...newPrev, ...files];
+		});
 	}
 
-	function handleDelete(file: File) {
-		setFiles((files) => files.filter((f) => f.name !== file.name));
+	function handleDelete(file: File | Blob) {
+		setFiles((prev) => {
+			const newPrev = prev ?? [];
+			const newFiles = newPrev.filter((f) => f.name !== file.name);
+
+			props.onChange?.(newFiles);
+
+			return newFiles;
+		});
 	}
 
 	return (
@@ -70,7 +90,7 @@ export function UploadArea(props: T.UploadAreaProps) {
 				onUpload={handleUpload}
 				onChangeDragActive={setIsDragging}
 				options={{
-					disabled: !props.multipleFiles && files.length > 0,
+					disabled: !!(!props.multiple && files && files.length > 0),
 					...props.dropzoneOptions,
 				}}
 			>
@@ -88,15 +108,18 @@ export function UploadArea(props: T.UploadAreaProps) {
 
 				{isDragging && <div className={U.classBase('overlay')} />}
 
-				{props.preview && files.length > 0 && !props.multipleFiles && (
-					<C.FilePreview
-						file={files.last()}
-						onDelete={() => handleDelete(files.last())}
-					/>
-				)}
+				{props.preview &&
+					files &&
+					files.length > 0 &&
+					!props.multiple && (
+						<C.FilePreview
+							file={files.last()}
+							onDelete={() => handleDelete(files.last())}
+						/>
+					)}
 			</Dropzone>
 
-			{props.preview && files.length > 0 && props.multipleFiles && (
+			{props.preview && files && files.length > 0 && props.multiple && (
 				<C.FileListPreview files={files} onDelete={handleDelete} />
 			)}
 		</UploadAreaContainer>
