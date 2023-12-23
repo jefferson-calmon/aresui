@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useEffect } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 
 import InputMask from 'react-input-mask';
 import { debounce, mergeObjects, randomString, useBoolean } from 'codekit';
@@ -22,6 +22,7 @@ export function Input(props: T.InputProps): JSX.Element {
 
 	// Refs
 	const inputRef = useRef<HTMLInputElement | null>(null);
+	const renderedMoneyInput = useRef(false);
 
 	// Controlled states
 	const [value, setValue] = useControlledState(
@@ -85,10 +86,18 @@ export function Input(props: T.InputProps): JSX.Element {
 		const element = document.querySelector(`input#${inputId}`);
 		const input = element as HTMLInputElement;
 
-		if (!isMoney || !isRenderTrigger || !input) return;
+		if (
+			!isMoney ||
+			!isRenderTrigger ||
+			!input ||
+			renderedMoneyInput.current
+		)
+			return;
 
 		U.maskInputMoneyByElement(input, args);
-	}, [inputId, props.money, props.role, value]);
+        input.blur();
+		renderedMoneyInput.current = true;
+	}, [inputId, props.money?.args, props.money?.trigger, props.role]);
 
 	// Functions
 	function handleChange(type: 'change' | 'input', isValid?: boolean) {
