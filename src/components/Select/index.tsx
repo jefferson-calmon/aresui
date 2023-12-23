@@ -107,7 +107,8 @@ export function Select(props: T.SelectProps): JSX.Element {
 
 			<Dropdown
 				items={dropdownItems}
-				menuWidth="100%"
+				width="100%"
+				height="160px"
 				onToggle={isActiveSelectOptions.setValue}
 				{...(props.dropdownProps ?? {})}
 			>

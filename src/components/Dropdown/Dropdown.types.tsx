@@ -11,7 +11,8 @@ export interface DropdownProps {
 	items: DropdownMenuItem[];
 
 	menuSelector?: string;
-	menuWidth?: '100%' | 'auto' | `${number}px`;
+	width?: '100%' | 'auto' | `${number}px`;
+	height?: '100%' | 'auto' | `${number}px`;
 	placement: Placement;
 	trigger: Trigger;
 
@@ -75,7 +76,8 @@ export const defaultPropsDropdown: DropdownProps = {
 		},
 	],
 	theme: {},
-	menuWidth: '220px',
+	width: '220px',
+	height: '160px',
 	placement: 'bottom-left',
 	trigger: 'click',
 };

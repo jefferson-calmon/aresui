@@ -45,7 +45,8 @@ export function DropdownMenu(props: T.DropdownProps) {
 	return (
 		<DropdownMenuContainer
 			className={className}
-			width={props.menuWidth || ''}
+			width={props.width || ''}
+			height={props.height || ''}
 			UITheme={theme}
 		>
 			{(props.items || []).map((item) => (

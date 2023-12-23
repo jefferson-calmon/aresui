@@ -8,6 +8,7 @@ import { globalStyle } from 'styles/global/components';
 
 interface Props {
 	width: string;
+	height: string;
 	UITheme: Theme;
 }
 
@@ -35,7 +36,10 @@ export const DropdownMenuContainer: Styled = styled.div`
 	flex-direction: column;
 
 	min-width: ${(props: Props) => props.width};
+	min-height: ${(props: Props) => props.height};
+	max-height: ${(props: Props) => props.height};
 	width: fit-content;
+	height: 100%;
 	padding: 0.4em 0;
 
 	background: var(--color-background);
@@ -45,6 +49,8 @@ export const DropdownMenuContainer: Styled = styled.div`
 	/* box-shadow: var(--shadow-extra-small); */
 
 	cursor: pointer;
+
+    overflow-y: scroll;
 
 	.${classBase('item')} {
 		display: inline-flex;
