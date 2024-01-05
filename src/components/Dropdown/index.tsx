@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 
-import { useBoolean, useEventListener } from 'codekit';
+import { randomString, useBoolean, useEventListener } from 'codekit';
 
 import * as T from './Dropdown.types';
 import * as U from './Dropdown.utils';
@@ -20,15 +20,25 @@ export function Dropdown(props: T.DropdownProps) {
 	// Common vars
 	let timeout: NodeJS.Timeout;
 
+	// Refs
+	const trackId = useRef(randomString(8, { useNumbers: false }));
+
 	// Memo vars
 	const className = useMemo(() => {
-		const classes = [U.classBase(), isOpen.value && U.classBase('active')];
+		const classes = [
+			U.classBase(),
+			isOpen.value && U.classBase('active'),
+			U.classBase(trackId.current),
+		];
 
 		return U.buildClassName(...classes);
-	}, [isOpen.value]);
+	}, [isOpen.value, trackId]);
 
 	// Functions
-	function handleClick() {
+	function handleClick(e: React.MouseEvent) {
+		const clickedOnSearch = !!(e.target as HTMLElement).closest('.search');
+		if (props.searchable && clickedOnSearch) return;
+
 		const trigger = props.trigger;
 		const isAllowed = trigger === 'click' || trigger.includes('click');
 		if (!isAllowed) return;
@@ -132,7 +142,7 @@ export function Dropdown(props: T.DropdownProps) {
 
 			{isOpen.value && (
 				<HandleClickOutside
-					elementSelectors={[`.${U.classBase()}`]}
+					elementSelectors={[`.${U.classBase(trackId.current)}`]}
 					onClickOutside={handleClose}
 				/>
 			)}

@@ -13,8 +13,10 @@ export interface DropdownProps {
 	menuSelector?: string;
 	width?: '100%' | 'auto' | `${number}px`;
 	height?: '100%' | 'auto' | `${number}px`;
+
 	placement: Placement;
 	trigger: Trigger;
+    searchable?: boolean;
 
 	autoCloseListeners: AutoCloseListeners[];
 
@@ -77,7 +79,7 @@ export const defaultPropsDropdown: DropdownProps = {
 	],
 	theme: {},
 	width: '220px',
-	height: '160px',
+	height: '200px',
 	placement: 'bottom-left',
 	trigger: 'click',
 };

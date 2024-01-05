@@ -36,10 +36,9 @@ export const DropdownMenuContainer: Styled = styled.div`
 	flex-direction: column;
 
 	min-width: ${(props: Props) => props.width};
-	min-height: ${(props: Props) => props.height};
 	max-height: ${(props: Props) => props.height};
 	width: fit-content;
-	height: 100%;
+	height: fit-content;
 	padding: 0.4em 0;
 
 	background: var(--color-background);
@@ -50,14 +49,29 @@ export const DropdownMenuContainer: Styled = styled.div`
 
 	cursor: pointer;
 
-    overflow-y: scroll;
+	overflow-y: scroll;
+
+	.search {
+		input {
+			height: 39px;
+			width: 100%;
+			padding: 0 12px;
+
+			border: 1px solid var(--color-line);
+			border-radius: 5px;
+
+			color: #000;
+		    opacity: 1;
+            font-weight: 500;
+		}
+	}
 
 	.${classBase('item')} {
 		display: inline-flex;
 		align-items: center;
 
 		text-align: left !important;
-        white-space: nowrap;
+		white-space: nowrap;
 
 		padding: 0.8em 1.2em;
 
@@ -66,7 +80,7 @@ export const DropdownMenuContainer: Styled = styled.div`
 		opacity: 0.8;
 		cursor: pointer;
 
-		&:hover {
+		&:not(.search):hover {
 			opacity: 1;
 			color: var(--color-primary);
 			background: ${H.transparentizePrimaryColorBy97Percent};
