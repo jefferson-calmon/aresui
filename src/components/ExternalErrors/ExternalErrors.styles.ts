@@ -14,13 +14,13 @@ export const ExternalErrorsContainer: StyledType = styled.div`
 
 	display: flex;
 	flex-direction: column;
-	gap: 0.4em;
+	gap: 4.00px;
 
 	span {
 		display: flex;
 
 		color: var(--color-error);
-		font-size: 1.4em;
+		font-size: 14.00px;
 		font-weight: 400;
 	}
 

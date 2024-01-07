@@ -16,8 +16,8 @@ export const LoadingContainer = styled.div`
 
 	position: relative;
 
-	width: ${(props: Props) => props.size / 10}rem;
-	height: ${(props: Props) => props.size / 10}rem;
+	width: ${(props: Props) => props.size / 16}rem;
+	height: ${(props: Props) => props.size / 16}rem;
 
 	svg,
 	> div {

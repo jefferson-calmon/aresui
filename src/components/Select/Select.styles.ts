@@ -70,7 +70,7 @@ export const SelectContainer: Styled = styled.div`
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			gap: 1.2rem;
+			gap: 12px;
 
 			height: 100%;
 		    width: 100%;

@@ -39,7 +39,7 @@ export const DropdownMenuContainer: Styled = styled.div`
 	max-height: ${(props: Props) => props.height};
 	width: fit-content;
 	height: fit-content;
-	padding: 0.4em 0;
+	padding: 4.00px 0;
 
 	background: var(--color-background);
 	border: 1px solid var(--color-line);
@@ -73,9 +73,9 @@ export const DropdownMenuContainer: Styled = styled.div`
 		text-align: left !important;
 		white-space: nowrap;
 
-		padding: 0.8em 1.2em;
+		padding: 8.00px 12.00px;
 
-		font-size: 1.4em;
+		font-size: 14.00px;
 
 		opacity: 0.8;
 		cursor: pointer;
@@ -89,7 +89,7 @@ export const DropdownMenuContainer: Styled = styled.div`
 
 	/* Placements */
 	& {
-		--gap: 0.8em;
+		--gap: 8.00px;
 
 		&.${classBase('placement', 'top-start')} {
 			top: 0;

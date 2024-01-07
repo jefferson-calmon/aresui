@@ -18,8 +18,8 @@ type StyledProps = StyledComponent<'div', any, Props, never>;
 export const UploadAreaContainer: StyledProps = styled.div`
 	${(props: Props) => globalStyle(props.UITheme)}
 
-	--side-preview-size: 7.2em;
-	--dropzone-height: 20rem;
+	--side-preview-size: 72.00px;
+	--dropzone-height: 200px;
 
 	position: relative;
 
@@ -35,7 +35,7 @@ export const UploadAreaContainer: StyledProps = styled.div`
 	label {
 		grid-area: label;
 		display: inline-block;
-		font-size: 1.4em;
+		font-size: 14.00px;
 		font-weight: 400;
 
 		color: ${H.readableColorByBackground};
@@ -52,7 +52,7 @@ export const UploadAreaContainer: StyledProps = styled.div`
 		align-items: center;
 		justify-content: center;
 		text-align: center;
-		gap: 3.2em;
+		gap: 32.00px;
 
 		width: 100%;
 		height: var(--dropzone-height);
@@ -67,13 +67,13 @@ export const UploadAreaContainer: StyledProps = styled.div`
 			flex-direction: column;
 			align-items: center;
 			text-align: center;
-			gap: 1.2em;
+			gap: 12.00px;
 
-			padding: 2.8rem;
+			padding: 28px;
 
 			.${classBase('icon')} {
-				width: 4.4em;
-				height: 4.4em;
+				width: 44.00px;
+				height: 44.00px;
 
 				svg {
 					width: 100%;
@@ -87,9 +87,9 @@ export const UploadAreaContainer: StyledProps = styled.div`
 			p {
 				display: inline-block;
 
-				max-width: 17em;
+				max-width: 170.00px;
 
-				font-size: 1.6em;
+				font-size: 16.00px;
 				opacity: 0.8;
 				line-height: 1.4;
 			}
@@ -121,7 +121,7 @@ export const UploadAreaContainer: StyledProps = styled.div`
 		grid-template-areas:
 			'label label'
 			'preview dropzone';
-		gap: 0 1.2em;
+		gap: 0 12.00px;
 	}
 `;
 
@@ -133,8 +133,8 @@ export const FilePreviewContainer = styled.div`
 	justify-content: center;
 	flex-shrink: 0;
 
-	width: 12em;
-	height: 12em;
+	width: 120.00px;
+	height: 120.00px;
 
 	cursor: pointer;
 
@@ -163,8 +163,8 @@ export const FilePreviewContainer = styled.div`
 		align-items: center;
 		justify-content: center;
 
-		width: 2em;
-		height: 2em;
+		width: 20.00px;
+		height: 20.00px;
 
 		background: var(--color-error);
 		border-radius: 50%;
@@ -196,7 +196,7 @@ export const FileListPreviewContainer = styled.div`
 	grid-area: preview;
 	display: flex;
 	flex-direction: column;
-	gap: 0.8em;
+	gap: 8.00px;
 
 	border-radius: var(--border-radius);
 
