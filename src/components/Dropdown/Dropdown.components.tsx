@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo, useState } from 'react';
 
 import { config, mergeObjects } from 'codekit';
@@ -36,9 +37,14 @@ export function DropdownMenu(props: T.DropdownProps) {
 	}, [aresUI.theme, props.theme]);
 
 	const items = useMemo(() => {
-		return (props.items ?? []).filter((item) =>
-			String(item.content).searchFor(search)
-		);
+		return (props.items ?? []).filter((item) => {
+			const isFunction = item instanceof Function;
+			const content = String((item as any)?.content);
+
+			if (search && isFunction) return false;
+
+			return content.searchFor(search);
+		});
 	}, [props.items, search]);
 
 	// Functions
@@ -72,13 +78,17 @@ export function DropdownMenu(props: T.DropdownProps) {
 				</div>
 			)}
 
-			{items.map((item) => (
-				<DropdownMenuItem
-					key={item.id}
-					item={item}
-					onClick={handleClick}
-				/>
-			))}
+			{items.map((Item) =>
+				!(Item instanceof Function) ? (
+					<DropdownMenuItem
+						key={Item.id}
+						item={Item}
+						onClick={handleClick}
+					/>
+				) : (
+					<Item />
+				)
+			)}
 		</DropdownMenuContainer>
 	);
 }

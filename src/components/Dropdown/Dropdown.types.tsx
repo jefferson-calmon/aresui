@@ -8,7 +8,7 @@ import { ChevronDown } from 'icons';
 export type AutoCloseListeners = 'scroll' | 'resize';
 
 export interface DropdownProps {
-	items: DropdownMenuItem[];
+	items: (DropdownMenuItem | (() => JSX.Element))[];
 
 	menuSelector?: string;
 	width?: '100%' | 'auto' | `${number}px`;
@@ -16,7 +16,7 @@ export interface DropdownProps {
 
 	placement: Placement;
 	trigger: Trigger;
-    searchable?: boolean;
+	searchable?: boolean;
 
 	autoCloseListeners: AutoCloseListeners[];
 
@@ -60,6 +60,7 @@ export const defaultPropsDropdown: DropdownProps = {
 			id: 'item2',
 			content: 'New File with Current Profile',
 		},
+		() => <h1>test</h1>,
 		{
 			id: 'item3',
 			content: 'Download As...',
