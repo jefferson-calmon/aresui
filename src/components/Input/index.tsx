@@ -59,11 +59,11 @@ export function Input(props: T.InputProps): JSX.Element {
 
 	const inputId = useMemo(() => randomString(16), []);
 
-	const pickerOptions = useMemo(() => {
-		return props.pickerOptions.filter((option) =>
+	const options = useMemo(() => {
+		return props.options.filter((option) =>
 			searchInText(String(value), option.value)
 		);
-	}, [value, props.pickerOptions]);
+	}, [value, props.options]);
 
 	const className = useMemo(() => {
 		const classes = [
@@ -95,7 +95,7 @@ export function Input(props: T.InputProps): JSX.Element {
 			return;
 
 		U.maskInputMoneyByElement(input, args);
-        input.blur();
+		input.blur();
 		renderedMoneyInput.current = true;
 	}, [inputId, props.money?.args, props.money?.trigger, props.role]);
 
@@ -167,6 +167,7 @@ export function Input(props: T.InputProps): JSX.Element {
 		if (option.disabled) return;
 
 		setValue(option.value);
+        props.onChangeValue?.(option.value);
 	}
 
 	return (
@@ -208,7 +209,7 @@ export function Input(props: T.InputProps): JSX.Element {
 					autoComplete={inputAttr.autoComplete}
 					placeholder={inputAttr.placeholder}
 					name={inputAttr.name}
-					// value={value as string}
+					value={props.role !== 'money' ? value as string : undefined}
 					// --
 					onChange={handleChange('change', props.role !== 'money')}
 					onInput={handleChange('input', props.role === 'money')}
@@ -217,9 +218,9 @@ export function Input(props: T.InputProps): JSX.Element {
 					onBlur={handleBlur}
 				/>
 
-				{isFocused.value && props.pickerOptions.length > 0 && (
+				{isFocused.value && props.options.length > 0 && (
 					<C.PickerOptions
-						options={pickerOptions}
+						options={options}
 						onChange={handleSelectPickerOption}
 					/>
 				)}

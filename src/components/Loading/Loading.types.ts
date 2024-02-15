@@ -2,7 +2,7 @@ import { Theme } from 'contexts';
 import { DeepPartial } from 'types';
 
 export interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
-    type: 'spinner' | 'dots';
+	type: 'spinner' | 'dots';
 	size: number;
 	speedInSeconds: number;
 	strokeWidth: number;
@@ -11,8 +11,10 @@ export interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
 	custom?: () => JSX.Element;
 }
 
+export const excludeProps: (keyof LoadingProps)[] = ['type'];
+
 export const defaultPropsLoading: LoadingProps = {
-    type: 'spinner',
+	type: 'spinner',
 	size: 25,
 	speedInSeconds: 1.5,
 	strokeWidth: 5,

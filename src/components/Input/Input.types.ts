@@ -24,7 +24,7 @@ export interface InputProps extends InputHTMLProps {
 	defaultValue?: InputHTMLProps['defaultValue'];
 
 	theme: DeepPartial<Theme>;
-	pickerOptions: InputPickerOption[];
+	options: InputPickerOption[];
 	error?: string;
 	addon?: () => JSX.Element;
 
@@ -128,7 +128,7 @@ export const defaultPropsInput: InputProps = {
 	errorPrefix: '',
 	theme: {},
 	customErrors: {},
-	pickerOptions: [],
+	options: [],
 	money: {
 		trigger: 'focus',
 	},

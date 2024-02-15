@@ -139,7 +139,7 @@ export function filterProps(props: InputProps) {
 
 	delete newProps.addon;
 	delete newProps.customErrors;
-	delete newProps.pickerOptions;
+	delete newProps.options;
 	delete newProps.width;
 	delete newProps.theme;
 	delete newProps.role;

@@ -7,6 +7,7 @@ import * as U from './Loading.utils';
 import { useAresUI } from 'contexts';
 
 import { LoadingContainer } from './Loading.styles';
+import { parseProps } from 'helpers/parseProps';
 
 export function Loading(props: T.LoadingProps): JSX.Element {
 	// Hooks
@@ -15,10 +16,14 @@ export function Loading(props: T.LoadingProps): JSX.Element {
 	// Memo Vars
 	const theme = useMemo(() => {
 		return mergeObjects(aresUI.theme, props.theme);
-	}, [props.theme]);
+	}, [aresUI.theme, props.theme]);
 
 	return (
-		<LoadingContainer className={U.classBase()} {...props} UITheme={theme}>
+		<LoadingContainer
+			className={U.classBase()}
+			{...parseProps(props, T.excludeProps)}
+			UITheme={theme}
+		>
 			{!props.custom && (
 				<svg viewBox="0 0 50 50">
 					<circle

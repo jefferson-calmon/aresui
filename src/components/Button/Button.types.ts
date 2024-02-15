@@ -31,6 +31,6 @@ export const defaultPropsButton: ButtonProps = {
 	variant: 'default',
     size: 'large',
 	loading: false,
-	rippleEffect: false,
+	rippleEffect: true,
 	theme: {},
 };

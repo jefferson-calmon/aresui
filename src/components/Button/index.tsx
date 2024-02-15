@@ -13,7 +13,6 @@ import { buildClassName } from 'helpers/buildClassName';
 import { ButtonContainer } from './Button.styles';
 
 config();
-
 export function Button(props: T.ButtonProps): JSX.Element {
 	// Hooks
 	const aresUI = useAresUI();
