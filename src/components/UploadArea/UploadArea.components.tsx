@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { classBase, getPreviewContentByFile } from './UploadArea.utils';
+import { FileItem } from './UploadArea.types';
 
 import {
 	FileListPreviewContainer,
@@ -8,20 +9,20 @@ import {
 } from './UploadArea.styles';
 
 interface FilePreviewProps {
-	file: File | Blob;
+	file: FileItem;
 	onDelete: () => void;
 }
 
 interface FileListPreviewProps {
-	files: (File | Blob)[];
-	onDelete: (file: File | Blob) => void;
+	files: FileItem[];
+	onDelete: (file: FileItem) => void;
 }
 
 export function FilePreview(props: FilePreviewProps) {
 	return (
 		<FilePreviewContainer className={classBase('file-preview')}>
 			<div className={classBase('file-preview-content')}>
-				{getPreviewContentByFile(props.file)}
+				{getPreviewContentByFile(props.file.file)}
 			</div>
 
 			<div className={classBase('remove')} onClick={props.onDelete}>
@@ -36,10 +37,10 @@ export function FileListPreview(props: FileListPreviewProps) {
 		<FileListPreviewContainer>
 			{props.files.map((file) => (
 				<div
-					key={file.name}
+					key={file.id}
 					className={classBase('file-list-preview-item')}
 				>
-					{getPreviewContentByFile(file)}
+					{getPreviewContentByFile(file.file)}
 				</div>
 			))}
 		</FileListPreviewContainer>

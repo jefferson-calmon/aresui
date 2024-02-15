@@ -7,7 +7,7 @@ export interface UploadAreaProps extends ComponentProps<object> {
 
 	width: Width;
 	multiple: boolean;
-	files?: (File | Blob)[];
+	files?: FileItem[];
 	preview?: boolean;
 
 	uploadIcon?: JSX.Element;
@@ -17,7 +17,12 @@ export interface UploadAreaProps extends ComponentProps<object> {
 	containerProps: DivHTMLAttributes;
 
 	onUpload?: (files: File[]) => void;
-	onChange?: (files: (File | Blob)[]) => void;
+	onChange?: (files: FileItem[]) => void;
+}
+
+export interface FileItem {
+    id: string;
+	file: File | Blob;
 }
 
 export interface FilePreviewProps {

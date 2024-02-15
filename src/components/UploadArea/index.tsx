@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
-import { config, mergeObjects } from 'codekit';
+import { config, mergeObjects, uuid } from 'codekit';
 
 import * as T from './UploadArea.types';
 import * as U from './UploadArea.utils';
@@ -15,7 +15,7 @@ config();
 
 export function UploadArea(props: T.UploadAreaProps) {
 	// Hooks
-	const aresUI = useAresUI();
+	const aresui = useAresUI();
 
 	// States
 	const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -23,13 +23,13 @@ export function UploadArea(props: T.UploadAreaProps) {
 	// Controlled states
 	const [files, setFiles] = useControlledState(
 		props.files,
-		[] as (File | Blob)[]
+		[] as T.FileItem[]
 	);
 
 	// Memo vars
 	const theme = useMemo(() => {
-		return mergeObjects(aresUI.theme, props.theme);
-	}, [aresUI.theme, props.theme]);
+		return mergeObjects(aresui.theme, props.theme);
+	}, [aresui.theme, props.theme]);
 
 	const className = useMemo(() => {
 		const previewMultiple =
@@ -53,22 +53,27 @@ export function UploadArea(props: T.UploadAreaProps) {
 
 	// Functions
 	function handleUpload(files: File[]) {
-        props.onUpload?.(files);
+		props.onUpload?.(files);
+
+		const filesNormalized = files.map<T.FileItem>((file) => ({
+			id: uuid(),
+			file,
+		}));
 
 		setFiles((prev) => {
 			const newPrev = prev ?? [];
-			const newFiles = [...newPrev, ...files];
+			const newFiles = [...newPrev, ...filesNormalized];
 
 			props.onChange?.(newFiles);
 
-			return [...newPrev, ...files];
+			return newFiles;
 		});
 	}
 
-	function handleDelete(file: File | Blob) {
+	function handleDelete(file: T.FileItem) {
 		setFiles((prev) => {
 			const newPrev = prev ?? [];
-			const newFiles = newPrev.filter((f) => f.name !== file.name);
+			const newFiles = newPrev.filter((f) => f.id !== file.id);
 
 			props.onChange?.(newFiles);
 
