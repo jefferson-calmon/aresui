@@ -37,4 +37,6 @@ function PaginationWithContext(props: T.PaginationProps) {
 
 PaginationWithContext.defaultProps = T.defaultPropsPagination;
 
+export * from './Pagination.types';
+
 export default PaginationWithContext;

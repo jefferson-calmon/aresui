@@ -16,3 +16,4 @@ export * from './TextArea';
 export * from './Dropdown';
 export * from './Select';
 export * from './NavigationProgressBar';
+export * from './Pagination';
