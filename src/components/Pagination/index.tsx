@@ -10,7 +10,7 @@ import { PaginationContainer } from './Pagination.styles';
 
 config();
 
-export function Pagination() {
+function PaginationComponent() {
 	const pagination = Ctx.usePagination();
 
 	return (
@@ -27,16 +27,16 @@ export function Pagination() {
 	);
 }
 
-function PaginationWithContext(props: T.PaginationProps) {
+export function Pagination(props: T.PaginationProps) {
 	return (
 		<Ctx.PaginationProvider props={props}>
-			<Pagination />
+			<PaginationComponent />
 		</Ctx.PaginationProvider>
 	);
 }
 
-PaginationWithContext.defaultProps = T.defaultPropsPagination;
+Pagination.defaultProps = T.defaultPropsPagination;
 
 export * from './Pagination.types';
 
-export default PaginationWithContext;
+export default Pagination;
