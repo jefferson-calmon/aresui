@@ -8,16 +8,16 @@ import { Width } from 'types';
 import { classBase } from './Select.utils';
 
 export interface Props {
-	UITheme: Theme;
-	width: Width;
+	$theme: Theme;
+	$width: Width;
 }
 
 type Styled = StyledComponent<'div', any, Props, never>;
 
 export const SelectContainer: Styled = styled.div`
-	${(props: Props) => globalStyle(props.UITheme)}
+	${(props: Props) => globalStyle(props.$theme)}
 
-	--width: ${(props: Props) => props.width};
+	--width: ${(props: Props) => props.$width};
 	--height: var(--base-height);
 
 	position: relative;
@@ -33,7 +33,7 @@ export const SelectContainer: Styled = styled.div`
 		font-size: 14px;
 		font-weight: 400;
 
-		color: ${H.readableColorByBackground};
+		color: ${H.readableColor('background')};
 
 		margin-bottom: 6px;
 	}
@@ -49,9 +49,9 @@ export const SelectContainer: Styled = styled.div`
 		user-select: none;
 	}
 
-    > .aresui-dropdown {
+	> .aresui-dropdown {
 		width: var(--width);
-    }
+	}
 
 	.${classBase('select')} {
 		position: relative;
@@ -73,12 +73,12 @@ export const SelectContainer: Styled = styled.div`
 			gap: 12px;
 
 			height: 100%;
-		    width: 100%;
+			width: 100%;
 
 			span {
 				font-size: 16px;
 				font-weight: 500;
-				color: ${H.readableColorByBackground};
+				color: ${H.readableColor('background')};
 			}
 
 			svg {

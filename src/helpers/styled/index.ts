@@ -1,26 +1,35 @@
 import { Theme } from 'contexts';
-import { darken, transparentize, readableColor } from 'polished';
+import * as P from 'polished';
 
 interface Props {
-	UITheme: Theme;
+	$theme: Theme;
 }
 
-export function readableColorByBackground(props: Props) {
-	return readableColor(props.UITheme.colors.background);
-}
-
-export function readableColorByPrimary(props: Props) {
-	return readableColor(props.UITheme.colors.primary);
-}
-
-export function darkenLineColorBy5Percent(props: Props) {
-	return darken(0.05, props.UITheme.colors.line);
-}
-
-export function transparentizePrimaryColorBy97Percent(props: Props) {
-	return transparentize(0.97, props.UITheme.colors.primary);
-}
+type Color = keyof Theme['colors'] & string;
 
 export function size(sizeInRem: number) {
-	return (props: Props) => props.UITheme.size * sizeInRem + 'px';
+	return (props: Props) => props.$theme.size * sizeInRem + 'px';
+}
+
+export function readableColor(color: Color) {
+	return (props: Props) =>
+		P.readableColor(props.$theme.colors?.[color] ?? color);
+}
+
+export function darken(color: Color, amount: number) {
+	return (props: Props) =>
+		P.darken(amount, props.$theme.colors?.[color] ?? color);
+}
+
+export function transparentize(color: Color, amount: number) {
+	return (props: Props) =>
+		P.transparentize(amount, props.$theme.colors?.[color] ?? color);
+}
+
+export function transparentizeReadableColor(color: Color, amount: number) {
+	return (props: Props) =>
+		P.transparentize(
+			amount,
+			P.readableColor(props.$theme.colors?.[color] ?? color)
+		);
 }

@@ -1,19 +1,19 @@
 import { Theme } from 'contexts';
 
 import * as H from 'helpers/styled';
-import styled, { StyledComponent } from 'styled-components';
+import styled from 'styled-components';
 import { globalStyle } from 'styles/global/components';
 import { classBase } from './Checkbox.utils';
 
 interface Props {
-	UITheme: Theme;
-	size: number;
+	$theme: Theme;
+	$size: number;
 }
 
 export const CheckboxContainer = styled.div`
-	${(props: Props) => globalStyle(props.UITheme)}
+	${(props: Props) => globalStyle(props.$theme)}
 
-	--width: ${(props) => props.size + 'px'};
+	--width: ${(props) => props.$size + 'px'};
 
 	display: flex;
 	align-items: center;
@@ -51,12 +51,12 @@ export const CheckboxContainer = styled.div`
 			}
 
 			svg {
-				width: ${(props) => props.size - 6 + 'px'};
-				height: ${(props) => props.size - 6 + 'px'};
+				width: ${(props) => props.$size - 6 + 'px'};
+				height: ${(props) => props.$size - 6 + 'px'};
 
 				object-fit: contain;
 
-				color: ${H.readableColorByPrimary};
+				color: ${H.readableColor('primary')};
 
 				animation: fadeIn 0.2s ease-in-out forwards;
 				opacity: 0;
@@ -140,6 +140,6 @@ export const CheckboxContainer = styled.div`
 			transform: scale(1);
 		}
 	}
-` as StyledComponent<'div', any, Props, never>;
+`;
 
 export default CheckboxContainer;

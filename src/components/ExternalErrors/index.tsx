@@ -10,23 +10,23 @@ import { ExternalErrorsContainer } from './ExternalErrors.styles';
 
 export function ExternalErrors(props: T.ExternalErrorsProps) {
 	// Hooks
-	const aresUI = useAresUI();
+	const aresui = useAresUI();
 
 	// Memo vars
 	const theme = useMemo(() => {
-		return mergeObjects(aresUI.theme, props.theme);
-	}, [props.theme]);
+		return mergeObjects(aresui.theme, props.theme);
+	}, [aresui.theme, props.theme]);
 
 	const className = useMemo(() => {
 		const classes = [U.classBase()];
 
 		return U.buildClassName(...classes);
-	}, [props]);
+	}, []);
 
 	if (props.errors.length === 0) return null;
 
 	return (
-		<ExternalErrorsContainer className={className} theme={theme}>
+		<ExternalErrorsContainer className={className} $theme={theme}>
 			{props.errors.map((error) => (
 				<span key={error.id} className={U.classBase('error')}>
 					{props.prefix}

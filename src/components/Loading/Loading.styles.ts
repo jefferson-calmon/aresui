@@ -6,18 +6,18 @@ import { globalStyle } from 'styles/global/components';
 import { classBase } from './Loading.utils';
 
 interface Props {
-	UITheme: Theme;
-	size: number;
-	speedInSeconds: number;
+	$theme: Theme;
+	$size: number;
+	$duration: number;
 }
 
 export const LoadingContainer = styled.div`
-	${(props: Props) => globalStyle(props.UITheme)}
+	${(props: Props) => globalStyle(props.$theme)}
 
 	position: relative;
 
-	width: ${(props: Props) => props.size / 16}rem;
-	height: ${(props: Props) => props.size / 16}rem;
+	width: ${(props: Props) => props.$size / 16}rem;
+	height: ${(props: Props) => props.$size / 16}rem;
 
 	svg,
 	> div {
@@ -39,7 +39,7 @@ export const LoadingContainer = styled.div`
 
 		.${classBase('path-spinner')} {
 			stroke-linecap: round;
-			animation: dash ${({ speedInSeconds }) => speedInSeconds}s
+			animation: dash ${({ $duration }) => $duration}s
 				ease-in-out infinite;
 		}
 	}

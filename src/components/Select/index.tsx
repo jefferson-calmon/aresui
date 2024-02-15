@@ -100,8 +100,8 @@ export function Select(props: T.SelectProps): JSX.Element {
 	return (
 		<SelectContainer
 			className={className}
-			UITheme={theme}
-			width={props.width}
+			$theme={theme}
+			$width={props.width}
 		>
 			{props.label && <label>{props.label}</label>}
 

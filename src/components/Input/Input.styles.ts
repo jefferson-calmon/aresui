@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled, { StyledComponent } from 'styled-components';
-import { transparentize } from 'polished';
 
 import * as H from 'helpers/styled';
 import { Theme } from 'contexts';
@@ -9,12 +8,12 @@ import { classBase } from './Input.utils';
 import { InputProps } from './Input.types';
 
 interface Props {
-	UITheme: Theme;
-	width: InputProps['width'];
+	$theme: Theme;
+	$width: InputProps['width'];
 }
 
 export const InputContainer = styled.div`
-	${(props: Props) => globalStyle(props.UITheme)};
+	${(props: Props) => globalStyle(props.$theme)};
 
 	--height: var(--base-height);
 
@@ -24,14 +23,14 @@ export const InputContainer = styled.div`
 	align-items: flex-start;
 	flex-direction: column;
 
-	width: ${(props: Props) => props.width};
+	width: ${(props: Props) => props.$width};
 
 	label {
 		display: inline-block;
 		font-size: 14px;
 		font-weight: 400;
 
-		color: ${H.readableColorByBackground};
+		color: ${H.readableColor('background')};
 
 		margin-bottom: 6px;
 	}
@@ -43,7 +42,7 @@ export const InputContainer = styled.div`
 
 		width: 100%;
 
-		background: ${(props: Props) => props.UITheme.colors.background};
+		background: ${(props: Props) => props.$theme.colors.background};
 		border-radius: var(--border-radius);
 		outline: var(--border-width-unfocused) solid var(--color-line);
 
@@ -62,9 +61,8 @@ export const InputContainer = styled.div`
 
 			border-radius: var(--border-radius) 0 0 var(--border-radius);
 			/* background: #f9f9f9; */
-			background: ${(props) =>
-				transparentize(0.98, H.readableColorByBackground(props))};
-			color: ${H.readableColorByBackground};
+			background: ${H.transparentizeReadableColor('background', 0.98)};
+			color: ${H.readableColor('background')};
 		}
 
 		input {
@@ -75,7 +73,7 @@ export const InputContainer = styled.div`
 
 			font-size: 16px;
 			font-weight: 500;
-			color: ${H.readableColorByBackground};
+			color: ${H.readableColor('background')};
 
 			background: transparent;
 			border-radius: var(--border-radius);
@@ -141,7 +139,7 @@ export const InputContainer = styled.div`
 
 				&:hover:not(.disabled):not(.not-found) {
 					opacity: 1;
-					background: ${H.transparentizePrimaryColorBy97Percent};
+					background: ${H.transparentize('primary', 0.97)};
 				}
 			}
 		}
@@ -190,7 +188,7 @@ export const InputContainer = styled.div`
 	&:hover {
 		/* input {
 			&:not(:focus):not(.aresui-input-invalid) {
-				outline-color: ${H.darkenLineColorBy5Percent};
+				outline-color: ${H.darken('line', 0.05)};
 			}
 		} */
 	}

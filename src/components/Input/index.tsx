@@ -173,8 +173,8 @@ export function Input(props: T.InputProps): JSX.Element {
 	return (
 		<InputContainer
 			className={className}
-			UITheme={theme}
-			width={props.width}
+			$theme={theme}
+			$width={props.width}
 		>
 			{props.label && <label>{props.label}</label>}
 

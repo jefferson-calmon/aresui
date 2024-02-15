@@ -8,12 +8,12 @@ import { classBase } from './TextArea.utils';
 import { TextAreaProps } from './TextArea.types';
 
 interface Props {
-	UITheme: Theme;
-	width: TextAreaProps['width'];
+	$theme: Theme;
+	$width: TextAreaProps['width'];
 }
 
 export const TextAreaContainer = styled.div`
-	${(props: Props) => globalStyle(props.UITheme)};
+	${(props: Props) => globalStyle(props.$theme)};
 
 	--height: calc(var(--base-height) * 2);
 
@@ -23,14 +23,14 @@ export const TextAreaContainer = styled.div`
 	align-items: flex-start;
 	flex-direction: column;
 
-	width: ${(props: Props) => props.width};
+	width: ${(props: Props) => props.$width};
 
 	label {
 		display: inline-block;
 		font-size: 14px;
 		font-weight: 400;
 
-		color: ${H.readableColorByBackground};
+		color: ${H.readableColor('background')};
 
 		margin-bottom: 6px;
 	}
@@ -40,21 +40,21 @@ export const TextAreaContainer = styled.div`
 
 		display: flex;
 
-		width: ${(props: Props) => props.width};
+		width: ${(props: Props) => props.$width};
 
-		background: ${(props: Props) => props.UITheme.colors.background};
+		background: ${(props: Props) => props.$theme.colors.background};
 		border-radius: var(--border-radius);
 		outline: var(--border-width-unfocused) solid var(--color-line);
 
 		textArea {
 			position: relative;
-			width: ${(props: Props) => props.width};
+			width: ${(props: Props) => props.$width};
 			height: var(--height);
 			padding: 16px;
 
 			font-size: 16px;
 			font-weight: 500;
-			color: ${H.readableColorByBackground};
+			color: ${H.readableColor('background')};
 
 			background: transparent;
 			border-radius: var(--border-radius);
@@ -116,7 +116,7 @@ export const TextAreaContainer = styled.div`
 	&:hover {
 		/* TextArea {
 			&:not(:focus):not(.aresui-TextArea-invalid) {
-				outline-color: ${H.darkenLineColorBy5Percent};
+				outline-color: ${H.darken('line', 0.05)};
 			}
 		} */
 	}

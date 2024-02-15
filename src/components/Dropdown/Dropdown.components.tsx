@@ -63,9 +63,9 @@ export function DropdownMenu(props: T.DropdownProps) {
 	return (
 		<DropdownMenuContainer
 			className={className}
-			width={props.width || ''}
-			height={props.height || ''}
-			UITheme={theme}
+			$width={props.width || ''}
+			$height={props.height || ''}
+			$theme={theme}
 		>
 			{props.searchable && (
 				<div className={`search ${U.classBase('item')}`}>

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import styled, { StyledComponent } from 'styled-components';
+import styled from 'styled-components';
 
 import * as H from 'helpers/styled';
 import { classBase } from './Dropdown.utils';
@@ -7,13 +7,10 @@ import { Theme } from 'contexts';
 import { globalStyle } from 'styles/global/components';
 
 interface Props {
-	width: string;
-	height: string;
-	UITheme: Theme;
+	$width: string;
+	$height: string;
+	$theme: Theme;
 }
-
-type Styled = StyledComponent<'div', any, Props, never>;
-
 export const DropdownContainer = styled.div`
 	position: relative;
 
@@ -26,8 +23,8 @@ export const DropdownContainer = styled.div`
 	}
 `;
 
-export const DropdownMenuContainer: Styled = styled.div`
-	${(props: Props) => globalStyle(props.UITheme)}
+export const DropdownMenuContainer = styled.div`
+	${(props: Props) => globalStyle(props.$theme)}
 
 	position: absolute;
 	z-index: 100;
@@ -35,8 +32,8 @@ export const DropdownMenuContainer: Styled = styled.div`
 	display: flex;
 	flex-direction: column;
 
-	min-width: ${(props: Props) => props.width};
-	max-height: ${(props: Props) => props.height};
+	min-width: ${(props: Props) => props.$width};
+	max-height: ${(props: Props) => props.$height};
 	width: fit-content;
 	height: fit-content;
 	padding: 4.00px 0;
@@ -83,7 +80,7 @@ export const DropdownMenuContainer: Styled = styled.div`
 		&:not(.search):hover {
 			opacity: 1;
 			color: var(--color-primary);
-			background: ${H.transparentizePrimaryColorBy97Percent};
+			background: ${H.transparentize('primary', 0.97)};
 		}
 	}
 
@@ -211,7 +208,7 @@ export const DropdownMenuContainer: Styled = styled.div`
 			transform: translate(-100%, 100%);
 		}
 	}
-` as Styled;
+`;
 
 export const Div = styled.div``;
 

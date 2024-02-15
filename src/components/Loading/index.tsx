@@ -11,18 +11,20 @@ import { parseProps } from 'helpers/parseProps';
 
 export function Loading(props: T.LoadingProps): JSX.Element {
 	// Hooks
-	const aresUI = useAresUI();
+	const aresui = useAresUI();
 
 	// Memo Vars
 	const theme = useMemo(() => {
-		return mergeObjects(aresUI.theme, props.theme);
-	}, [aresUI.theme, props.theme]);
+		return mergeObjects(aresui.theme, props.theme);
+	}, [aresui.theme, props.theme]);
 
 	return (
 		<LoadingContainer
 			className={U.classBase()}
 			{...parseProps(props, T.excludeProps)}
-			UITheme={theme}
+			$size={props.size}
+			$duration={props.duration}
+			$theme={theme}
 		>
 			{!props.custom && (
 				<svg viewBox="0 0 50 50">

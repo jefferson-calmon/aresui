@@ -63,8 +63,8 @@ export function Checkbox(props: T.CheckboxProps): JSX.Element {
 	return (
 		<CheckboxContainer
 			className={className}
-			UITheme={theme}
-			size={props.size}
+			$theme={theme}
+			$size={props.size}
 		>
 			<label>
 				<div className={U.classBase('wrapper')}>

@@ -80,8 +80,8 @@ export function UploadArea(props: T.UploadAreaProps) {
 		<UploadAreaContainer
 			{...props.containerProps}
 			className={className}
-			UITheme={theme}
-			width={props.width}
+			$theme={theme}
+			$width={props.width}
 		>
 			{props.label && <label>{props.label}</label>}
 

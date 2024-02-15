@@ -1,16 +1,14 @@
-import styled, { StyledComponent } from 'styled-components';
+import styled from 'styled-components';
 
 import { Theme } from 'contexts';
 import { globalStyle } from 'styles/global/components';
 
 interface Props {
-	theme: Theme;
+	$theme: Theme;
 }
 
-type StyledType = StyledComponent<'div', any, Props, never>;
-
-export const ExternalErrorsContainer: StyledType = styled.div`
-	${(props: Props) => globalStyle(props.theme)}
+export const ExternalErrorsContainer = styled.div`
+	${(props: Props) => globalStyle(props.$theme)}
 
 	display: flex;
 	flex-direction: column;

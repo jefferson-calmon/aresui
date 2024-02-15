@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled, { StyledComponent } from 'styled-components';
-import { transparentize } from 'polished';
 
 import * as H from 'helpers/styled';
 import { globalStyle } from 'styles/global/components';
@@ -9,14 +8,14 @@ import { classBase } from './UploadArea.utils';
 import { UploadAreaProps } from './UploadArea.types';
 
 interface Props {
-	UITheme: Theme;
-	width: UploadAreaProps['width'];
+	$theme: Theme;
+	$width: UploadAreaProps['width'];
 }
 
 type StyledProps = StyledComponent<'div', any, Props, never>;
 
 export const UploadAreaContainer: StyledProps = styled.div`
-	${(props: Props) => globalStyle(props.UITheme)}
+	${(props: Props) => globalStyle(props.$theme)}
 
 	--side-preview-size: 72.00px;
 	--dropzone-height: 200px;
@@ -30,15 +29,16 @@ export const UploadAreaContainer: StyledProps = styled.div`
 		'label'
 		'dropzone';
 
-	width: ${({ width }) => (typeof width === 'string' ? width : width + 'px')};
+	width: ${({ $width }) =>
+		typeof $width === 'string' ? $width : $width + 'px'};
 
 	label {
 		grid-area: label;
 		display: inline-block;
-		font-size: 14.00px;
+		font-size: 14px;
 		font-weight: 400;
 
-		color: ${H.readableColorByBackground};
+		color: ${H.readableColor('background')};
 
 		margin-bottom: 6px;
 	}
@@ -52,34 +52,33 @@ export const UploadAreaContainer: StyledProps = styled.div`
 		align-items: center;
 		justify-content: center;
 		text-align: center;
-		gap: 32.00px;
+		gap: 32px;
 
 		width: 100%;
 		height: var(--dropzone-height);
 
 		border-radius: var(--border-radius);
 		border: 2px dashed var(--color-line-dark);
-		background: ${(props) =>
-			transparentize(0.99, H.readableColorByBackground(props))};
+		background: ${H.transparentizeReadableColor('background', 0.99)};
 
 		.${classBase('dz-content')} {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			text-align: center;
-			gap: 12.00px;
+			gap: 12px;
 
 			padding: 28px;
 
 			.${classBase('icon')} {
-				width: 44.00px;
-				height: 44.00px;
+				width: 44px;
+				height: 44px;
 
 				svg {
 					width: 100%;
 					height: 100%;
 					object-fit: contain;
-					color: ${H.readableColorByBackground};
+					color: ${H.readableColor('background')};
 					opacity: 0.7;
 				}
 			}
@@ -87,9 +86,9 @@ export const UploadAreaContainer: StyledProps = styled.div`
 			p {
 				display: inline-block;
 
-				max-width: 170.00px;
+				max-width: 170px;
 
-				font-size: 16.00px;
+				font-size: 16px;
 				opacity: 0.8;
 				line-height: 1.4;
 			}
@@ -104,7 +103,7 @@ export const UploadAreaContainer: StyledProps = styled.div`
 			width: 100%;
 			height: 100%;
 
-			background: ${H.transparentizePrimaryColorBy97Percent};
+			background: ${H.transparentize('primary', 0.97)};
 		}
 	}
 
@@ -121,7 +120,7 @@ export const UploadAreaContainer: StyledProps = styled.div`
 		grid-template-areas:
 			'label label'
 			'preview dropzone';
-		gap: 0 12.00px;
+		gap: 0 12px;
 	}
 `;
 
@@ -133,8 +132,8 @@ export const FilePreviewContainer = styled.div`
 	justify-content: center;
 	flex-shrink: 0;
 
-	width: 120.00px;
-	height: 120.00px;
+	width: 120px;
+	height: 120px;
 
 	cursor: pointer;
 
@@ -163,8 +162,8 @@ export const FilePreviewContainer = styled.div`
 		align-items: center;
 		justify-content: center;
 
-		width: 20.00px;
-		height: 20.00px;
+		width: 20px;
+		height: 20px;
 
 		background: var(--color-error);
 		border-radius: 50%;
@@ -196,7 +195,7 @@ export const FileListPreviewContainer = styled.div`
 	grid-area: preview;
 	display: flex;
 	flex-direction: column;
-	gap: 8.00px;
+	gap: 8px;
 
 	border-radius: var(--border-radius);
 
