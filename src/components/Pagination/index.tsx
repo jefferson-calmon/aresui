@@ -10,7 +10,7 @@ import { PaginationContainer } from './Pagination.styles';
 
 config();
 
-function Pagination() {
+export function Pagination() {
 	const pagination = Ctx.usePagination();
 
 	return (
