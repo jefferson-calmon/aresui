@@ -4,6 +4,7 @@ import { config } from 'codekit';
 
 import * as T from './Pagination.types';
 import * as C from './Pagination.components';
+import * as U from './Pagination.utils';
 import * as Ctx from './Pagination.context';
 
 import { PaginationContainer } from './Pagination.styles';
@@ -15,6 +16,7 @@ function PaginationComponent() {
 
 	return (
 		<PaginationContainer
+			className={U.classBase()}
 			$theme={pagination.theme}
 			$width={pagination.props.width}
 		>

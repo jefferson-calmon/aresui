@@ -12,7 +12,7 @@ function Total() {
 
 	// Memo vars
 	const className = useMemo(() => {
-		const classes = [classBase('pager')];
+		const classes = [classBase('total')];
 
 		return buildClassName(...classes);
 	}, []);
