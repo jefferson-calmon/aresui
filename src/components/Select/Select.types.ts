@@ -10,6 +10,7 @@ export interface SelectProps {
 
 	disabled?: boolean;
 	searchable?: boolean;
+	required?: boolean;
 	options: SelectOption[] | Promise<SelectOption[]>;
 
 	selectProps?: Omit<React.HTMLAttributes<HTMLSelectElement>, 'onChange'>;

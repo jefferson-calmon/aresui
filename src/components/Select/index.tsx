@@ -109,7 +109,7 @@ export function Select(props: T.SelectProps): JSX.Element {
 				items={dropdownItems}
 				width="100%"
 				height="160px"
-                searchable={!!props.searchable}
+				searchable={!!props.searchable}
 				onToggle={isActiveSelectOptions.setValue}
 				{...(props.dropdownProps ?? {})}
 			>
@@ -126,7 +126,7 @@ export function Select(props: T.SelectProps): JSX.Element {
 				name={props.name}
 				tabIndex={-1}
 				{...props.selectProps}
-				required
+				required={props.required ?? true}
 			>
 				{option && <option value={option.value}>{option.value}</option>}
 			</select>
