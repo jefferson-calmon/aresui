@@ -4,40 +4,36 @@ import { mergeObjects } from 'codekit';
 
 import * as T from './Loading.types';
 import * as U from './Loading.utils';
+import Spinner from './components/Spinner';
+import Bar from './components/Bar';
 import { useAresUI } from 'contexts';
+import { filterHTMLProps } from 'helpers/filterHTMLProps';
 
 import { LoadingContainer } from './Loading.styles';
-import { parseProps } from 'helpers/parseProps';
 
-export function Loading(props: T.LoadingProps): JSX.Element {
+export function Loading(
+	props: T.LoadingProps = T.defaultPropsLoading
+): JSX.Element {
 	// Hooks
 	const aresui = useAresUI();
 
 	// Memo Vars
 	const theme = useMemo(() => {
-		return mergeObjects(aresui.theme, props.theme);
+		return mergeObjects(aresui.theme, props.theme ?? {});
 	}, [aresui.theme, props.theme]);
 
 	return (
 		<LoadingContainer
 			className={U.classBase()}
-			{...parseProps(props, T.excludeProps)}
-			$size={props.size}
-			$duration={props.duration}
+			{...filterHTMLProps(props)}
 			$theme={theme}
 		>
-			{!props.custom && (
-				<svg viewBox="0 0 50 50">
-					<circle
-						className={U.classBase('path-spinner')}
-						cx={25}
-						cy={25}
-						r={20}
-						fill="none"
-						strokeWidth={props.strokeWidth}
-						stroke={theme.colors?.primary}
-					/>
-				</svg>
+			{!props.custom && props.type === 'spinner' && (
+				<Spinner {...props} theme={theme} />
+			)}
+
+			{!props.custom && props.type === 'bar' && (
+				<Bar {...props} theme={theme} />
 			)}
 
 			{props.custom && (
@@ -48,8 +44,6 @@ export function Loading(props: T.LoadingProps): JSX.Element {
 		</LoadingContainer>
 	);
 }
-
-Loading.defaultProps = T.defaultPropsLoading;
 
 export * from './Loading.types';
 

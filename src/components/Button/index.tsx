@@ -79,6 +79,7 @@ export function Button(props: T.ButtonProps): JSX.Element {
 			{props.loading && (
 				<div className={U.classBase('loading-indicator')}>
 					<Loading
+                        type="spinner"
 						size={24}
 						theme={loadingTheme}
 						{...props.loadingProps}

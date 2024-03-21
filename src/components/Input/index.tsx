@@ -104,12 +104,10 @@ export function Input(props: T.InputProps): JSX.Element {
 	function handleChange(type: 'change' | 'input', isValid?: boolean) {
 		if (!isValid && typeof isValid !== 'undefined') return () => null;
 
-
-
 		const change = (event: React.ChangeEvent<HTMLInputElement>) => {
 			props.onChange?.(event);
 
-            isActivePickerOptions.setTrue();
+			isActivePickerOptions.setTrue();
 
 			setValue(event.target.value);
 			props.onChangeValue?.(event.target.value);
@@ -118,7 +116,7 @@ export function Input(props: T.InputProps): JSX.Element {
 		const input = (event: React.FormEvent<HTMLInputElement>) => {
 			props.onInput?.(event);
 
-            isActivePickerOptions.setTrue();
+			isActivePickerOptions.setTrue();
 
 			const input = event.target as HTMLInputElement;
 
@@ -192,7 +190,11 @@ export function Input(props: T.InputProps): JSX.Element {
 			<div className={U.classBase('input-container')}>
 				{props.loading && (
 					<div className={U.classBase('input-addon')}>
-						<Loading size={18} {...props.loadingProps} />
+						<Loading
+							type="spinner"
+							size={18}
+							{...props.loadingProps}
+						/>
 					</div>
 				)}
 

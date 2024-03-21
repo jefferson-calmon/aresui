@@ -53,7 +53,7 @@ export function Select(props: T.SelectProps): JSX.Element {
 					id: '',
 					content: (
 						<>
-							<Loading size={18} />
+							<Loading type="spinner" size={18} />
 							&nbsp;&nbsp;Loading
 						</>
 					),
