@@ -33,6 +33,7 @@ export function Input(props: T.InputProps): JSX.Element {
 	// Boolean hooks
 	const isFocused = useBoolean();
 	const isAlreadyFocused = useBoolean();
+	const isActivePickerOptions = useBoolean();
 
 	// Memo vars
 	const theme = useMemo(() => {
@@ -103,8 +104,12 @@ export function Input(props: T.InputProps): JSX.Element {
 	function handleChange(type: 'change' | 'input', isValid?: boolean) {
 		if (!isValid && typeof isValid !== 'undefined') return () => null;
 
+
+
 		const change = (event: React.ChangeEvent<HTMLInputElement>) => {
 			props.onChange?.(event);
+
+            isActivePickerOptions.setTrue();
 
 			setValue(event.target.value);
 			props.onChangeValue?.(event.target.value);
@@ -112,6 +117,8 @@ export function Input(props: T.InputProps): JSX.Element {
 
 		const input = (event: React.FormEvent<HTMLInputElement>) => {
 			props.onInput?.(event);
+
+            isActivePickerOptions.setTrue();
 
 			const input = event.target as HTMLInputElement;
 
@@ -133,6 +140,7 @@ export function Input(props: T.InputProps): JSX.Element {
 		props.onFocus?.(event);
 		isFocused.setTrue();
 		isAlreadyFocused.setTrue();
+		isActivePickerOptions.setTrue();
 
 		if (props.role === 'money' && props.money?.trigger === 'focus') {
 			U.maskInputMoneyByEvent(event, props.money?.args);
@@ -141,7 +149,8 @@ export function Input(props: T.InputProps): JSX.Element {
 
 	function handleBlur(event: React.FocusEvent<HTMLInputElement>) {
 		props.onBlur?.(event);
-		debounce(isFocused.setFalse, 50);
+		isFocused.setFalse();
+		debounce(isActivePickerOptions.setFalse, 300);
 
 		value && handleValidation(String(value));
 	}
@@ -167,7 +176,9 @@ export function Input(props: T.InputProps): JSX.Element {
 		if (option.disabled) return;
 
 		setValue(option.value);
-        props.onChangeValue?.(option.value);
+		option.onClick?.();
+		props.onChangeValue?.(option.value);
+		isActivePickerOptions.setFalse();
 	}
 
 	return (
@@ -209,7 +220,9 @@ export function Input(props: T.InputProps): JSX.Element {
 					autoComplete={inputAttr.autoComplete}
 					placeholder={inputAttr.placeholder}
 					name={inputAttr.name}
-					value={props.role !== 'money' ? value as string : undefined}
+					value={
+						props.role !== 'money' ? (value as string) : undefined
+					}
 					// --
 					onChange={handleChange('change', props.role !== 'money')}
 					onInput={handleChange('input', props.role === 'money')}
@@ -218,7 +231,7 @@ export function Input(props: T.InputProps): JSX.Element {
 					onBlur={handleBlur}
 				/>
 
-				{isFocused.value && props.options.length > 0 && (
+				{isActivePickerOptions.value && props.options.length > 0 && (
 					<C.PickerOptions
 						options={options}
 						onChange={handleSelectPickerOption}

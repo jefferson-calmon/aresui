@@ -4413,7 +4413,7 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
 
-codekit@^1.6.12:
+codekit@^1.6.35:
   version "1.6.35"
   resolved "https://registry.yarnpkg.com/codekit/-/codekit-1.6.35.tgz#86c879c5df1e205de9180f2bd0b2417a19fa6b36"
   integrity sha512-O3JbG4J2L0Km/0DhzXJ4xH65GDOcEBhNuAD4mveqlCojAIFdMOX49r1kKf8zCJgOoGowWGAPzNO7gnjD8IVEbw==
@@ -7043,11 +7043,6 @@ micromatch@^4.0.2, micromatch@^4.0.4:
   dependencies:
     braces "^3.0.2"
     picomatch "^2.3.1"
-
-microtip@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/microtip/-/microtip-0.2.2.tgz#9d9d43cbbf6815d6d16a514abc71c17c5b91d1e9"
-  integrity sha512-oah38eH5vSHVFP6yXjbKWOYt92mav++0j3zh844h1vhOscqEg7Rf4agDEIwUTFCcAPPdlhYUQMe6eZfHgD+4oQ==
 
 miller-rabin@^4.0.0:
   version "4.0.1"

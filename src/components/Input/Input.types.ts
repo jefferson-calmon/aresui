@@ -52,6 +52,7 @@ export interface InputProps extends InputHTMLProps {
 export interface InputPickerOption {
 	value: string;
 	disabled?: boolean;
+    onClick?: () => void;
 }
 
 export type InputAttributes = ReactInputMaskProps & InputHTMLProps;

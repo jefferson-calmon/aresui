@@ -3,7 +3,7 @@ import React from 'react';
 import * as T from './Tooltip.types';
 import * as U from './Tooltip.utils';
 
-import 'microtip/microtip.css';
+import './microtip.css';
 
 export function Tooltip(props: T.TooltipProps) {
 	return (
