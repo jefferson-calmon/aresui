@@ -36,8 +36,13 @@ export function Dropdown(props: T.DropdownProps) {
 
 	// Functions
 	function handleClick(e: React.MouseEvent) {
-		const clickedOnSearch = !!(e.target as HTMLElement).closest('.search');
+		const target = e.target as HTMLElement;
+
+		const clickedOnSearch = !!target.closest('.search');
 		if (props.searchable && clickedOnSearch) return;
+
+		const closest = props.disableAutoCloseWhenClosest ?? [];
+		if (closest.some((selector) => target.closest(selector))) return;
 
 		const trigger = props.trigger;
 		const isAllowed = trigger === 'click' || trigger.includes('click');

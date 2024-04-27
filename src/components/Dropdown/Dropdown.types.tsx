@@ -19,6 +19,7 @@ export interface DropdownProps {
 	searchable?: boolean;
 
 	autoCloseListeners: AutoCloseListeners[];
+    disableAutoCloseWhenClosest?: string[];
 
 	theme: DeepPartial<Theme>;
 

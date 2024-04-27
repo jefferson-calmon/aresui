@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useContext, useMemo } from 'react';
 
-import { mergeObjects } from 'codekit';
+import { merge } from 'codekit';
 
 import * as T from './Pagination.types';
 import { useControlledState } from 'hooks/useControlledState';
@@ -48,7 +48,7 @@ export function PaginationProvider({
 	}, [current, props.pages]);
 
 	const theme = useMemo(() => {
-		return mergeObjects(aresui.theme, props.theme ?? {});
+		return merge(aresui.theme, props.theme ?? {});
 	}, [aresui.theme, props.theme]);
 
 	// Functions
@@ -82,7 +82,11 @@ export function PaginationProvider({
 			value={{
 				props,
 
-				currentPage: current ?? 1,
+				currentPage: current
+					? current > props.pages
+						? 1
+						: current
+					: 1,
 				canPrev,
 				canNext,
 

@@ -7,6 +7,9 @@ export interface ModalBackdropProps {
 	 * Ex: .modal, #modal
 	 */
 	modalSelector?: string;
+
+    disableScrollLock?: boolean;
+
 	onClose: () => void;
 
 	clickOutsideProps?: Partial<HandleClickOutsideProps>;

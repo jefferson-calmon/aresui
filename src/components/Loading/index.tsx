@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { mergeObjects } from 'codekit';
+import { merge } from 'codekit';
 
 import * as T from './Loading.types';
 import * as U from './Loading.utils';
@@ -19,7 +19,7 @@ export function Loading(
 
 	// Memo Vars
 	const theme = useMemo(() => {
-		return mergeObjects(aresui.theme, props.theme ?? {});
+		return merge(aresui.theme, props.theme ?? {});
 	}, [aresui.theme, props.theme]);
 
 	return (

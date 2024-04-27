@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo, useState } from 'react';
 
-import { config, mergeObjects } from 'codekit';
+import { config, merge } from 'codekit';
 
 import * as T from './Dropdown.types';
 import * as U from './Dropdown.utils';
@@ -33,7 +33,7 @@ export function DropdownMenu(props: T.DropdownProps) {
 	}, [props]);
 
 	const theme = useMemo(() => {
-		return mergeObjects(aresUI.theme, props.theme);
+		return merge(aresUI.theme, props.theme);
 	}, [aresUI.theme, props.theme]);
 
 	const items = useMemo(() => {

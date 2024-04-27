@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
-import { config, mergeObjects, uuid } from 'codekit';
+import { config, merge, uuid } from 'codekit';
 
 import * as T from './UploadArea.types';
 import * as U from './UploadArea.utils';
@@ -28,7 +28,7 @@ export function UploadArea(props: T.UploadAreaProps) {
 
 	// Memo vars
 	const theme = useMemo(() => {
-		return mergeObjects(aresui.theme, props.theme);
+		return merge(aresui.theme, props.theme);
 	}, [aresui.theme, props.theme]);
 
 	const className = useMemo(() => {

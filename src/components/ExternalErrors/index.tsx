@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { mergeObjects } from 'codekit';
+import { merge } from 'codekit';
 
 import * as T from './ExternalErrors.types';
 import * as U from './ExternalErrors.utils';
@@ -14,7 +14,7 @@ export function ExternalErrors(props: T.ExternalErrorsProps) {
 
 	// Memo vars
 	const theme = useMemo(() => {
-		return mergeObjects(aresui.theme, props.theme);
+		return merge(aresui.theme, props.theme);
 	}, [aresui.theme, props.theme]);
 
 	const className = useMemo(() => {

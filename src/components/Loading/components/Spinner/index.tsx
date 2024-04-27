@@ -9,7 +9,7 @@ function Spinner(props: LoadingProps & LoaderProps) {
 	return (
 		<SpinnerContainer
 			className={classBase('spinner')}
-			$duration={props.duration ?? 0}
+			$duration={props.duration ?? 1.5}
 			$size={props.size}
 		>
 			<svg viewBox="0 0 50 50">
@@ -19,7 +19,7 @@ function Spinner(props: LoadingProps & LoaderProps) {
 					cy={25}
 					r={20}
 					fill="none"
-					strokeWidth={props.spinner?.strokeWidth}
+					strokeWidth={props.spinner?.strokeWidth ?? 5}
 					stroke={props.theme.colors?.primary}
 				/>
 			</svg>

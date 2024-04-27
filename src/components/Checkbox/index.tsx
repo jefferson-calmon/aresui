@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { mergeObjects, uuid } from 'codekit';
+import { merge, uuid } from 'codekit';
 
 import * as T from './Checkbox.types';
 import * as U from './Checkbox.utils';
@@ -19,7 +19,7 @@ export function Checkbox(props: T.CheckboxProps): JSX.Element {
 
 	// Memo Vars
 	const theme = useMemo(() => {
-		return mergeObjects(aresUI.theme, props.theme);
+		return merge(aresUI.theme, props.theme);
 	}, [aresUI.theme, props.theme]);
 
 	const className = useMemo(() => {

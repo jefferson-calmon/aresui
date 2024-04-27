@@ -3,7 +3,7 @@ import Router from 'next/router';
 import { useEffect, useCallback, useRef, memo, useMemo } from 'react';
 
 import progress from 'nprogress';
-import { mergeObjects } from 'codekit';
+import { merge } from 'codekit';
 
 import * as T from './NavigationProgressBar.types';
 import * as U from './NavigationProgressBar.utils';
@@ -16,7 +16,7 @@ export function NavigationProgressBar(params: T.NavigationProgressBarProps) {
 
 	// Memo vars
 	const props = useMemo(() => {
-		return mergeObjects(T.defaultPropsNavigationProgressBar, params);
+		return merge(T.defaultPropsNavigationProgressBar, params);
 	}, [params]);
 
 	const transformCSS = useMemo(() => {

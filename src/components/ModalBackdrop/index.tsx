@@ -13,17 +13,20 @@ export function ModalBackdrop(props: T.ModalBackdropProps): JSX.Element {
 	const escapeKeyPressed = useKeyPress('Escape');
 
 	useEffect(() => {
+		if (props.disableScrollLock) return;
+        
 		document.body.style.overflow = 'hidden';
 
 		return () => {
 			document.body.style.overflow = 'auto';
 		};
-	}, []);
+	}, [props.disableScrollLock]);
 
 	useEffect(() => {
 		if (!escapeKeyPressed) return;
 
 		props.onClose();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [escapeKeyPressed]);
 
 	return (
@@ -34,7 +37,7 @@ export function ModalBackdrop(props: T.ModalBackdropProps): JSX.Element {
 				<HandleClickOutside
 					elementSelectors={[props.modalSelector]}
 					onClickOutside={props.onClose}
-					{...(props.clickOutsideProps|| {})}
+					{...(props.clickOutsideProps || {})}
 				/>
 			)}
 		</>

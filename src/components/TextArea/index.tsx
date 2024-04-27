@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { mergeObjects, useBoolean, debounce } from 'codekit';
+import { merge, useBoolean, debounce } from 'codekit';
 
 import * as T from './TextArea.types';
 import * as U from './TextArea.utils';
@@ -21,7 +21,7 @@ export function TextArea(props: T.TextAreaProps): JSX.Element {
 
 	// Memo vars
 	const theme = useMemo(() => {
-		return mergeObjects(aresUI.theme, props.theme);
+		return merge(aresUI.theme, props.theme);
 	}, [aresUI.theme, props.theme]);
 
 	const className = useMemo(() => {

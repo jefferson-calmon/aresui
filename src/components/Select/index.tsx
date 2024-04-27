@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 
-import { mergeObjects, useBoolean } from 'codekit';
+import { merge, useBoolean } from 'codekit';
 
 import * as T from './Select.types';
 import * as U from './Select.utils';
@@ -26,7 +26,7 @@ export function Select(props: T.SelectProps): JSX.Element {
 
 	// Memo vars
 	const theme = useMemo(() => {
-		return mergeObjects(aresUI.theme, props.theme ?? {});
+		return merge(aresUI.theme, props.theme ?? {});
 	}, [aresUI.theme, props.theme]);
 
 	const placeholder = useMemo(() => {

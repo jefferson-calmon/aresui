@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 
 import InputMask from 'react-input-mask';
-import { debounce, mergeObjects, randomString, useBoolean } from 'codekit';
+import { debounce, merge, randomString, useBoolean } from 'codekit';
 
 import * as T from './Input.types';
 import * as U from './Input.utils';
@@ -37,7 +37,7 @@ export function Input(props: T.InputProps): JSX.Element {
 
 	// Memo vars
 	const theme = useMemo(() => {
-		return mergeObjects(aresUI.theme, props.theme);
+		return merge(aresUI.theme, props.theme);
 	}, [aresUI.theme, props.theme]);
 
 	const errors = useMemo(() => {
@@ -159,7 +159,7 @@ export function Input(props: T.InputProps): JSX.Element {
 		const validator = U.getInputValidator(props.role);
 		const isValid = validator(value);
 
-		const errors = mergeObjects(
+		const errors = merge(
 			U.validationErrors,
 			props.customErrors ?? {}
 		);

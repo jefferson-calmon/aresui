@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { config, mergeObjects, randomString } from 'codekit';
+import { config, merge, randomString } from 'codekit';
 import { readableColor } from 'polished';
 
 import * as T from './Button.types';
@@ -19,7 +19,7 @@ export function Button(props: T.ButtonProps): JSX.Element {
 
 	// Memo vars
 	const theme = useMemo(() => {
-		return mergeObjects(aresUI.theme, props.theme);
+		return merge(aresUI.theme, props.theme);
 	}, [aresUI.theme, props.theme]);
 
 	const identifier = useMemo(() => {

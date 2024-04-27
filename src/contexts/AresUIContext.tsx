@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { mergeObjects } from 'codekit';
+import { merge } from 'codekit';
 import { DeepPartial } from 'types';
 
 export interface Config {
@@ -67,8 +67,8 @@ export const AresUIProvider = (props: AresUIContextProps): JSX.Element => {
 	return (
 		<AresUIContext.Provider
 			value={{
-				config: mergeObjects(defaultConfig, props.config),
-				theme: mergeObjects(defaultTheme, props.theme),
+				config: merge(defaultConfig, props.config),
+				theme: merge(defaultTheme, props.theme),
 			}}
 		>
 			{props.children}
@@ -80,8 +80,8 @@ export const useAresUI = () => {
 	const contextData = useContext(AresUIContext);
 
 	const data: AresUIContextData = {
-		config: mergeObjects(defaultConfig, contextData.config || {}),
-		theme: mergeObjects(defaultTheme, contextData.theme || {}),
+		config: merge(defaultConfig, contextData.config || {}),
+		theme: merge(defaultTheme, contextData.theme || {}),
 	};
 
 	return data;

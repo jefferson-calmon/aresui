@@ -22,7 +22,7 @@ function Pager() {
 		if (max === 0) return [];
 
 		return Array.new(pagination.props.pages)
-			.map((id, index) => ({ key: id, page: index + 1 }))
+			.map((item, index) => ({ key: item.id, page: index + 1 }))
 			.slice(max * increment - max, max * increment);
 	}, [pagination]);
 
