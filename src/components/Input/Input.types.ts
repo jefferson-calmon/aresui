@@ -1,39 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Theme } from 'contexts';
-
 import { Props } from 'react-input-mask';
 import { MoneyArgs, validationErrors } from './Input.utils';
 import { LoadingProps } from 'components/Loading';
-import { DeepPartial } from 'types';
+import { BaseProps } from 'types';
 
 export type ReactInputMaskProps = Props;
 type InputHTMLProps = React.InputHTMLAttributes<HTMLInputElement>;
 
-export interface InputProps extends InputHTMLProps {
-	children?: React.ReactNode | JSX.Element;
-	name: string;
+export interface InputProps extends BaseProps<'input'> {
 	label?: string;
-	containerClassName?: string;
 
-	role: InputRole;
+	mode?: BaseProps<'input'>['inputMode'];
+	role?: InputRole;
 	mask?: string;
 	autoComplete?: InputAutoComplete;
-	width: 'auto' | '100%' | `${number}px`;
+	width?: 'auto' | '100%' | `${number}px`;
 
-	value?: InputHTMLProps['value'];
-	defaultValue?: InputHTMLProps['defaultValue'];
-
-	theme: DeepPartial<Theme>;
-	options: InputPickerOption[];
+	options?: InputPickerOption[];
 	error?: string;
 	addon?: () => JSX.Element;
 
 	loading?: boolean;
 	disabled?: boolean;
 
-	errorPrefix: string;
+	errorPrefix?: string;
 	disableValidations?: boolean;
-	customErrors: Partial<typeof validationErrors>;
+	customErrors?: Partial<typeof validationErrors>;
 	money?: {
 		trigger?: 'focus' | 'render';
 		args?: MoneyArgs;
@@ -47,12 +39,14 @@ export interface InputProps extends InputHTMLProps {
 	onFocus?: React.FocusEventHandler<HTMLInputElement>;
 	onKeyUp?: React.KeyboardEventHandler<HTMLInputElement>;
 	onBlur?: React.FocusEventHandler<HTMLInputElement>;
+
+	children?: React.ReactNode | JSX.Element;
 }
 
 export interface InputPickerOption {
 	value: string;
 	disabled?: boolean;
-    onClick?: () => void;
+	onClick?: () => void;
 }
 
 export type InputAttributes = ReactInputMaskProps & InputHTMLProps;
@@ -111,8 +105,8 @@ export type InputAutoComplete =
 export type InputRole =
 	| 'default'
 	| 'email'
-	| 'tel'
-	| 'money'
+	| 'phone'
+	| 'currency'
 	| 'cpf'
 	| 'url'
 	| 'number'
@@ -120,17 +114,3 @@ export type InputRole =
 	| 'cnpj';
 
 export type InputError = any;
-
-export const defaultPropsInput: InputProps = {
-	name: 'input',
-	label: '',
-	role: 'default',
-	width: '100%',
-	errorPrefix: '',
-	theme: {},
-	customErrors: {},
-	options: [],
-	money: {
-		trigger: 'focus',
-	},
-};

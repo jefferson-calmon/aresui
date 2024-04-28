@@ -16,8 +16,8 @@ import { baseClass } from 'helpers/baseClass';
 export const validationErrors: Record<InputRole, string> = {
 	default: 'Entrada inválida.',
 	email: 'O email fornecido não é válido.',
-	tel: 'O número de telefone fornecido não é válido.',
-	money: 'O valor monetário fornecido não é válido.',
+	phone: 'O número de telefone fornecido não é válido.',
+	currency: 'O valor monetário fornecido não é válido.',
 	cpf: 'O CPF fornecido não é válido.',
 	url: 'A URL fornecida não é válida.',
 	number: 'O número fornecido não é válido.',
@@ -32,8 +32,8 @@ export function getDefaultInputType(role: InputRole) {
 
 	if (role === 'default') type = 'text';
 	if (role === 'email') type = 'email';
-	if (role === 'tel') type = 'tel';
-	if (role === 'money') type = 'text';
+	if (role === 'phone') type = 'tel';
+	if (role === 'currency') type = 'text';
 	if (role === 'cpf') type = 'text';
 	if (role === 'cnpj') type = 'text';
 	if (role === 'url') type = 'url';
@@ -48,8 +48,8 @@ export function getDefaultInputMode(role: InputRole) {
 
 	if (role === 'default') mode = 'text';
 	if (role === 'email') mode = 'email';
-	if (role === 'tel') mode = 'tel';
-	if (role === 'money') mode = 'numeric';
+	if (role === 'phone') mode = 'tel';
+	if (role === 'currency') mode = 'numeric';
 	if (role === 'cpf') mode = 'numeric';
 	if (role === 'cnpj') mode = 'numeric';
 	if (role === 'url') mode = 'url';
@@ -64,8 +64,8 @@ export function getDefaultInputAutoComplete(role: InputRole) {
 
 	if (role === 'default') autoComplete = 'on';
 	if (role === 'email') autoComplete = 'email';
-	if (role === 'tel') autoComplete = 'tel';
-	if (role === 'money') autoComplete = 'off';
+	if (role === 'phone') autoComplete = 'tel';
+	if (role === 'currency') autoComplete = 'off';
 	if (role === 'cpf') autoComplete = 'on';
 	if (role === 'cnpj') autoComplete = 'on';
 	if (role === 'url') autoComplete = 'url';
@@ -80,8 +80,8 @@ export function getDefaultInputPlaceholder(role: InputRole) {
 
 	if (role === 'default') placeholder = '';
 	if (role === 'email') placeholder = 'example@gmail.com';
-	if (role === 'tel') placeholder = '+55 (11) 99999-9999';
-	if (role === 'money') placeholder = 'R$ 0,00';
+	if (role === 'phone') placeholder = '+55 (11) 99999-9999';
+	if (role === 'currency') placeholder = 'R$ 0,00';
 	if (role === 'cpf') placeholder = '123.456.789-10';
 	if (role === 'cnpj') placeholder = '123.456.789/00001-10';
 	if (role === 'url') placeholder = 'https://www.example.com';
@@ -91,9 +91,32 @@ export function getDefaultInputPlaceholder(role: InputRole) {
 	return placeholder;
 }
 
-export function getInputAttributes(props: InputProps) {
-	const mask = props.mask || '';
-	const name = props.name;
+export function getDefaultInputMask(role: InputRole) {
+	let mask = '';
+
+	if (role === 'default') mask = '';
+	if (role === 'email') mask = '';
+	if (role === 'phone') mask = '(99) 99999-9999';
+	if (role === 'currency') mask = '';
+	if (role === 'cpf') mask = '999.999.999-99';
+	if (role === 'cnpj') mask = '999.999.999/9999-99';
+	if (role === 'url') mask = '';
+	if (role === 'number') mask = '';
+	if (role === 'password') mask = '';
+
+	return mask;
+}
+
+export function getInputAttributes(props: {
+	mask: InputProps['mask'];
+	name: InputProps['name'];
+	role: Required<InputProps>['role'];
+	type: InputProps['type'];
+	inputMode: InputProps['inputMode'];
+	autoComplete: InputProps['autoComplete'];
+	placeholder: InputProps['placeholder'];
+}) {
+	const mask = getDefaultInputMask(props.role);
 	const type = getDefaultInputType(props.role);
 	const inputMode = getDefaultInputMode(props.role);
 	const autoComplete = getDefaultInputAutoComplete(props.role);
@@ -102,8 +125,8 @@ export function getInputAttributes(props: InputProps) {
 	const ariaAutocomplete = autoComplete === 'off' ? 'none' : undefined;
 
 	const attributes: InputAttributes = {
-		mask,
-        name,
+		mask: props.mask ?? mask,
+		name: props.name ?? props.role,
 		type: props.type ?? type,
 		inputMode: props.inputMode ?? inputMode,
 		autoComplete: props.autoComplete ?? autoComplete,
@@ -123,7 +146,7 @@ export function getInputValidator(role: InputRole) {
 		cnpj: validateCnpj,
 		cpf: validateCpf,
 		email: validateEmail,
-		tel: validatePhoneNumber,
+		phone: validatePhoneNumber,
 		url: (value: string) => validateByRegex(value, urlRegex),
 	};
 
@@ -132,27 +155,6 @@ export function getInputValidator(role: InputRole) {
 	if (roleValidator) validator = roleValidator;
 
 	return validator;
-}
-
-export function filterProps(props: InputProps) {
-	const newProps: Partial<typeof props> = { ...props };
-
-	delete newProps.addon;
-	delete newProps.customErrors;
-	delete newProps.options;
-	delete newProps.width;
-	delete newProps.theme;
-	delete newProps.role;
-	delete newProps.containerClassName;
-	delete newProps.mask;
-	delete newProps.loading;
-	delete newProps.errorPrefix;
-	delete newProps.disableValidations;
-	delete newProps.maskProps;
-	delete newProps.money;
-	delete newProps.loadingProps;
-
-	return newProps;
 }
 
 export * from './utils/moneyMask';

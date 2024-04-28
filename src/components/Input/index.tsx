@@ -1,24 +1,66 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 
 import InputMask from 'react-input-mask';
-import { debounce, merge, randomString, useBoolean } from 'codekit';
+import { config, debounce, merge, useBoolean } from 'codekit';
 
 import * as T from './Input.types';
 import * as U from './Input.utils';
 import * as C from './Input.components';
 import Loading from 'components/Loading';
+import Errors from 'components/Errors';
 import { useControlledState } from 'hooks/useControlledState';
 import { useError } from 'hooks/useError';
-import { useAresUI } from 'contexts';
+import { useTheme } from 'hooks/useTheme';
+import { useComponentId } from 'hooks/useComponentId';
+import { filterHTMLProps } from 'helpers/filterHTMLProps';
 import { buildClassName } from 'helpers/buildClassName';
-import { searchInText } from 'helpers/searchInText';
 
 import { InputContainer } from './Input.styles';
 
-export function Input(props: T.InputProps): JSX.Element {
+config();
+
+export function Input({
+	name,
+	type = 'text',
+	label,
+	placeholder,
+
+	mode,
+	role = 'default',
+	mask,
+	autoComplete,
+	width = '100%',
+
+	options = [],
+	error: propError,
+	addon,
+
+	loading,
+	disabled,
+
+	errorPrefix = '',
+	disableValidations,
+	customErrors,
+	money = {
+		trigger: 'focus',
+	},
+
+	maskProps,
+	loadingProps,
+
+	onChangeValue,
+	onChange,
+	onInput,
+	onFocus,
+	onKeyUp,
+	onBlur,
+	children,
+	...props
+}: T.InputProps): JSX.Element {
 	// Hooks
 	const error = useError();
-	const aresUI = useAresUI();
+	const theme = useTheme(props.theme);
+	const componentId = useComponentId('input');
 
 	// Refs
 	const inputRef = useRef<HTMLInputElement | null>(null);
@@ -27,7 +69,7 @@ export function Input(props: T.InputProps): JSX.Element {
 	// Controlled states
 	const [value, setValue] = useControlledState(
 		props.value,
-		props.defaultValue || ''
+		props.defaultValue ?? ''
 	);
 
 	// Boolean hooks
@@ -36,55 +78,54 @@ export function Input(props: T.InputProps): JSX.Element {
 	const isActivePickerOptions = useBoolean();
 
 	// Memo vars
-	const theme = useMemo(() => {
-		return merge(aresUI.theme, props.theme);
-	}, [aresUI.theme, props.theme]);
-
 	const errors = useMemo(() => {
-		const externalError = props.error ? error.build(props.error) : null;
+		const externalError = propError ? error.build(propError) : null;
 		const renderExternalError = isAlreadyFocused.value && value;
 
 		return [
 			...error.errors,
 			!!renderExternalError && externalError,
 		].compact();
-	}, [props.error, error, isAlreadyFocused.value, value]);
+	}, [propError, error, isAlreadyFocused.value, value]);
 
 	const isValid = useMemo(() => {
 		return error.errors.length === 0 && errors.length === 0;
 	}, [error.errors.length, errors.length]);
 
 	const inputAttr = useMemo(() => {
-		return U.getInputAttributes(props);
-	}, [props]);
+		return U.getInputAttributes({
+			mask,
+			autoComplete,
+			inputMode: mode,
+			name,
+			placeholder,
+			role,
+			type,
+		});
+	}, [autoComplete, mask, mode, name, placeholder, role, type]);
 
-	const inputId = useMemo(() => randomString(16), []);
-
-	const options = useMemo(() => {
-		return props.options.filter((option) =>
-			searchInText(String(value), option.value)
-		);
-	}, [value, props.options]);
+	const optionsFiltered = useMemo(() => {
+		return options.search('value', String(value));
+	}, [value, options]);
 
 	const className = useMemo(() => {
 		const classes = [
 			U.classBase(),
-			U.classBase(props.containerClassName || ''),
 			!isValid && U.classBase('invalid'),
-			props.disabled && U.classBase('disabled'),
+			disabled && U.classBase('disabled'),
 			isFocused.value && U.classBase('focused'),
 		];
 
 		return buildClassName(...classes);
-	}, [props, isValid, isFocused.value]);
+	}, [isValid, disabled, isFocused.value]);
 
 	// Effects
 	useEffect(() => {
-		const isMoney = props.role === 'money';
-		const isRenderTrigger = props.money?.trigger === 'render';
-		const args = props.money?.args;
+		const isMoney = role === 'currency';
+		const isRenderTrigger = money?.trigger === 'render';
+		const args = money?.args;
 
-		const element = document.querySelector(`input#${inputId}`);
+		const element = document.querySelector(`input#${componentId}`);
 		const input = element as HTMLInputElement;
 
 		if (
@@ -98,30 +139,30 @@ export function Input(props: T.InputProps): JSX.Element {
 		U.maskInputMoneyByElement(input, args);
 		input.blur();
 		renderedMoneyInput.current = true;
-	}, [inputId, props.money?.args, props.money?.trigger, props.role]);
+	}, [componentId, money?.args, money?.trigger, role]);
 
 	// Functions
 	function handleChange(type: 'change' | 'input', isValid?: boolean) {
 		if (!isValid && typeof isValid !== 'undefined') return () => null;
 
 		const change = (event: React.ChangeEvent<HTMLInputElement>) => {
-			props.onChange?.(event);
+			onChange?.(event);
 
 			isActivePickerOptions.setTrue();
 
 			setValue(event.target.value);
-			props.onChangeValue?.(event.target.value);
+			onChangeValue?.(event.target.value);
 		};
 
 		const input = (event: React.FormEvent<HTMLInputElement>) => {
-			props.onInput?.(event);
+			onInput?.(event);
 
 			isActivePickerOptions.setTrue();
 
 			const input = event.target as HTMLInputElement;
 
 			setValue(input.value);
-			props.onChangeValue?.(input.value);
+			onChangeValue?.(input.value);
 		};
 
 		if (type === 'input') return input;
@@ -131,22 +172,22 @@ export function Input(props: T.InputProps): JSX.Element {
 	}
 
 	function handleKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
-		props.onKeyUp?.(event);
+		onKeyUp?.(event);
 	}
 
 	function handleFocus(event: React.FocusEvent<HTMLInputElement>) {
-		props.onFocus?.(event);
+		onFocus?.(event);
 		isFocused.setTrue();
 		isAlreadyFocused.setTrue();
 		isActivePickerOptions.setTrue();
 
-		if (props.role === 'money' && props.money?.trigger === 'focus') {
-			U.maskInputMoneyByEvent(event, props.money?.args);
+		if (role === 'currency' && money?.trigger === 'focus') {
+			U.maskInputMoneyByEvent(event, money?.args);
 		}
 	}
 
 	function handleBlur(event: React.FocusEvent<HTMLInputElement>) {
-		props.onBlur?.(event);
+		onBlur?.(event);
 		isFocused.setFalse();
 		debounce(isActivePickerOptions.setFalse, 300);
 
@@ -154,16 +195,13 @@ export function Input(props: T.InputProps): JSX.Element {
 	}
 
 	function handleValidation(value: string) {
-		if (props.disableValidations) return;
+		if (disableValidations) return;
 
-		const validator = U.getInputValidator(props.role);
+		const validator = U.getInputValidator(role);
 		const isValid = validator(value);
 
-		const errors = merge(
-			U.validationErrors,
-			props.customErrors ?? {}
-		);
-		const errorMessage = errors[props.role];
+		const errors = merge(U.validationErrors, customErrors ?? {});
+		const errorMessage = errors[role];
 
 		error.remove(errorMessage.slugify());
 
@@ -175,37 +213,32 @@ export function Input(props: T.InputProps): JSX.Element {
 
 		setValue(option.value);
 		option.onClick?.();
-		props.onChangeValue?.(option.value);
+		onChangeValue?.(option.value);
 		isActivePickerOptions.setFalse();
 	}
 
+	// Common vars
+	const Addon = addon;
+
 	return (
-		<InputContainer
-			className={className}
-			$theme={theme}
-			$width={props.width}
-		>
-			{props.label && <label>{props.label}</label>}
+		<InputContainer className={className} $theme={theme} $width={width}>
+			{label && <label>{label}</label>}
 
 			<div className={U.classBase('input-container')}>
-				{props.loading && (
+				{loading && (
 					<div className={U.classBase('input-addon')}>
-						<Loading
-							type="spinner"
-							size={18}
-							{...props.loadingProps}
-						/>
+						<Loading type="spinner" size={18} {...loadingProps} />
 					</div>
 				)}
 
-				{props.addon && (
+				{Addon && (
 					<div className={U.classBase('input-addon')}>
-						<props.addon />
+						<Addon />
 					</div>
 				)}
 
 				<InputMask
-					id={inputId}
+					id={componentId}
 					inputRef={inputRef}
 					alwaysShowMask={false}
 					maskChar={null} // If you want don't show the characters, just set `null`.;
@@ -213,8 +246,8 @@ export function Input(props: T.InputProps): JSX.Element {
 					// --
 					aria-autocomplete={inputAttr['aria-autocomplete']}
 					// --
-					{...U.filterProps(props)}
-					{...props.maskProps}
+					{...filterHTMLProps(props)}
+					{...maskProps}
 					// --
 					type={inputAttr.type}
 					inputMode={inputAttr.inputMode}
@@ -222,33 +255,29 @@ export function Input(props: T.InputProps): JSX.Element {
 					autoComplete={inputAttr.autoComplete}
 					placeholder={inputAttr.placeholder}
 					name={inputAttr.name}
-					value={
-						props.role !== 'money' ? (value as string) : undefined
-					}
+					value={role !== 'currency' ? (value as string) : undefined}
 					// --
-					onChange={handleChange('change', props.role !== 'money')}
-					onInput={handleChange('input', props.role === 'money')}
+					onChange={handleChange('change', role !== 'currency')}
+					onInput={handleChange('input', role === 'currency')}
 					onKeyUp={handleKeyUp}
 					onFocus={handleFocus}
 					onBlur={handleBlur}
 				/>
 
-				{isActivePickerOptions.value && props.options.length > 0 && (
+				{isActivePickerOptions.value && optionsFiltered.length > 0 && (
 					<C.PickerOptions
-						options={options}
+						options={optionsFiltered}
 						onChange={handleSelectPickerOption}
 					/>
 				)}
 			</div>
 
-			<C.Errors errors={errors} errorPrefix={props.errorPrefix} />
+			<Errors errors={errors} prefix={errorPrefix} />
 
-			{props.children}
+			{children}
 		</InputContainer>
 	);
 }
-
-Input.defaultProps = T.defaultPropsInput;
 
 export * from './Input.types';
 

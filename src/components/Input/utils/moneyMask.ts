@@ -1,3 +1,7 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable no-case-declarations */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // @ts-ignore
 /* eslint-disable prefer-rest-params */
 interface Input extends HTMLInputElement {

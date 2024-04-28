@@ -1,32 +1,11 @@
 import React from 'react';
 
-import { useError } from 'codekit';
-import { InputPickerOption, InputProps } from './Input.types';
+import { InputPickerOption } from './Input.types';
 import { classBase } from './Input.utils';
-
-interface ErrorsProps {
-	errors: ReturnType<typeof useError>['errors'];
-	errorPrefix: InputProps['errorPrefix'];
-}
 
 interface PickerOptionsProps {
 	onChange: (option: InputPickerOption) => void;
 	options: InputPickerOption[];
-}
-
-export function Errors(props: ErrorsProps) {
-	if (props.errors.length === 0) return null;
-
-	return (
-		<div className={classBase('errors')}>
-			{props.errors.map((error) => (
-				<span key={error.id} className={classBase('error')}>
-					{props.errorPrefix}
-					{error.message}
-				</span>
-			))}
-		</div>
-	);
 }
 
 export function PickerOptions(props: PickerOptionsProps) {

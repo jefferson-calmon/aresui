@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Input from './index';
-import { defaultPropsInput, InputProps } from './Input.types';
+import { InputProps } from './Input.types';
 
-const storiesDefaultProps: Partial<InputProps> = {
+const storyProps: Partial<InputProps> = {
 	name: 'input',
 	label: 'Input',
 	role: 'default',
@@ -15,8 +15,7 @@ const meta: Meta<typeof Input> = {
 	component: Input,
 	tags: ['autodocs'],
 	args: {
-		...defaultPropsInput,
-		...storiesDefaultProps,
+		...storyProps,
 	},
 };
 
@@ -25,7 +24,6 @@ type Story = StoryObj<typeof Input>;
 
 export const Default: Story = {
 	args: {
-		...defaultPropsInput,
-		...storiesDefaultProps,
+		...storyProps,
 	},
 };

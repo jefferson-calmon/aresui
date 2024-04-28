@@ -109,7 +109,7 @@ export const InputContainer = styled.div`
 			width: 100%;
 			max-height: 200px;
 
-			padding: 8px 0;
+			padding: 4px 0;
 
 			overflow-y: scroll;
 
