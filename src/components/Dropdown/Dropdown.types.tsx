@@ -1,35 +1,40 @@
 import React from 'react';
 
 import Button from 'components/Button';
-import { Theme } from 'contexts';
-import { DeepPartial, Placement, Trigger } from 'types';
+import { BasePropsWithoutComponentProps, Placement, Trigger } from 'types';
 import { ChevronDown } from 'icons';
+import { Theme } from 'contexts';
 
 export type AutoCloseListeners = 'scroll' | 'resize';
+export type MenuProps = Pick<
+	Required<DropdownProps>,
+	'items' | 'height' | 'width' | 'placement' | 'searchable'
+> & {
+	theme: Theme;
+	onChange?: DropdownProps['onChange'];
+};
 
-export interface DropdownProps {
+export interface DropdownProps extends BasePropsWithoutComponentProps {
 	items: (DropdownMenuItem | (() => JSX.Element))[];
 
-	menuSelector?: string;
 	width?: '100%' | 'auto' | `${number}px`;
 	height?: '100%' | 'auto' | `${number}px`;
 
-	placement: Placement;
-	trigger: Trigger;
+	placement?: Placement;
+	trigger?: Trigger;
 	searchable?: boolean;
 
-	autoCloseListeners: AutoCloseListeners[];
-    disableAutoCloseWhenClosest?: string[];
+	autoCloseListeners?: AutoCloseListeners[];
+	disableAutoCloseWhenClosest?: string[];
 
-	theme: DeepPartial<Theme>;
-
-	children: JSX.Element;
-	customMenu?: (props: DropdownProps) => JSX.Element;
+	customMenu?: (props: MenuProps) => JSX.Element;
 
 	onOpen?: () => void;
 	onClose?: () => void;
 	onToggle?: (open: boolean) => void;
 	onChange?: (item: DropdownMenuItem) => void;
+
+	children: JSX.Element | React.ReactNode;
 }
 
 export interface DropdownMenuItem {
@@ -40,48 +45,8 @@ export interface DropdownMenuItem {
 	linkTo?: string;
 }
 
-export interface DropdownMenuItemProps {
-	item: DropdownMenuItem;
-	onClick: (item: DropdownMenuItem) => (event: React.MouseEvent) => void;
-}
-
-export const defaultPropsDropdown: DropdownProps = {
-	children: (
-		<Button variant="secondary" size="small" rippleEffect>
-			Dropdown <ChevronDown />
-		</Button>
-	),
-	autoCloseListeners: ['resize', 'scroll'],
-	items: [
-		{
-			id: 'item1',
-			content: 'New File',
-		},
-		{
-			id: 'item2',
-			content: 'New File with Current Profile',
-		},
-		() => <h1>test</h1>,
-		{
-			id: 'item3',
-			content: 'Download As...',
-		},
-		{
-			id: 'item4',
-			content: 'Export PDF',
-		},
-		{
-			id: 'item5',
-			content: 'Export HTML',
-		},
-		{
-			id: 'item6',
-			content: 'Settings',
-		},
-	],
-	theme: {},
-	width: '220px',
-	height: '200px',
-	placement: 'bottom-left',
-	trigger: 'click',
-};
+export const defaultPropsDropdownChildren: DropdownProps['children'] = (
+	<Button variant="secondary" size="small" rippleEffect>
+		Dropdown <ChevronDown />
+	</Button>
+);

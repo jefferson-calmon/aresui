@@ -1,6 +1,6 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 
-import { randomString, useBoolean, useEventListener } from 'codekit';
+import { useBoolean, useEventListener } from 'codekit';
 
 import * as T from './Dropdown.types';
 import * as U from './Dropdown.utils';
@@ -8,8 +8,30 @@ import * as C from './Dropdown.components';
 import { HandleClickOutside } from '../';
 
 import { DropdownContainer } from './Dropdown.styles';
+import { useComponentId } from 'hooks/useComponentId';
+import { useTheme } from 'hooks/useTheme';
 
-export function Dropdown(props: T.DropdownProps) {
+export function Dropdown({
+	items = [],
+	height = '200px',
+	width = '220px',
+	placement = 'bottom-left',
+	trigger = 'click',
+	searchable = false,
+	autoCloseListeners = ['resize', 'scroll'],
+	disableAutoCloseWhenClosest = [],
+	customMenu,
+	onOpen,
+	onClose,
+	onToggle,
+	onChange,
+	children = T.defaultPropsDropdownChildren,
+	...props
+}: T.DropdownProps) {
+	// Hooks
+	const componentId = useComponentId('dropdown');
+	const theme = useTheme(props.theme);
+
 	// Boolean hooks
 	const isOpen = useBoolean(false);
 
@@ -18,80 +40,73 @@ export function Dropdown(props: T.DropdownProps) {
 	useEventListener('resize', handleClose('resize'));
 
 	// Common vars
-	let timeout: NodeJS.Timeout;
-
-	// Refs
-	const trackId = useRef(randomString(8, { useNumbers: false }));
+	let mouseStateTimeout: NodeJS.Timeout;
 
 	// Memo vars
 	const className = useMemo(() => {
 		const classes = [
+			componentId,
 			U.classBase(),
 			isOpen.value && U.classBase('active'),
-			U.classBase(trackId.current),
 		];
 
 		return U.buildClassName(...classes);
-	}, [isOpen.value, trackId]);
+	}, [isOpen.value, componentId]);
 
 	// Functions
 	function handleClick(e: React.MouseEvent) {
 		const target = e.target as HTMLElement;
 
 		const clickedOnSearch = !!target.closest('.search');
-		if (props.searchable && clickedOnSearch) return;
+		if (searchable && clickedOnSearch) return;
 
-		const closest = props.disableAutoCloseWhenClosest ?? [];
+		const closest = disableAutoCloseWhenClosest;
 		if (closest.some((selector) => target.closest(selector))) return;
 
-		const trigger = props.trigger;
 		const isAllowed = trigger === 'click' || trigger.includes('click');
 		if (!isAllowed) return;
 
 		const newValue = !isOpen.value;
 
-		props.onToggle?.(newValue);
+		onToggle?.(newValue);
 
-		newValue === true && props.onOpen?.();
-		newValue === false && props.onClose?.();
+		newValue === true && onOpen?.();
+		newValue === false && onClose?.();
 
 		isOpen.toggle();
 	}
 
 	function handleMouseEnter() {
-		clearTimeout(timeout);
+		clearTimeout(mouseStateTimeout);
 
-		const trigger = props.trigger;
 		const isAllowed = trigger === 'hover' || trigger.includes('hover');
 		if (!isAllowed) return;
 
 		const newValue = true;
 
-		props.onToggle?.(newValue);
-		props.onOpen?.();
+		onToggle?.(newValue);
+		onOpen?.();
 
 		isOpen.setValue(newValue);
 	}
 
 	function handleMouseOut() {
-		const trigger = props.trigger;
 		const isAllowed = trigger === 'hover' || trigger.includes('hover');
 		if (!isAllowed) return;
 
 		const callback = () => {
 			const newValue = false;
 
-			props.onToggle?.(newValue);
-			props.onClose?.();
+			onToggle?.(newValue);
+			onClose?.();
 
 			isOpen.setValue(newValue);
 		};
 
-		timeout = setTimeout(callback, 150);
+		mouseStateTimeout = setTimeout(callback, 150);
 	}
 
 	function handleContextMenu(e: React.MouseEvent) {
-		const trigger = props.trigger;
 		const isAllowed =
 			trigger === 'contextmenu' || trigger.includes('contextmenu');
 		if (!isAllowed) return;
@@ -100,8 +115,8 @@ export function Dropdown(props: T.DropdownProps) {
 
 		const newValue = true;
 
-		props.onToggle?.(newValue);
-		props.onOpen?.();
+		onToggle?.(newValue);
+		onOpen?.();
 
 		isOpen.setValue(newValue);
 	}
@@ -110,26 +125,22 @@ export function Dropdown(props: T.DropdownProps) {
 		const close = () => {
 			const newValue = false;
 
-			props.onToggle?.(newValue);
-			props.onClose?.();
+			onToggle?.(newValue);
+			onClose?.();
 
 			isOpen.setValue(newValue);
 		};
 
 		// if (typeof closeTrigger === 'undefined') return close();
 		if (!closeTrigger) close();
-		if (
-			!props.autoCloseListeners.includes(
-				closeTrigger as T.AutoCloseListeners
-			)
-		)
+		if (!autoCloseListeners.includes(closeTrigger as T.AutoCloseListeners))
 			return () => ({});
 
 		return close;
 	}
 
 	// Components
-	const DropdownMenu = props.customMenu || C.DropdownMenu;
+	const DropdownMenu = customMenu || C.DropdownMenu;
 
 	return (
 		<DropdownContainer className={className}>
@@ -140,22 +151,30 @@ export function Dropdown(props: T.DropdownProps) {
 				onMouseOut={handleMouseOut}
 				onContextMenu={handleContextMenu}
 			>
-				{props.children}
+				{children}
 
-				{isOpen.value && <DropdownMenu {...props} />}
+				{isOpen.value && (
+					<DropdownMenu
+						theme={theme}
+						items={items}
+						height={height}
+						width={width}
+						placement={placement}
+						searchable={searchable}
+						onChange={onChange}
+					/>
+				)}
 			</div>
 
 			{isOpen.value && (
 				<HandleClickOutside
-					elementSelectors={[`.${U.classBase(trackId.current)}`]}
+					elementSelectors={[`.${componentId}`]}
 					onClickOutside={handleClose}
 				/>
 			)}
 		</DropdownContainer>
 	);
 }
-
-Dropdown.defaultProps = T.defaultPropsDropdown;
 
 export * from './Dropdown.types';
 

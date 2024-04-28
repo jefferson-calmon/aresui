@@ -1,43 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo, useState } from 'react';
 
-import { config, merge } from 'codekit';
+import { config } from 'codekit';
 
 import * as T from './Dropdown.types';
 import * as U from './Dropdown.utils';
 import Link from 'components/Link';
-import { useAresUI } from 'contexts';
 
 import { DropdownMenuContainer, Div } from './Dropdown.styles';
 
 config();
 
-export function DropdownMenu(props: T.DropdownProps) {
-	// Hooks
-	const aresUI = useAresUI();
-
+export function DropdownMenu({
+	theme,
+	items = [],
+	height = '200px',
+	width = '220px',
+	placement = 'bottom-left',
+	searchable = false,
+	onChange,
+}: T.MenuProps) {
 	// States
 	const [search, setSearch] = useState<string>('');
 
 	// Memo vars
 	const className = useMemo(() => {
-		const placement = props.placement || 'bottom-center';
-
 		const classes = [
 			U.classBase('menu'),
-			props.menuSelector,
 			U.classBase('placement', placement),
 		];
 
 		return U.buildClassName(...classes);
-	}, [props]);
+	}, [placement]);
 
-	const theme = useMemo(() => {
-		return merge(aresUI.theme, props.theme);
-	}, [aresUI.theme, props.theme]);
-
-	const items = useMemo(() => {
-		return (props.items ?? []).filter((item) => {
+	const itemsFiltered = useMemo(() => {
+		return items.filter((item) => {
 			const isFunction = item instanceof Function;
 			const content = String((item as any)?.content);
 
@@ -45,7 +42,7 @@ export function DropdownMenu(props: T.DropdownProps) {
 
 			return content.searchFor(search);
 		});
-	}, [props.items, search]);
+	}, [items, search]);
 
 	// Functions
 	function handleClick(item: T.DropdownMenuItem) {
@@ -56,18 +53,18 @@ export function DropdownMenu(props: T.DropdownProps) {
 			}
 
 			item.onClick?.(item);
-			props.onChange?.(item);
+			onChange?.(item);
 		};
 	}
 
 	return (
 		<DropdownMenuContainer
 			className={className}
-			$width={props.width || ''}
-			$height={props.height || ''}
+			$width={width}
+			$height={height}
 			$theme={theme}
 		>
-			{props.searchable && (
+			{searchable && (
 				<div className={`search ${U.classBase('item')}`}>
 					<input
 						type="search"
@@ -78,7 +75,7 @@ export function DropdownMenu(props: T.DropdownProps) {
 				</div>
 			)}
 
-			{items.map((Item) =>
+			{itemsFiltered.map((Item) =>
 				!(Item instanceof Function) ? (
 					<DropdownMenuItem
 						key={Item.id}
@@ -93,7 +90,12 @@ export function DropdownMenu(props: T.DropdownProps) {
 	);
 }
 
-function DropdownMenuItem(props: T.DropdownMenuItemProps) {
+interface DropdownMenuItemProps {
+	item: T.DropdownMenuItem;
+	onClick: (item: T.DropdownMenuItem) => (event: React.MouseEvent) => void;
+}
+
+function DropdownMenuItem(props: DropdownMenuItemProps) {
 	// Common vars
 	const baseProps = {
 		className: U.classBase('item'),
@@ -115,5 +117,3 @@ function DropdownMenuItem(props: T.DropdownMenuItemProps) {
 		</>
 	);
 }
-
-DropdownMenu.defaultProps = T.defaultPropsDropdown;

@@ -2,11 +2,13 @@
 import { ComponentProps, JSXElementConstructor } from 'react';
 import { Theme } from 'contexts';
 
+export type BasePropsWithoutComponentProps = {
+	theme?: DeepPartial<Theme>;
+};
+
 export type BaseProps<
 	K extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>
-> = {
-	theme?: DeepPartial<Theme>;
-} & ComponentProps<K>;
+> = BasePropsWithoutComponentProps & ComponentProps<K>;
 
 export type DeepPartial<T> = {
 	[P in keyof T]?: DeepPartial<T[P]>;
