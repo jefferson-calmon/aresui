@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ComponentProps, JSXElementConstructor } from 'react';
 import { Theme } from 'contexts';
 
-interface CommonComponentProps {
-	theme: DeepPartial<Theme>;
-}
+export type BaseProps<
+	K extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>
+> = {
+	theme?: DeepPartial<Theme>;
+} & ComponentProps<K>;
 
 export type DeepPartial<T> = {
 	[P in keyof T]?: DeepPartial<T[P]>;
@@ -11,9 +15,8 @@ export type DeepPartial<T> = {
 export type InputHTMLAttributes = React.HTMLAttributes<HTMLInputElement>;
 export type DivHTMLAttributes = React.HTMLAttributes<HTMLDivElement>;
 
-export type ComponentProps<T> = CommonComponentProps & T;
-
 export type Width = 'auto' | '100%' | 'fit-content' | `${number}px` | number;
+
 export type Trigger =
 	| 'click'
 	| 'hover'

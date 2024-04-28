@@ -1,36 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { LinkProps } from 'components/Link';
 import { LoadingProps } from 'components/Loading';
 import { Theme } from 'contexts';
-import { DeepPartial } from 'types';
+import { BaseProps, DeepPartial } from 'types';
 
-export interface ButtonProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-	children: React.ReactNode;
-	className?: string;
-
-	loading: boolean;
+export interface ButtonProps extends BaseProps<'button'> {
+	loading?: boolean;
 	disabled?: boolean;
-	rippleEffect: boolean;
+	rippleEffect?: boolean;
 
-	variant: ButtonVariant;
+	variant?: ButtonVariant;
+	size?: ButtonSize;
+
 	linkTo?: LinkProps['to'];
-	theme: DeepPartial<Theme>;
-	size: 'large' | 'normal' | 'small';
 
 	linkProps?: LinkProps;
 	loadingProps?: LoadingProps;
-
-	onClick?: React.ButtonHTMLAttributes<HTMLButtonElement>['onClick'];
+	theme?: DeepPartial<Theme>;
 }
 
 export type ButtonVariant = 'default' | 'text' | 'outlined' | 'secondary';
-
-export const defaultPropsButton: ButtonProps = {
-	children: 'Button',
-	variant: 'default',
-    size: 'large',
-	loading: false,
-	rippleEffect: true,
-	theme: {},
-};
+export type ButtonSize = 'large' | 'normal' | 'small' | 'x-small';

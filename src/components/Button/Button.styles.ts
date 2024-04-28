@@ -19,7 +19,6 @@ export const ButtonContainer = styled.button`
 	align-items: center;
 	justify-content: center;
 
-	/* min-width: ${H.size(12)}; */
 	height: var(--base-height);
 
 	font-size: 15px;
@@ -36,11 +35,11 @@ export const ButtonContainer = styled.button`
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: ${H.size(1.2)};
+		gap: 12px;
 
 		pointer-events: none;
 
-		&.hidden {
+		&[data-hidden='true'] {
 			opacity: 0;
 		}
 	}
@@ -142,13 +141,16 @@ export const ButtonContainer = styled.button`
 
 	/* Sizes */
 	&.${classBase('size', 'large')} {
-		padding: 0 ${H.size(2.8)};
+		padding: 0 28px;
 	}
 	&.${classBase('size', 'normal')} {
-		padding: 0 ${H.size(2.0)};
+		padding: 0 20px;
 	}
 	&.${classBase('size', 'small')} {
-		padding: 0 ${H.size(1.6)};
+		padding: 0 16px;
+	}
+	&.${classBase('size', 'x-small')} {
+		padding: 0 12px;
 	}
 
 	/* Button states */

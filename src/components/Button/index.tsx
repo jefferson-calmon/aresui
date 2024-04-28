@@ -1,102 +1,103 @@
 import React, { useMemo } from 'react';
 
-import { config, merge, randomString } from 'codekit';
+import { config } from 'codekit';
 import { readableColor } from 'polished';
 
 import * as T from './Button.types';
 import * as U from './Button.utils';
 import Link from 'components/Link';
 import Loading from 'components/Loading';
-import { useAresUI } from 'contexts';
+import { useTheme } from 'hooks/useTheme';
+import { useComponentId } from 'hooks/useComponentId';
 import { buildClassName } from 'helpers/buildClassName';
+import { filterHTMLProps } from 'helpers/filterHTMLProps';
 
 import { ButtonContainer } from './Button.styles';
 
 config();
-export function Button(props: T.ButtonProps): JSX.Element {
+
+export function Button({
+	children = 'Button TESTE',
+	loading = false,
+	disabled,
+	rippleEffect = true,
+	variant = 'default',
+	linkTo,
+	theme: componentTheme,
+	size = 'normal',
+	linkProps,
+	loadingProps,
+	...props
+}: T.ButtonProps): JSX.Element {
 	// Hooks
-	const aresUI = useAresUI();
+	const theme = useTheme(componentTheme);
+	const componentId = useComponentId('button');
 
 	// Memo vars
-	const theme = useMemo(() => {
-		return merge(aresUI.theme, props.theme);
-	}, [aresUI.theme, props.theme]);
-
-	const identifier = useMemo(() => {
-		return randomString(16, {
-			useNumbers: false,
-			useSpecialCharacters: false,
-		});
-	}, []);
-
 	const className = useMemo(() => {
 		const classes = [
-			identifier,
+			componentId,
 			U.classBase(),
-			U.classBase('variant', props.variant),
-			U.classBase('size', props.size),
+			U.classBase('variant', variant),
+			U.classBase('size', size),
 			U.classBase(props.className || ''),
-			props.loading && U.classBase('loading'),
+			loading && U.classBase('loading'),
 		];
 
 		return buildClassName(...classes);
-	}, [identifier, props.className, props.loading, props.size, props.variant]);
+	}, [componentId, props.className, loading, size, variant]);
 
 	const loadingTheme = useMemo(() => {
 		let color = readableColor(theme.colors.primary);
 
-		if (props.variant === 'text') color = '#000';
-		if (props.variant === 'outlined') color = '#000';
+		if (variant === 'text') color = '#000';
+		if (variant === 'outlined') color = '#000';
 
 		return {
 			colors: {
 				primary: color,
 			},
 		};
-	}, [props.variant, theme.colors.primary]);
+	}, [variant, theme.colors.primary]);
 
 	// Functions
 	function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
 		props.onClick?.(event);
 
-		if (props.rippleEffect) U.handleRippleEffect(event, identifier);
+		if (rippleEffect) U.handleRippleEffect(event, componentId);
 	}
 
 	return (
 		<ButtonContainer
 			type="button"
-			disabled={props.disabled || !!props.loading}
-			{...props}
+			disabled={disabled || !!loading}
+			{...filterHTMLProps(props)}
 			$theme={theme}
-			$loading={props.loading ? 'true' : undefined}
+			$loading={loading ? 'true' : undefined}
 			className={className}
 			onClick={handleClick}
 		>
-			<span className={`${props.loading ? 'hidden' : ''}`}>
-				{props.children}
-			</span>
+			<span data-hidden={!!loading}>{children}</span>
 
-			{props.loading && (
+			{loading && (
 				<div className={U.classBase('loading-indicator')}>
 					<Loading
-                        type="spinner"
+						type="spinner"
 						size={24}
 						theme={loadingTheme}
-						{...props.loadingProps}
+						{...loadingProps}
 					/>
 				</div>
 			)}
 
-			{props.linkTo && !props.disabled && (
+			{linkTo && !disabled && (
 				<div className={U.classBase('link')}>
-					<Link to={props.linkTo} {...props.linkProps} />
+					<Link to={linkTo} {...linkProps} />
 				</div>
 			)}
 		</ButtonContainer>
 	);
 }
-
-Button.defaultProps = T.defaultPropsButton;
 
 export * from './Button.types';
 
