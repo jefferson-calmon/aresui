@@ -1,57 +1,51 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
-import { merge, uuid } from 'codekit';
+import { useControlledState } from 'codekit';
 
 import * as T from './Checkbox.types';
 import * as U from './Checkbox.utils';
-import { useAresUI } from 'contexts';
 import { buildClassName } from 'helpers/buildClassName';
 import { CheckIcon } from 'icons';
+import { useTheme } from 'hooks/useTheme';
+import { useComponentId } from 'hooks/useComponentId';
 
 import { CheckboxContainer } from './Checkbox.styles';
 
-export function Checkbox(props: T.CheckboxProps): JSX.Element {
+export function Checkbox({
+	label = 'Checkbox',
+	size = 16,
+	disabled,
+	checked,
+	onChange,
+	...props
+}: T.CheckboxProps): JSX.Element {
 	// Hooks
-	const aresUI = useAresUI();
+	const theme = useTheme(props.theme);
+	const componentId = useComponentId('checkbox');
 
 	// States
-	const [checked, setChecked] = useState<boolean>();
+	const [isChecked, setIsChecked] = useControlledState<boolean | undefined>(
+		checked,
+		false
+	);
 
 	// Memo Vars
-	const theme = useMemo(() => {
-		return merge(aresUI.theme, props.theme);
-	}, [aresUI.theme, props.theme]);
-
 	const className = useMemo(() => {
 		const classes = [
 			U.classBase(),
-			props.disabled && U.classBase('disabled'),
-			checked && U.classBase('checked'),
+			disabled && U.classBase('disabled'),
+			isChecked && U.classBase('checked'),
 		];
 
 		return buildClassName(...classes);
-	}, [props, checked]);
-
-	const checkboxId = useMemo(() => {
-		return 'checkbox_id:' + uuid();
-	}, []);
-
-	// Effects
-	useEffect(() => {
-		const initialChecked = props.checked || props.defaultChecked || false;
-
-		if (props.disabled) return;
-
-		setChecked(initialChecked);
-	}, [props.checked, props.defaultChecked, props.disabled]);
+	}, [disabled, isChecked]);
 
 	// Functions
 	function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-		props.onChange?.(event.target.checked, event);
+		if (disabled) return;
 
-		if (props.disabled || typeof props.checked !== 'undefined') return;
-
-		setChecked(event.target.checked);
+		onChange?.(event.target.checked, event);
+		setIsChecked(event.target.checked);
 	}
 
 	function handleClick(e: React.MouseEvent<HTMLInputElement, MouseEvent>) {
@@ -60,43 +54,35 @@ export function Checkbox(props: T.CheckboxProps): JSX.Element {
 		props.onClick?.(e);
 	}
 
+	// Common vars
+	const Label = label;
+
 	return (
-		<CheckboxContainer
-			className={className}
-			$theme={theme}
-			$size={props.size}
-		>
+		<CheckboxContainer className={className} $theme={theme} $size={size}>
 			<label>
 				<div className={U.classBase('wrapper')}>
 					<input
 						type="checkbox"
-						id={checkboxId}
-						checked={checked}
-						aria-checked={checked}
+						id={componentId}
+						checked={!!isChecked}
+						aria-checked={!!isChecked}
 						{...props}
-						name={props.name}
 						onChange={handleChange}
 						onClick={handleClick}
 					/>
 
-					{checked && <CheckIcon />}
+					{isChecked && <CheckIcon />}
 				</div>
 
-				{props.label && (
+				{Label && (
 					<span className={U.classBase('label')}>
-						{typeof props.label === 'string' ? (
-							props.label
-						) : (
-							<props.label />
-						)}
+						{typeof Label === 'string' ? Label : <Label />}
 					</span>
 				)}
 			</label>
 		</CheckboxContainer>
 	);
 }
-
-Checkbox.defaultProps = T.defaultPropsCheckbox;
 
 export * from './Checkbox.types';
 
