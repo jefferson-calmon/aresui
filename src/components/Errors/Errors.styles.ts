@@ -7,7 +7,7 @@ interface Props {
 	$theme: Theme;
 }
 
-export const ExternalErrorsContainer = styled.div`
+export const ErrorsContainer = styled.div`
 	${(props: Props) => globalStyle(props.$theme)}
 
 	display: flex;
@@ -31,4 +31,4 @@ export const ExternalErrorsContainer = styled.div`
 	}
 `;
 
-export default ExternalErrorsContainer;
+export default ErrorsContainer;

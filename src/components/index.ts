@@ -11,7 +11,7 @@ export * from './UploadArea';
 export * from './HandleClick';
 export * from './HandleClickOutside';
 export * from './ModalBackdrop';
-export * from './ExternalErrors';
+export * from './Errors';
 export * from './TextArea';
 export * from './Dropdown';
 export * from './Select';
