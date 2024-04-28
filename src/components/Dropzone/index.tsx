@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import * as D from 'react-dropzone';
 
@@ -7,29 +7,31 @@ import * as U from './Dropzone.utils';
 
 import { DropzoneContainer } from './Dropzone.styles';
 
-export function Dropzone(props: T.DropzoneProps): JSX.Element {
-	// Callbacks
-	const onDrop = useCallback(
-		(files: File[]) => props.onUpload?.(files),
-		[props.onUpload]
-	);
-
-	const onChangeDragActive = useCallback(
-		(isActive: boolean) => props.onChangeDragActive?.(isActive),
-		[props]
-	);
-
+export function Dropzone({
+	children = null,
+	options = {},
+	onUpload,
+	onChangeDragActive,
+	...props
+}: T.DropzoneProps): JSX.Element {
 	// Hooks
 	const dropzone = D.useDropzone({
-		onDrop,
-		accept: U.getAccepts(props.options),
-		...props.options,
+		onDrop: (files: File[]) => onUpload?.(files),
+		accept: {
+			'image/*': [],
+			'video/*': [],
+			'audio/*': [],
+			'text/*': [],
+			'application/pdf': [],
+		},
+		...options,
 	});
 
 	// Effects
 	useEffect(() => {
-		onChangeDragActive(dropzone.isDragActive);
-	}, [dropzone.isDragActive, onChangeDragActive]);
+		onChangeDragActive?.(dropzone.isDragActive);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dropzone.isDragActive]);
 
 	// Memo vars
 	const className = useMemo(() => {
@@ -40,18 +42,16 @@ export function Dropzone(props: T.DropzoneProps): JSX.Element {
 		];
 
 		return U.buildClassName(...classes);
-	}, [props, dropzone]);
+	}, [dropzone, props.className]);
 
 	return (
 		<DropzoneContainer {...dropzone.getRootProps()} className={className}>
 			<input {...dropzone.getInputProps()} />
 
-			{props.children}
+			{children}
 		</DropzoneContainer>
 	);
 }
-
-Dropzone.defaultProps = T.defaultPropsDropzone;
 
 export * from './Dropzone.types';
 
