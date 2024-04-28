@@ -1,19 +1,23 @@
 import { useEffect } from 'react';
 
-import * as T from './HandleClickOutside.types';
 import { debounce } from 'codekit';
 
-export function HandleClickOutside(props: T.HandleClickOutsideProps) {
+import * as T from './HandleClickOutside.types';
+
+export function HandleClickOutside({
+	selectors,
+	delay = 300,
+	disabled,
+	onClickOutside,
+}: T.HandleClickOutsideProps) {
 	// Effects
 	useEffect(() => {
-		const d = document;
-
 		function handleClickOutside(event: MouseEvent) {
 			const target = event.target as HTMLElement;
 
-			if (props.disabled || !target) return;
+			if (disabled || !target) return;
 
-			const clickedOutside = !props.elementSelectors.some((selector) => {
+			const clickedOutside = !selectors.some((selector) => {
 				const element = document.querySelector(selector);
 
 				if (target.closest(selector)) return true;
@@ -21,20 +25,19 @@ export function HandleClickOutside(props: T.HandleClickOutsideProps) {
 					return true;
 			});
 
-			clickedOutside && setTimeout(() => props.onClickOutside(), 1);
+			clickedOutside && setTimeout(() => onClickOutside?.(), 1);
 		}
 
-		const setup = () => d.addEventListener('click', handleClickOutside);
+		const setup = () =>
+			document.addEventListener('click', handleClickOutside);
 
-		debounce(setup, props.delay);
+		debounce(setup, delay);
 
-		return () => d.removeEventListener('click', handleClickOutside);
-	}, [props]);
+		return () => document.removeEventListener('click', handleClickOutside);
+	}, [delay, disabled, onClickOutside, selectors]);
 
 	return null;
 }
-
-HandleClickOutside.defaultProps = T.defaultPropsHandleClickOutside;
 
 export * from './HandleClickOutside.types';
 

@@ -168,7 +168,7 @@ export function Dropdown({
 
 			{isOpen.value && (
 				<HandleClickOutside
-					elementSelectors={[`.${componentId}`]}
+					selectors={[`.${componentId}`]}
 					onClickOutside={handleClose}
 				/>
 			)}

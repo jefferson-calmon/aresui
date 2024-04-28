@@ -14,7 +14,7 @@ export function ModalBackdrop(props: T.ModalBackdropProps): JSX.Element {
 
 	useEffect(() => {
 		if (props.disableScrollLock) return;
-        
+
 		document.body.style.overflow = 'hidden';
 
 		return () => {
@@ -35,7 +35,7 @@ export function ModalBackdrop(props: T.ModalBackdropProps): JSX.Element {
 
 			{props.modalSelector && (
 				<HandleClickOutside
-					elementSelectors={[props.modalSelector]}
+					selectors={[props.modalSelector]}
 					onClickOutside={props.onClose}
 					{...(props.clickOutsideProps || {})}
 				/>

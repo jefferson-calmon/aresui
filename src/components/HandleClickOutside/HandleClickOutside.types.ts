@@ -1,12 +1,7 @@
 export interface HandleClickOutsideProps {
-	elementSelectors: string[];
-	onClickOutside: () => void;
-	disabled?: boolean;
-	delay: number;
-}
+	selectors: string[];
 
-export const defaultPropsHandleClickOutside: HandleClickOutsideProps = {
-	elementSelectors: [],
-	onClickOutside: () => ({}),
-	delay: 300,
-};
+	onClickOutside?: () => void;
+	disabled?: boolean;
+	delay?: number;
+}
