@@ -10,24 +10,24 @@ import { buildClassName } from 'helpers/buildClassName';
 
 config();
 
-export const Image = (props: T.ImageProps): JSX.Element => {
+export const Image = ({ ...props }: T.ImageProps): JSX.Element => {
 	// Hooks
-	const aresUI = useAresUI();
+	const { config } = useAresUI();
 
 	// Memo vars
 	const className = useMemo(() => {
-		const classes = [U.classBase(), U.classBase(props.className || '')];
+		const classes = [U.classBase(), props.className];
 
 		return buildClassName(...classes);
 	}, [props.className]);
 
 	const altText = useMemo(() => {
-		const sentences = [props.alt, aresUI.config.app.name].compact();
+		const sentences = [props.alt, config.app.name].compact();
 
-		return sentences.join(' | ');
-	}, []);
+		return sentences.join(' - ');
+	}, [config.app.name, props.alt]);
 
-	return <NextImage className={className} {...props} alt={altText} />;
+	return <NextImage {...props} className={className} alt={altText} />;
 };
 
 export * from './Image.types';
