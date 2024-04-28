@@ -5,33 +5,26 @@ import * as T from './HandleClick.types';
 export function HandleClick(props: T.HandleClickProps) {
 	// Effects
 	useEffect(() => {
-		const d = document;
-		const selectors = props.elementSelectors;
-
 		if (props.disabled) return;
 
-		selectors.forEach((selector) => {
-			const elements = Array.from(d.querySelectorAll(selector));
+		const elements = props.selectors
+			.map((selector) => document.querySelectorAll<HTMLElement>(selector))
+			.map((nodeList) => Array.from(nodeList))
+			.flat();
 
-			elements.forEach((element) => {
-				element.addEventListener('click', props.onClick);
-			});
+		elements.forEach((element) => {
+			element.addEventListener('click', () => props.onClick?.());
 		});
 
 		return () => {
-			selectors.forEach((selector) => {
-				const elements = Array.from(d.querySelectorAll(selector));
-				elements.forEach((element) => {
-					element.removeEventListener('click', props.onClick);
-				});
+			elements.forEach((element) => {
+				element.removeEventListener('click', () => props.onClick?.());
 			});
 		};
 	}, [props]);
 
 	return null;
 }
-
-HandleClick.defaultProps = T.defaultPropsHandleClick;
 
 export * from './HandleClick.types';
 

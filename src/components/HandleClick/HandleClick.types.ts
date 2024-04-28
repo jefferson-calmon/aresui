@@ -1,10 +1,6 @@
 export interface HandleClickProps {
-	elementSelectors: string[];
+	selectors: string[];
 	disabled?: boolean;
-	onClick: () => void;
-}
 
-export const defaultPropsHandleClick: HandleClickProps = {
-	elementSelectors: [],
-	onClick: () => ({}),
-};
+	onClick?: () => void;
+}
