@@ -5,14 +5,14 @@ import { useTable } from 'components/Table/Table.context';
 
 import { TableHeadingSelectingContainer } from './styles';
 
-function TableHeadingSelecting<T extends Types.TableBaseDataType>() {
+function TableHeadingSelecting<T extends Types.TableBaseData>() {
 	// Hooks
 	const table = useTable<T>();
 
 	// Functions
 	function handleConfirm() {
 		table.onEndSelecting();
-		table.props.onCompleteSelection?.(table.selected);
+		table.onCompleteSelection?.(table.selected);
 	}
 
 	return (
@@ -21,7 +21,7 @@ function TableHeadingSelecting<T extends Types.TableBaseDataType>() {
 
 			<div className="handlers">
 				<button onClick={table.onEndSelecting}>Cancelar seleção</button>
-                
+
 				<button onClick={handleConfirm}>Confirmar</button>
 			</div>
 		</TableHeadingSelectingContainer>

@@ -16,7 +16,7 @@ export interface TableColumnProps<T> {
 	header?: boolean;
 }
 
-function TableColumn<T extends Types.TableBaseDataType>(
+function TableColumn<T extends Types.TableBaseData>(
 	props: TableColumnProps<T>
 ) {
 	// Hooks
@@ -24,13 +24,13 @@ function TableColumn<T extends Types.TableBaseDataType>(
 
 	// Memo vars
 	const key = useMemo(() => {
-		const columns = Object.entries(table.props.columns);
+		const columns = Object.entries(table.columns);
 		const headerKey = columns.find(([, value]) => value === props.column);
 
 		const key = !props.header ? props.column : headerKey?.[0];
 
 		return (key ?? '') as keyof T;
-	}, [props.column, props.header, table.props.columns]);
+	}, [props.column, props.header, table.columns]);
 
 	const className = useMemo(() => {
 		const classes = [
@@ -50,19 +50,19 @@ function TableColumn<T extends Types.TableBaseDataType>(
 
 	const CustomColumn = useMemo(() => {
 		const customs = props.header
-			? table.props.customColumnsHeader
-			: table.props.customColumns;
+			? table.customColumnsHeader
+			: table.customColumns;
 
 		const customColumn = customs?.[key];
 
 		return customColumn ? () => customColumn(props.data) : null;
-	}, [key, props.data, props.header, table.props]);
+	}, [key, props.data, props.header, table]);
 
 	// console.log(key, CustomColumn);
 
 	// Functions
 	function handleClick() {
-		if (table.props.sortType === 'row') table.onSort(key);
+		if (table.sortType === 'row') table.onSort(key);
 	}
 
 	return (
@@ -73,7 +73,7 @@ function TableColumn<T extends Types.TableBaseDataType>(
 			{!CustomColumn && props.header && (
 				<strong
 					onClick={handleClick}
-					data-sortable={table.props.sortType === 'row'}
+					data-sortable={table.sortType === 'row'}
 					data-sorting={table.sort.item === key}
 				>
 					{value}

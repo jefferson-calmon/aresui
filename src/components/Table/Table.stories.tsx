@@ -5,7 +5,9 @@ import { faker } from '@faker-js/faker/locale/pt_BR';
 
 import Table from './index';
 import Image from '../Image';
-import { defaultPropsTable, TableProps } from './Table.types';
+import { TableProps } from './Table.types';
+
+type Data = (typeof data)[number];
 
 const data = Array.from({ length: 10 }).map(() => ({
 	id: faker.string.uuid(),
@@ -19,7 +21,7 @@ const data = Array.from({ length: 10 }).map(() => ({
 	createdAt: faker.date.recent().toISOString(),
 }));
 
-const storiesDefaultProps: Partial<TableProps<(typeof data)[number]>> = {
+const storyProps: Partial<TableProps<Data>> = {
 	data,
 	columns: {
 		imageURL: '',
@@ -64,22 +66,20 @@ const storiesDefaultProps: Partial<TableProps<(typeof data)[number]>> = {
 	},
 };
 
-const meta: Meta<typeof Table> = {
+const meta: Meta<typeof Table<Data>> = {
 	title: 'Table',
 	component: Table,
 	tags: ['autodocs'],
 	args: {
-		...defaultPropsTable,
-		...(storiesDefaultProps as unknown as typeof defaultPropsTable),
+		...storyProps,
 	},
 };
 
 export default meta;
-type Story = StoryObj<typeof Table>;
+type Story = StoryObj<typeof Table<Data>>;
 
 export const Default: Story = {
 	args: {
-		...defaultPropsTable,
-		...(storiesDefaultProps as unknown as typeof defaultPropsTable),
+		...storyProps,
 	},
 };

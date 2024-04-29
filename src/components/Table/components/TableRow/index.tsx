@@ -16,38 +16,37 @@ export interface TableRowProps<T> {
 	header?: boolean;
 }
 
-function TableRow<T extends Types.TableBaseDataType>(props: TableRowProps<T>) {
+function TableRow<T extends Types.TableBaseData>(props: TableRowProps<T>) {
 	// Hooks
 	const table = useTable<T>();
 
 	// Memo vars
 	const columns = useMemo(() => {
-		if (props.header) return Object.values(table.props.columns);
+		if (props.header) return Object.values(table.columns);
 
 		return Object.keys(props.data)
-			.filter((key) => key in table.props.columns)
-			.orderByArray(Object.keys(table.props.columns))
+			.filter((key) => key in table.columns)
+			.orderByArray(Object.keys(table.columns))
 			.map((key) => key as keyof T);
-	}, [props.data, props.header, table.props.columns]);
+	}, [props.data, props.header, table.columns]);
 
 	const className = useMemo(() => {
 		const classes = [
 			Utils.classBase('row'),
-			Utils.processor(props.data, table.props.rowClassName),
 			props.header && Utils.classBase('row-header'),
 		];
 
 		return classes.compact().uniq().join(' ');
-	}, [props.data, props.header, table.props.rowClassName]);
+	}, [props.header]);
 
 	const isSelected = useMemo(() => {
 		const selected = table.selected;
-		const data = table.props.data;
+		const data = table.data;
 
 		if (props.header) return selected.length === data.length;
 
 		return !!selected.find((s) => s.id === props.data.id);
-	}, [props.data.id, props.header, table.props.data, table.selected]);
+	}, [props.data.id, props.header, table.data, table.selected]);
 
 	// Functions
 	function handleSelectRow() {
@@ -62,7 +61,7 @@ function TableRow<T extends Types.TableBaseDataType>(props: TableRowProps<T>) {
 			data-header={String(props.header)}
 		>
 			<motion.div className={className} key={props.data.id}>
-				{table.props.selectable && (
+				{table.selectable && (
 					<Checkbox
 						label=""
 						checked={isSelected}
@@ -79,7 +78,7 @@ function TableRow<T extends Types.TableBaseDataType>(props: TableRowProps<T>) {
 					/>
 				))}
 
-				{table.props.options && !props.header && (
+				{table.options && !props.header && (
 					<Components.TableRowOptions<T> data={props.data} />
 				)}
 			</motion.div>
@@ -93,17 +92,17 @@ function TableRowSkeleton() {
 
 	return (
 		<TableRowContainer className={Utils.classBase('row-wrapper')}>
-			{table.props.loadingType === 'flat' && (
+			{table.loadingType === 'flat' && (
 				<Skeleton width="100%" height={table.style.rowMinHeight} />
 			)}
 
-			{table.props.loadingType === 'detailed' && (
+			{table.loadingType === 'detailed' && (
 				<motion.div className={Utils.classBase('row')}>
-					{Object.keys(table.props.columns).map((key) => (
+					{Object.keys(table.columns).map((key) => (
 						<Components.TableColumn.Skeleton key={key} />
 					))}
 
-					{table.props.options && (
+					{table.options && (
 						<Skeleton
 							className={Utils.classBase(
 								'loading',

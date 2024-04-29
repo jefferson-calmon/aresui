@@ -12,14 +12,14 @@ export type TableLayout =
 export type TableLoading = 'detailed' | 'flat';
 export type TableSort = 'row' | 'button';
 
-export interface TableBaseDataType {
+export interface TableBaseData {
 	id: string;
 }
 
 export interface TableProps<T> {
 	data: T[];
 	columns: Partial<Record<keyof T, string>>;
-	layout: TableLayout[];
+	layout?: TableLayout[];
 
 	loading?: boolean;
 	selectable?: boolean;
@@ -34,16 +34,24 @@ export interface TableProps<T> {
 	customColumnsHeader?: Partial<Record<keyof T, (data: T) => any>>;
 	options?: TableOption<T>[];
 	sort?: Partial<Record<keyof T, string>>;
-	searchFor?: KeyOf<T> | KeyOf<T>[];
-
-	rowClassName?: string | ((data: T) => string);
+	search?: KeyOf<T>[];
 
 	loadingType?: TableLoading;
 	sortType?: TableSort;
 
-	customHeadingHandlers?: (props: TableProps<T>) => JSX.Element;
+	customHeadingHandlers?: (props: TablePropsCompiled<T>) => JSX.Element;
 
 	onCompleteSelection?: (selected: T[]) => void;
+}
+
+export interface TablePropsCompiled<T> extends TableProps<T> {
+	layout: Required<TableProps<T>>['layout'];
+	search: Required<TableProps<T>>['search'];
+	loading: Required<TableProps<T>>['loading'];
+	selectable: Required<TableProps<T>>['selectable'];
+	pagination: Required<TableProps<T>>['pagination'];
+	loadingType: Required<TableProps<T>>['loadingType'];
+	sortType: Required<TableProps<T>>['sortType'];
 }
 
 export interface TableOption<T> {
@@ -75,16 +83,3 @@ export interface StyleConfig {
 	hoverRowBorderColor?: string;
 	hoverRowBackground?: string;
 }
-
-export const defaultPropsTable: Partial<TableProps<TableBaseDataType>> = {
-	layout: [
-		'no-data',
-		'pagination',
-		'heading:search',
-		'heading:sort',
-		'heading:options',
-	],
-	loadingType: 'detailed',
-	sortType: 'row',
-	selectable: true,
-};

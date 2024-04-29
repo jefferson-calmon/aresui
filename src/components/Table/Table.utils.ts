@@ -4,7 +4,14 @@ import { baseClass } from 'helpers/baseClass';
 
 export const classBase = baseClass('Table');
 
-export function styleProcessor<T>(props: TableProps<T>) {
+export function styleProcessor<T>(props: {
+	data: TableProps<T>['data'];
+	columns: TableProps<T>['columns'];
+	options: TableProps<T>['options'];
+	loading: Required<TableProps<T>>['loading'];
+	selectable: Required<TableProps<T>>['selectable'];
+	style: Required<TableProps<T>>['style'];
+}) {
 	const columnWidths: Record<string, string> = {};
 
 	Object.keys(props.columns).forEach((column) => {

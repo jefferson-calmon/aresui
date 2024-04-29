@@ -12,7 +12,7 @@ export interface TableRowOptionsProps<T> {
 	data: T;
 }
 
-function TableRowOptions<T extends Types.TableBaseDataType>(
+function TableRowOptions<T extends Types.TableBaseData>(
 	props: TableRowOptionsProps<T>
 ) {
 	// Hooks
@@ -29,7 +29,7 @@ function TableRowOptions<T extends Types.TableBaseDataType>(
 	}, []);
 
 	const options = useMemo(() => {
-		const options = table.props.options ?? [];
+		const options = table.options ?? [];
 
 		return options.map<DropdownMenuItem>((option) => ({
 			id: Number.random(8).toString(),
@@ -37,7 +37,7 @@ function TableRowOptions<T extends Types.TableBaseDataType>(
 			linkTo: Utils.processor(props.data, option.linkTo),
 			onClick: () => Utils.processor(props.data, option.onClick),
 		}));
-	}, [props.data, table.props.options]);
+	}, [props.data, table.options]);
 
 	return (
 		<TableRowOptionsContainer className={className}>

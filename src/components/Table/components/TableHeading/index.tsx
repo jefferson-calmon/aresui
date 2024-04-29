@@ -10,7 +10,7 @@ import { useTable } from 'components/Table/Table.context';
 
 import { TableHeadingContainer } from './styles';
 
-function TableHeading<T extends Types.TableBaseDataType>() {
+function TableHeading<T extends Types.TableBaseData>() {
 	// Hooks
 	const table = useTable<T>();
 
@@ -29,8 +29,8 @@ function TableHeading<T extends Types.TableBaseDataType>() {
 
 	return (
 		<TableHeadingContainer className={Utils.classBase('heading')}>
-			{!table.props.layout.includes('heading:search') && <div />}
-			{table.props.layout.includes('heading:search') && (
+			{!table.layout.includes('heading:search') && <div />}
+			{table.layout.includes('heading:search') && (
 				<div className="search">
 					<div className="search-icon">
 						<Icons.Search />
@@ -45,8 +45,8 @@ function TableHeading<T extends Types.TableBaseDataType>() {
 			)}
 
 			<div className="handlers">
-				{table.props.layout.includes('heading:sort') &&
-					table.props.sortType === 'button' && (
+				{table.layout.includes('heading:sort') &&
+					table.sortType === 'button' && (
 						<Dropdown items={sortOptions} placement="bottom-right">
 							<div className="handler">
 								<Icons.Sort />
@@ -56,7 +56,7 @@ function TableHeading<T extends Types.TableBaseDataType>() {
 						</Dropdown>
 					)}
 
-				{table.props.layout.includes('heading:filter') && (
+				{table.layout.includes('heading:filter') && (
 					<div className="handler">
 						<Icons.Filter />
 
@@ -64,7 +64,7 @@ function TableHeading<T extends Types.TableBaseDataType>() {
 					</div>
 				)}
 
-				{table.props.layout.includes('heading:options') && (
+				{table.layout.includes('heading:options') && (
 					<Dropdown items={[]} placement="bottom-right">
 						<div className="handler options">
 							<Icons.Dots />
@@ -72,8 +72,8 @@ function TableHeading<T extends Types.TableBaseDataType>() {
 					</Dropdown>
 				)}
 
-				{table.props.customHeadingHandlers && (
-					<table.props.customHeadingHandlers {...table.props} />
+				{table.customHeadingHandlers && (
+					<table.customHeadingHandlers {...table.props} />
 				)}
 			</div>
 		</TableHeadingContainer>
