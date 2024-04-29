@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Pagination from './index';
-import { defaultPropsPagination, PaginationProps } from './Pagination.types';
+import { PaginationProps } from './Pagination.types';
 
-const storiesDefaultProps: PaginationProps = {
+const storyProps: PaginationProps = {
 	pages: 7,
 };
 
@@ -12,8 +12,7 @@ const meta: Meta<typeof Pagination> = {
 	component: Pagination,
 	tags: ['autodocs'],
 	args: {
-		...defaultPropsPagination,
-		...storiesDefaultProps,
+		...storyProps,
 	},
 };
 
@@ -22,7 +21,6 @@ type Story = StoryObj<typeof Pagination>;
 
 export const Default: Story = {
 	args: {
-		...defaultPropsPagination,
-		...storiesDefaultProps,
+		...storyProps,
 	},
 };

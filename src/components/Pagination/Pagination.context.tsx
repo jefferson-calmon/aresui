@@ -1,16 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useContext, useMemo } from 'react';
 
-import { merge } from 'codekit';
-
 import * as T from './Pagination.types';
 import { useControlledState } from 'hooks/useControlledState';
-import { Theme, useAresUI } from 'contexts';
+import { Theme } from 'contexts';
 
 interface PaginationContextProps {
 	children: React.ReactNode;
 
-	props: T.PaginationProps;
+	props: T.PaginationProps & {
+		next: Required<T.PaginationProps>['next'];
+		prev: Required<T.PaginationProps>['prev'];
+		width: Required<T.PaginationProps>['width'];
+		layout: Required<T.PaginationProps>['layout'];
+		maxButtons: Required<T.PaginationProps>['maxButtons'];
+		theme: Theme;
+	};
 }
 
 export interface PaginationContextData
@@ -32,9 +37,6 @@ export function PaginationProvider({
 	props,
 	children,
 }: PaginationContextProps) {
-	// Hooks
-	const aresui = useAresUI();
-
 	// States
 	const [current, setCurrent] = useControlledState(props.current, 1);
 
@@ -46,10 +48,6 @@ export function PaginationProvider({
 	const canNext = useMemo(() => {
 		return Number(current) < props.pages;
 	}, [current, props.pages]);
-
-	const theme = useMemo(() => {
-		return merge(aresui.theme, props.theme ?? {});
-	}, [aresui.theme, props.theme]);
 
 	// Functions
 	function handleChangePage(page: number) {
@@ -94,7 +92,7 @@ export function PaginationProvider({
 				onPrev: handlePrevPage,
 				onNext: handleNextPage,
 
-				theme,
+				theme: props.theme,
 			}}
 		>
 			{children}

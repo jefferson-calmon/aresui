@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { Theme } from 'contexts';
-import { DeepPartial, Width } from 'types';
+import { BasePropsWithoutComponentProps, Width } from 'types';
 
-export interface PaginationProps {
+export interface PaginationProps extends BasePropsWithoutComponentProps {
 	current?: number;
 	pages: number;
 
@@ -14,8 +13,6 @@ export interface PaginationProps {
 	layout?: Layout[];
 	disabled?: boolean;
 	maxButtons?: number;
-
-	theme?: DeepPartial<Theme>;
 
 	customTotal?: (props: PaginationProps) => CustomComponent;
 	customPager?: (props: PaginationProps) => CustomComponent;
@@ -29,12 +26,3 @@ export interface PaginationProps {
 
 type CustomComponent = JSX.Element | React.ReactNode;
 export type Layout = 'total' | '-' | 'pager';
-
-export const defaultPropsPagination: Partial<PaginationProps> = {
-	next: true,
-	prev: true,
-
-	width: 'auto',
-	maxButtons: 3,
-	layout: ['total', '-', 'pager'],
-};
