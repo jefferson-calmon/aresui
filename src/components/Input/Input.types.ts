@@ -26,7 +26,7 @@ export interface InputProps extends BaseProps<'input'> {
 	errorPrefix?: string;
 	disableValidations?: boolean;
 	customErrors?: Partial<typeof validationErrors>;
-	money?: {
+	currency?: {
 		trigger?: 'focus' | 'render';
 		args?: MoneyArgs;
 	};

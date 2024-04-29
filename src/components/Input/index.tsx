@@ -41,7 +41,7 @@ export function Input({
 	errorPrefix = '',
 	disableValidations,
 	customErrors,
-	money = {
+	currency = {
 		trigger: 'focus',
 	},
 
@@ -122,8 +122,8 @@ export function Input({
 	// Effects
 	useEffect(() => {
 		const isMoney = role === 'currency';
-		const isRenderTrigger = money?.trigger === 'render';
-		const args = money?.args;
+		const isRenderTrigger = currency?.trigger === 'render';
+		const args = currency?.args;
 
 		const element = document.querySelector(`input#${componentId}`);
 		const input = element as HTMLInputElement;
@@ -139,7 +139,7 @@ export function Input({
 		U.maskInputMoneyByElement(input, args);
 		input.blur();
 		renderedMoneyInput.current = true;
-	}, [componentId, money?.args, money?.trigger, role]);
+	}, [componentId, currency?.args, currency?.trigger, role]);
 
 	// Functions
 	function handleChange(type: 'change' | 'input', isValid?: boolean) {
@@ -181,8 +181,8 @@ export function Input({
 		isAlreadyFocused.setTrue();
 		isActivePickerOptions.setTrue();
 
-		if (role === 'currency' && money?.trigger === 'focus') {
-			U.maskInputMoneyByEvent(event, money?.args);
+		if (role === 'currency' && currency?.trigger === 'focus') {
+			U.maskInputMoneyByEvent(event, currency?.args);
 		}
 	}
 
@@ -243,6 +243,8 @@ export function Input({
 					alwaysShowMask={false}
 					maskChar={null} // If you want don't show the characters, just set `null`.;
 					required
+					readOnly={disabled}
+					disabled={disabled}
 					// --
 					aria-autocomplete={inputAttr['aria-autocomplete']}
 					// --

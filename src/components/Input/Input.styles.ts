@@ -172,8 +172,9 @@ export const InputContainer = styled.div`
 		user-select: none;
 		pointer-events: visible;
 
-		input {
-			pointer-events: visible;
+		input,
+		label {
+			pointer-events: none;
 		}
 
 		opacity: 0.4;
