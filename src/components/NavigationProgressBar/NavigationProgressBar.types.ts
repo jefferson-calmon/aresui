@@ -44,15 +44,3 @@ export interface NavigationProgressBarProps {
 	 */
 	transformCSS?: (css: string) => JSX.Element;
 }
-
-export const defaultPropsNavigationProgressBar: NavigationProgressBarProps & {
-	height: number;
-	color: string;
-	startPosition: number;
-} = {
-	color: '#000000',
-	startPosition: 0.3,
-	stopDelayMs: 200,
-	height: 2.5,
-	showOnShallow: true,
-};
