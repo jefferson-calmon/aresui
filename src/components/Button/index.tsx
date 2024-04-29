@@ -17,7 +17,7 @@ import { ButtonContainer } from './Button.styles';
 config();
 
 export function Button({
-	children = 'Button TESTE',
+	children = 'Button',
 	loading = false,
 	disabled,
 	rippleEffect = true,

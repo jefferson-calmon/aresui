@@ -11,7 +11,7 @@ export const SpinnerContainer = styled.div`
 	position: relative;
 
 	--size: ${(props: Props) => props.$size + 'px'};
-	--duration: ${(props: Props) => props.$duration + 's'};
+	--duration: ${(props: Props) => props.$duration + 'ms'};
 
 	width: var(--size);
 	height: var(--size);

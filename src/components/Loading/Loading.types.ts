@@ -1,43 +1,32 @@
 import { Theme } from 'contexts';
-import { DeepPartial } from 'types';
+import { BasePropsWithoutComponentProps } from 'types';
 
 export type LoadingType = 'spinner' | 'bar';
 
-export interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
-	type: LoadingType;
-	size: number;
+export interface LoadingProps extends BasePropsWithoutComponentProps {
+	type?: LoadingType;
+	size?: number;
 	duration?: number;
-	theme?: DeepPartial<Theme>;
 
-	spinner?: LoadingSpinnerProps;
-	bar?: LoadingBarProps;
+	spinner?: LoadingSpinner;
+	bar?: LoadingBar;
 
 	custom?: () => JSX.Element;
 }
 
-export interface LoadingSpinnerProps {
+export interface LoadingSpinner {
 	strokeWidth: number;
 }
 
-export interface LoadingBarProps {
+export interface LoadingBar {
 	width?: number;
 	height?: number;
 }
 
 export interface LoaderProps {
+	size: Required<LoadingProps>['size'];
+	duration: Required<LoadingProps>['duration'];
+	spinner: Required<LoadingProps>['spinner'];
+	bar: Required<LoadingProps>['bar'];
 	theme: Theme;
 }
-
-export const defaultPropsLoading: LoadingProps = {
-	type: 'spinner',
-	size: 25,
-	duration: 1.5,
-	theme: {},
-	spinner: {
-		strokeWidth: 5,
-	},
-	bar: {
-		width: 150,
-		height: 5,
-	},
-};

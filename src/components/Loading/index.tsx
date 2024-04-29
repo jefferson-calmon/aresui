@@ -1,44 +1,46 @@
-import React, { useMemo } from 'react';
-
-import { merge } from 'codekit';
+import React from 'react';
 
 import * as T from './Loading.types';
 import * as U from './Loading.utils';
 import Spinner from './components/Spinner';
 import Bar from './components/Bar';
-import { useAresUI } from 'contexts';
-import { filterHTMLProps } from 'helpers/filterHTMLProps';
+import { useTheme } from 'hooks/useTheme';
 
 import { LoadingContainer } from './Loading.styles';
 
-export function Loading(
-	props: T.LoadingProps = T.defaultPropsLoading
-): JSX.Element {
+export function Loading({
+	type = 'spinner',
+	size = 24,
+	duration = 1500,
+	spinner = {
+		strokeWidth: 5,
+	},
+	bar = {
+		width: 150,
+		height: 4,
+	},
+	custom,
+	...props
+}: T.LoadingProps): JSX.Element {
 	// Hooks
-	const aresui = useAresUI();
+	const theme = useTheme(props.theme);
 
-	// Memo Vars
-	const theme = useMemo(() => {
-		return merge(aresui.theme, props.theme ?? {});
-	}, [aresui.theme, props.theme]);
+	// Common vars
+	const Custom = custom;
 
 	return (
-		<LoadingContainer
-			className={U.classBase()}
-			{...filterHTMLProps(props)}
-			$theme={theme}
-		>
-			{!props.custom && props.type === 'spinner' && (
-				<Spinner {...props} theme={theme} />
+		<LoadingContainer className={U.classBase()} {...props} $theme={theme}>
+			{!Custom && type === 'spinner' && (
+				<Spinner {...{ size, duration, spinner, bar }} theme={theme} />
 			)}
 
-			{!props.custom && props.type === 'bar' && (
-				<Bar {...props} theme={theme} />
+			{!Custom && type === 'bar' && (
+				<Bar {...{ size, duration, spinner, bar }} theme={theme} />
 			)}
 
-			{props.custom && (
+			{Custom && (
 				<div className={U.classBase('custom-loader')}>
-					<props.custom />
+					<Custom />
 				</div>
 			)}
 		</LoadingContainer>

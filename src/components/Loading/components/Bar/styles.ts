@@ -1,16 +1,19 @@
 import styled from 'styled-components';
+import * as H from 'helpers/styled';
+import { Theme } from 'contexts';
 
 interface Props {
 	$width: number;
 	$height: number;
 	$duration: number;
+	$theme: Theme;
 }
 
 export const BarContainer = styled.div`
 	--border-radius: 10px;
 	--width: ${(props: Props) => props.$width + 'px'};
 	--height: ${(props: Props) => props.$height + 'px'};
-	--duration: ${(props: Props) => props.$duration + 's'};
+	--duration: ${(props: Props) => props.$duration + 'ms'};
 
 	position: relative;
 
@@ -19,7 +22,7 @@ export const BarContainer = styled.div`
 
 	border-radius: var(--border-radius);
 
-	background: #ddd;
+	background: ${H.transparentizeReadableColor('background', 0.95)};
 
 	.bar {
 		position: absolute;

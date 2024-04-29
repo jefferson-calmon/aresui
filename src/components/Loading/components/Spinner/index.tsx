@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { LoaderProps, LoadingProps } from 'components/Loading/Loading.types';
+import { LoaderProps } from 'components/Loading/Loading.types';
 import { classBase } from 'components/Loading/Loading.utils';
 
 import { SpinnerContainer } from './styles';
 
-function Spinner(props: LoadingProps & LoaderProps) {
+function Spinner(props: LoaderProps) {
 	return (
 		<SpinnerContainer
 			className={classBase('spinner')}
-			$duration={props.duration ?? 1.5}
+			$duration={props.duration}
 			$size={props.size}
 		>
 			<svg viewBox="0 0 50 50">
@@ -19,7 +19,7 @@ function Spinner(props: LoadingProps & LoaderProps) {
 					cy={25}
 					r={20}
 					fill="none"
-					strokeWidth={props.spinner?.strokeWidth ?? 5}
+					strokeWidth={props.spinner?.strokeWidth}
 					stroke={props.theme.colors?.primary}
 				/>
 			</svg>

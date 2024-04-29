@@ -7,6 +7,7 @@ import { BarContainer } from './styles';
 function Bar(props: LoadingProps & LoaderProps) {
 	return (
 		<BarContainer
+			$theme={props.theme}
 			$width={props.bar?.width ?? props.size ?? 150}
 			$height={props.bar?.height ?? 5}
 			$duration={props.duration ?? 1.5}
