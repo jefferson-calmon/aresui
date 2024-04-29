@@ -74,19 +74,31 @@ export const SelectContainer: Styled = styled.div`
 
 			height: 100%;
 			width: 100%;
+			color: ${H.readableColor('background')};
+			font-size: 16px;
 
 			span {
-				font-size: 16px;
 				font-weight: 500;
-				color: ${H.readableColor('background')};
 			}
 
+            div {
+                display: flex;
+                align-items: center;
+            }
+
 			svg {
-				font-size: 14px;
-				width: 14px;
-				height: 14px;
+				--icon-size: 14px;
+
+				width: var(--icon-size);
+				height: var(--icon-size);
+				stroke-width: 1.5;
 				object-fit: contain;
 				transition: 0.15s ease-in-out;
+				opacity: 0.8;
+
+				&.lucide-x {
+					--icon-size: 16px;
+				}
 			}
 		}
 	}
@@ -94,7 +106,7 @@ export const SelectContainer: Styled = styled.div`
 	&.${classBase('active')} {
 		.${classBase('select')} {
 			.${classBase('current')} {
-				svg {
+				svg:not(.lucide-x) {
 					transform: rotate(-180deg);
 				}
 			}

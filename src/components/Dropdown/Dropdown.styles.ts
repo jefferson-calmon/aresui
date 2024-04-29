@@ -36,7 +36,7 @@ export const DropdownMenuContainer = styled.div`
 	max-height: ${(props: Props) => props.$height};
 	width: fit-content;
 	height: fit-content;
-	padding: 4.00px 0;
+	padding: 4.00px 4px;
 
 	background: var(--color-background);
 	border: 1px solid var(--color-line);
@@ -76,6 +76,8 @@ export const DropdownMenuContainer = styled.div`
 
 		opacity: 0.8;
 		cursor: pointer;
+
+        border-radius: 4px;
 
 		&:not(.search):hover {
 			opacity: 1;

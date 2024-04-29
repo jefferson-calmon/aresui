@@ -1,7 +1,10 @@
+import React from 'react';
+
 import type { Meta, StoryObj } from '@storybook/react';
-import centered from '@storybook/addon-centered/react';
 
 import Dropdown, { DropdownProps } from './index';
+import Button from 'components/Button';
+import { ChevronDown } from 'icons';
 
 const storyProps: Partial<DropdownProps> = {
 	items: [
@@ -30,6 +33,11 @@ const storyProps: Partial<DropdownProps> = {
 			content: 'Settings',
 		},
 	],
+	children: (
+		<Button variant="secondary" size="small" rippleEffect>
+			Dropdown <ChevronDown />
+		</Button>
+	),
 };
 
 const meta: Meta<typeof Dropdown> = {
@@ -44,5 +52,4 @@ type Story = StoryObj<typeof Dropdown>;
 
 export const Default: Story = {
 	args: storyProps,
-	decorators: [centered],
 };

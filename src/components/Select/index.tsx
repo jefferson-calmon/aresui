@@ -1,52 +1,62 @@
 import React, { useMemo, useState, useEffect } from 'react';
 
-import { merge, useBoolean } from 'codekit';
+import { useBoolean, useControlledState } from 'codekit';
 
 import * as T from './Select.types';
 import * as U from './Select.utils';
-import * as C from './Select.components';
+import * as Icons from 'icons';
 import Dropdown, { DropdownMenuItem } from 'components/Dropdown';
 import Loading from 'components/Loading';
-import { useAresUI } from 'contexts/AresUIContext';
+import Tooltip from 'components/Tooltip';
+import { useTheme } from 'hooks/useTheme';
 import { isPromise } from 'helpers/isPromise';
 
 import { SelectContainer } from './Select.styles';
 
-export function Select(props: T.SelectProps): JSX.Element {
+export function Select({
+	name = 'select',
+	label,
+	placeholder = 'Selecione uma opção',
+	value: propValue,
+	defaultValue,
+	disabled = false,
+	searchable = false,
+	required = true,
+	options: propOptions = [],
+	selectProps = {},
+	wrapperProps = {},
+	dropdownProps = {},
+	width = '100%',
+	onChange,
+	...props
+}: T.SelectProps) {
 	// Hooks
-	const aresUI = useAresUI();
+	const theme = useTheme(props.theme);
 
 	// States
 	const [options, setOptions] = useState<T.SelectOption[]>([]);
-	const [option, setOption] = useState<T.SelectOption | null>(null);
+	const [value, setValue] = useControlledState(propValue, defaultValue);
 
 	// Boolean hooks
 	const isActiveSelectOptions = useBoolean();
-	const isLoading = useBoolean(isPromise(props.options));
+	const isLoading = useBoolean(isPromise(propOptions));
 
 	// Memo vars
-	const theme = useMemo(() => {
-		return merge(aresUI.theme, props.theme ?? {});
-	}, [aresUI.theme, props.theme]);
-
-	const placeholder = useMemo(() => {
-		const defaultPlaceholder = T.defaultPropsSelect['placeholder'];
-		const placeholder = props.placeholder ?? defaultPlaceholder;
-
-		return option ? option.label : placeholder;
-	}, [option, props.placeholder]);
+	const option = useMemo(() => {
+		return options.find((o) => o.value === value);
+	}, [options, value]);
 
 	const className = useMemo(() => {
 		const classes = [
 			U.classBase(),
-			props.disabled && U.classBase('disabled'),
+			disabled && U.classBase('disabled'),
 			isActiveSelectOptions.value && U.classBase('active'),
 		];
 
 		return U.buildClassName(...classes);
-	}, [props, isActiveSelectOptions.value]);
+	}, [disabled, isActiveSelectOptions.value]);
 
-	const dropdownItems = useMemo(() => {
+	const items = useMemo(() => {
 		if (isLoading.value)
 			return [
 				{
@@ -64,20 +74,20 @@ export function Select(props: T.SelectProps): JSX.Element {
 			id: option.value,
 			content: option.label,
 			onClick: () => {
-				setOption(option);
+				setValue(option.value);
+				onChange?.(option.value);
 				option.onClick?.(option);
-				props.onChange?.(option.value);
 			},
 		}));
-	}, [isLoading.value, options, props]);
+	}, [isLoading.value, onChange, options, setValue]);
 
 	// Effects
 	useEffect(() => {
 		async function loadOptions() {
-			if (Array.isArray(props.options)) {
-				setOptions(props.options);
+			if (Array.isArray(propOptions)) {
+				setOptions(propOptions);
 			} else {
-				const resolvedOptions = await props.options;
+				const resolvedOptions = await propOptions;
 
 				isLoading.setFalse();
 				setOptions(resolvedOptions);
@@ -85,56 +95,57 @@ export function Select(props: T.SelectProps): JSX.Element {
 		}
 
 		loadOptions();
-	}, [isLoading, props.options]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [propOptions]);
 
-	useEffect(() => {
-		if (option || !props.defaultOptionByValue) return;
-
-		const defaultOption = options.find(
-			(o) => o.value === props.defaultOptionByValue
-		);
-
-		defaultOption && setOption(defaultOption);
-	}, [options, option, props.defaultOptionByValue]);
+	// Functions
+	function handleClickIcon() {
+		if (option) {
+			setValue('');
+			onChange?.('');
+		}
+	}
 
 	return (
-		<SelectContainer
-			className={className}
-			$theme={theme}
-			$width={props.width}
-		>
-			{props.label && <label>{props.label}</label>}
+		<SelectContainer className={className} $theme={theme} $width={width}>
+			{label && <label>{label}</label>}
 
 			<Dropdown
-				items={dropdownItems}
+				items={items}
 				width="100%"
 				height="160px"
-				searchable={!!props.searchable}
+				searchable={!!searchable}
 				onToggle={isActiveSelectOptions.setValue}
-				{...(props.dropdownProps ?? {})}
+				{...(dropdownProps ?? {})}
 			>
-				<div className={U.classBase('select')} {...props.wrapperProps}>
+				<div className={U.classBase('select')} {...wrapperProps}>
 					<div className={U.classBase('current')}>
-						<span>{placeholder}</span>
+						<span>{option ? option.label : placeholder}</span>
 
-						<C.ChevronDownIcon />
+						<div className="icon" onClick={handleClickIcon}>
+							<Tooltip label="Limpar" disabled={!option}>
+								{option ? (
+									<Icons.X />
+								) : (
+									<Icons.SelectChevronDown />
+								)}
+							</Tooltip>
+						</div>
 					</div>
 				</div>
 			</Dropdown>
 
 			<select
-				name={props.name}
+				name={name}
 				tabIndex={-1}
-				{...props.selectProps}
-				required={props.required ?? true}
+				{...selectProps}
+				required={required}
 			>
 				{option && <option value={option.value}>{option.value}</option>}
 			</select>
 		</SelectContainer>
 	);
 }
-
-Select.defaultProps = T.defaultPropsSelect;
 
 export * from './Select.types';
 

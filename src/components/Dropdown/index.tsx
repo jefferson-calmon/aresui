@@ -25,7 +25,7 @@ export function Dropdown({
 	onClose,
 	onToggle,
 	onChange,
-	children = T.defaultPropsDropdownChildren,
+	children,
 	...props
 }: T.DropdownProps) {
 	// Hooks

@@ -108,7 +108,7 @@ function DropdownMenuItem(props: DropdownMenuItemProps) {
 	return (
 		<>
 			{isLink && (
-				<Link {...baseProps} to={props.item.linkTo}>
+				<Link {...baseProps} to={props.item.linkTo ?? '#'}>
 					{props.item.content}
 				</Link>
 			)}

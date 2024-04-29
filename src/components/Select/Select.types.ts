@@ -1,24 +1,26 @@
-import { DropdownProps } from 'components/Dropdown';
-import { Theme } from 'contexts';
-import { DeepPartial, Width } from 'types';
+import { ComponentProps } from 'react';
 
-export interface SelectProps {
-	name: string;
+import { DropdownProps } from 'components/Dropdown';
+import { BasePropsWithoutComponentProps, Width } from 'types';
+
+export interface SelectProps extends BasePropsWithoutComponentProps {
+	name?: string;
 	label?: string;
 	placeholder?: string;
-	defaultOptionByValue?: string;
+
+	value?: string;
+	defaultValue?: string;
 
 	disabled?: boolean;
 	searchable?: boolean;
 	required?: boolean;
 	options: SelectOption[] | Promise<SelectOption[]>;
 
-	selectProps?: Omit<React.HTMLAttributes<HTMLSelectElement>, 'onChange'>;
-	wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+	selectProps?: Omit<ComponentProps<'select'>, 'onChange'>;
+	wrapperProps?: ComponentProps<'div'>;
 	dropdownProps?: Partial<DropdownProps>;
 
-	theme?: DeepPartial<Theme>;
-	width: Width;
+	width?: Width;
 
 	onChange?: (value: string) => void;
 }
@@ -35,10 +37,3 @@ export interface SelectOption {
 	onClick?: (option: SelectOption) => void;
 	disabled?: boolean;
 }
-
-export const defaultPropsSelect: SelectProps = {
-	name: '',
-	options: [],
-	placeholder: 'Selecione uma opção',
-	width: '100%',
-};

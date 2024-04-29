@@ -1,8 +1,6 @@
 import React from 'react';
 
-import Button from 'components/Button';
 import { BasePropsWithoutComponentProps, Placement, Trigger } from 'types';
-import { ChevronDown } from 'icons';
 import { Theme } from 'contexts';
 
 export type AutoCloseListeners = 'scroll' | 'resize';
@@ -44,9 +42,3 @@ export interface DropdownMenuItem {
 	onClick?: (item: DropdownMenuItem) => void;
 	linkTo?: string;
 }
-
-export const defaultPropsDropdownChildren: DropdownProps['children'] = (
-	<Button variant="secondary" size="small" rippleEffect>
-		Dropdown <ChevronDown />
-	</Button>
-);
