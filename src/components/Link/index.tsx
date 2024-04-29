@@ -8,7 +8,8 @@ import * as U from './Link.utils';
 import { buildClassName } from 'helpers/buildClassName';
 
 config();
-export function Link(props: T.LinkProps): JSX.Element {
+
+export function Link({ to = '#', ...props }: T.LinkProps): JSX.Element {
 	// Memo vars
 	const className = useMemo(() => {
 		const classes = [U.classBase(), props.className];
@@ -17,13 +18,11 @@ export function Link(props: T.LinkProps): JSX.Element {
 	}, [props]);
 
 	return (
-		<NextLink href={props.to} {...props} className={className}>
+		<NextLink href={to} {...props} className={className}>
 			{props.children && props.children}
 		</NextLink>
 	);
 }
-
-Link.defaultProps = T.defaultPropsLink;
 
 export * from './Link.types';
 

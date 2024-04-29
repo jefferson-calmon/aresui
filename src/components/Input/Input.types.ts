@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Props } from 'react-input-mask';
+import { Props as ReactInputMaskProps } from 'react-input-mask';
+
 import { MoneyArgs, validationErrors } from './Input.utils';
 import { LoadingProps } from 'components/Loading';
 import { BaseProps } from 'types';
-
-export type ReactInputMaskProps = Props;
-type InputHTMLProps = React.InputHTMLAttributes<HTMLInputElement>;
 
 export interface InputProps extends BaseProps<'input'> {
 	label?: string;
@@ -49,7 +47,8 @@ export interface InputPickerOption {
 	onClick?: () => void;
 }
 
-export type InputAttributes = ReactInputMaskProps & InputHTMLProps;
+export type InputAttributes = ReactInputMaskProps &
+	Omit<BaseProps<'input'>, 'theme'>;
 
 export type InputAutoComplete =
 	| 'on'
