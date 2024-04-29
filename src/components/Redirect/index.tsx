@@ -1,25 +1,28 @@
 import { useRouter } from 'next/router';
 
-import { useIsomorphicLayoutEffect } from 'codekit';
+import { debounce, useIsomorphicLayoutEffect } from 'codekit';
 
 import * as T from './Redirect.types';
 
-export function Redirect(props: T.RedirectProps): JSX.Element | null {
+export function Redirect({
+	to = '',
+	delay = 0,
+	toBack = false,
+	transitionOptions: options = {},
+}: T.RedirectProps): JSX.Element | null {
 	// Hooks
 	const router = useRouter();
 
 	useIsomorphicLayoutEffect(() => {
-		setTimeout(() => {
-			if (props.toBack) return router.back();
+		debounce(() => {
+			if (toBack) return router.back();
 
-			if (props.to) return router.push(props.to);
-		}, props.delay);
-	}, [props.delay, props.toBack]);
+			if (to) return router.push(to, undefined, options);
+		}, delay);
+	}, [delay, toBack, to]);
 
 	return null;
 }
-
-Redirect.defaultProps = T.defaultPropsRedirect;
 
 export * from './Redirect.types';
 
