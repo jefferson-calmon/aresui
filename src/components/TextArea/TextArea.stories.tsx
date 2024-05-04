@@ -1,14 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import TextArea from './index';
-import { defaultPropsTextArea } from './TextArea.types';
+import TextArea, { TextAreaProps } from './index';
+
+const storyProps: TextAreaProps = {
+	label: 'TextArea',
+	theme: {},
+	width: '280px',
+};
 
 const meta: Meta<typeof TextArea> = {
 	title: 'TextArea',
 	component: TextArea,
 	tags: ['autodocs'],
 	args: {
-		...defaultPropsTextArea,
+		...storyProps,
 	},
 };
 
@@ -17,6 +22,6 @@ type Story = StoryObj<typeof TextArea>;
 
 export const Default: Story = {
 	args: {
-		...defaultPropsTextArea,
+		...storyProps,
 	},
 };

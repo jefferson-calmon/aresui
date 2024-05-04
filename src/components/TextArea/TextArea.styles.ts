@@ -35,7 +35,7 @@ export const TextAreaContainer = styled.div`
 		margin-bottom: 6px;
 	}
 
-	.${classBase('textArea-container')} {
+	.${classBase('container')} {
 		position: relative;
 
 		display: flex;
@@ -46,7 +46,7 @@ export const TextAreaContainer = styled.div`
 		border-radius: var(--border-radius);
 		outline: var(--border-width-unfocused) solid var(--color-line);
 
-		textArea {
+		textarea {
 			position: relative;
 			width: ${(props: Props) => props.$width};
 			height: var(--height);
@@ -58,6 +58,7 @@ export const TextAreaContainer = styled.div`
 
 			background: transparent;
 			border-radius: var(--border-radius);
+            resize: vertical;
 
 			&:-webkit-autofill,
 			&:-webkit-autofill:hover,
@@ -90,7 +91,7 @@ export const TextAreaContainer = styled.div`
 	}
 
 	&.${classBase('focused')} {
-		.${classBase('TextArea-container')} {
+		.${classBase('container')} {
 			outline: var(--border-width-focused) solid var(--color-primary);
 		}
 	}
@@ -108,7 +109,7 @@ export const TextAreaContainer = styled.div`
 	}
 
 	&.${classBase('invalid')} {
-		.${classBase('TextArea-container')} {
+		.${classBase('container')} {
 			outline: var(--border-width-focused) solid var(--color-error);
 		}
 	}
