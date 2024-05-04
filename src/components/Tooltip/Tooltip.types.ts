@@ -1,13 +1,13 @@
 import { HTMLAttributes } from 'react';
 
 export interface TooltipProps {
-	role: HTMLAttributes<HTMLElement>['role'];
-	children?: JSX.Element | React.ReactNode;
+	role?: HTMLAttributes<HTMLElement>['role'];
+	children: JSX.Element | React.ReactNode;
 
 	label: string;
 	disabled?: boolean;
 
-	position: TooltipPosition;
+	position?: TooltipPosition;
 	size?: TooltipSize;
 }
 
