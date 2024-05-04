@@ -3,7 +3,7 @@ import { LinkProps as NextLinkProps } from 'next/link';
 import { UrlObject } from 'url';
 
 export interface LinkProps extends Omit<NextLinkProps, 'href'> {
-	to: Url;
+	to?: Url;
 
 	className?: string;
 	children?: React.ReactNode | JSX.Element;

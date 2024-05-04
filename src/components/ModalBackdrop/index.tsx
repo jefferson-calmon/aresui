@@ -25,7 +25,7 @@ export function ModalBackdrop(props: T.ModalBackdropProps): JSX.Element {
 	useEffect(() => {
 		if (!escapeKeyPressed) return;
 
-		props.onClose();
+		props.onClose?.();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [escapeKeyPressed]);
 
