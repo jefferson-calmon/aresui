@@ -4,9 +4,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import Tooltip from './index';
 import Button from 'components/Button';
-import { defaultPropsTooltip, TooltipProps } from './Tooltip.types';
+import { TooltipProps } from './Tooltip.types';
 
-const storiesDefaultProps: TooltipProps = {
+const storyProps: TooltipProps = {
 	role: 'button',
 	label: 'Olá, eu sou um tooltip!',
 	position: 'top',
@@ -18,8 +18,7 @@ const meta: Meta<typeof Tooltip> = {
 	component: Tooltip,
 	tags: ['autodocs'],
 	args: {
-		...defaultPropsTooltip,
-		...storiesDefaultProps,
+		...storyProps,
 	},
 };
 
@@ -28,7 +27,6 @@ type Story = StoryObj<typeof Tooltip>;
 
 export const Default: Story = {
 	args: {
-		...defaultPropsTooltip,
-		...storiesDefaultProps,
+		...storyProps,
 	},
 };

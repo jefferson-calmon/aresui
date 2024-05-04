@@ -3,26 +3,37 @@ import React from 'react';
 import * as T from './Tooltip.types';
 import * as U from './Tooltip.utils';
 
-import './microtip.css';
+import { TooltipContainer } from './styles';
 
-export function Tooltip(props: T.TooltipProps) {
+export function Tooltip({
+	role,
+	position = 'top',
+	label,
+	disabled = false,
+	size = 'fit',
+	children,
+}: T.TooltipProps) {
 	return (
-		<div
+		<TooltipContainer
 			className={U.classBase()}
-			role={!props.disabled ? 'tooltip' : props.role}
-			aria-label={props.label}
-			data-microtip-position={props.position}
-			data-microtip-size={props.size}
 			style={{
 				width: 'fit-content',
 			}}
 		>
-			{props.children}
-		</div>
+			<div
+				role={!disabled ? 'tooltip' : role}
+				aria-label={label}
+				data-tooltip-position={position}
+				data-tooltip-size={size}
+				style={{
+					width: 'fit-content',
+				}}
+			>
+				{children}
+			</div>
+		</TooltipContainer>
 	);
 }
-
-Tooltip.defaultProps = T.defaultPropsTooltip;
 
 export * from './Tooltip.types';
 

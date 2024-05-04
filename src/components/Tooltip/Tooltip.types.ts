@@ -22,7 +22,3 @@ export type TooltipPosition =
 	| 'right';
 
 export type TooltipSize = 'small' | 'medium' | 'large' | 'fit';
-
-export const defaultPropsTooltip: Partial<TooltipProps> = {
-	position: 'top',
-};
