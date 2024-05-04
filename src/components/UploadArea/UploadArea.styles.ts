@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import styled, { StyledComponent } from 'styled-components';
+import styled from 'styled-components';
 
 import * as H from 'helpers/styled';
 import { globalStyle } from 'styles/global/components';
@@ -12,9 +12,7 @@ interface Props {
 	$width: UploadAreaProps['width'];
 }
 
-type StyledProps = StyledComponent<'div', any, Props, never>;
-
-export const UploadAreaContainer: StyledProps = styled.div`
+export const UploadAreaContainer = styled.div`
 	${(props: Props) => globalStyle(props.$theme)}
 
 	--side-preview-size: 72.00px;

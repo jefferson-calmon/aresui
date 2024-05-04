@@ -1,21 +1,27 @@
 import React, { useMemo, useState } from 'react';
 
-import { config, merge, uuid } from 'codekit';
+import { config, uuid } from 'codekit';
 
 import * as T from './UploadArea.types';
 import * as U from './UploadArea.utils';
 import * as C from './UploadArea.components';
 import Dropzone from 'components/Dropzone';
-import { useAresUI } from 'contexts';
 import { useControlledState } from 'hooks/useControlledState';
+import { useTheme } from 'hooks/useTheme';
 
 import { UploadAreaContainer } from './UploadArea.styles';
 
 config();
 
-export function UploadArea(props: T.UploadAreaProps) {
+export function UploadArea({
+	width = 400,
+	multiple = true,
+	preview = true,
+	containerProps = {},
+	...props
+}: T.UploadAreaProps) {
 	// Hooks
-	const aresui = useAresUI();
+	const theme = useTheme(props.theme);
 
 	// States
 	const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -27,29 +33,25 @@ export function UploadArea(props: T.UploadAreaProps) {
 	);
 
 	// Memo vars
-	const theme = useMemo(() => {
-		return merge(aresui.theme, props.theme);
-	}, [aresui.theme, props.theme]);
-
 	const className = useMemo(() => {
 		const previewMultiple =
-			props.preview && files && files.length > 0 && props.multiple;
+			preview && files && files.length > 0 && multiple;
 
 		const classes = [
 			U.classBase(),
 			isDragging && U.classBase('dragging'),
-			props.containerProps.className,
+			containerProps?.className,
 			previewMultiple && U.classBase('preview-multiple'),
 		];
 
 		return U.buildClassName(...classes);
-	}, [props, isDragging, files]);
+	}, [preview, files, multiple, isDragging, containerProps?.className]);
 
 	const showDropzoneContent = useMemo(() => {
-		if (props.multiple) return true;
+		if (multiple) return true;
 
-		return !props.preview || files?.length === 0;
-	}, [files?.length, props.multiple, props.preview]);
+		return !preview || files?.length === 0;
+	}, [files?.length, multiple, preview]);
 
 	// Functions
 	function handleUpload(files: File[]) {
@@ -83,10 +85,10 @@ export function UploadArea(props: T.UploadAreaProps) {
 
 	return (
 		<UploadAreaContainer
-			{...props.containerProps}
+			{...containerProps}
 			className={className}
 			$theme={theme}
-			$width={props.width}
+			$width={width}
 		>
 			{props.label && <label>{props.label}</label>}
 
@@ -95,7 +97,7 @@ export function UploadArea(props: T.UploadAreaProps) {
 				onUpload={handleUpload}
 				onChangeDragActive={setIsDragging}
 				options={{
-					disabled: !!(!props.multiple && files && files.length > 0),
+					disabled: !!(!multiple && files && files.length > 0),
 					...props.dropzoneOptions,
 				}}
 			>
@@ -113,25 +115,20 @@ export function UploadArea(props: T.UploadAreaProps) {
 
 				{isDragging && <div className={U.classBase('overlay')} />}
 
-				{props.preview &&
-					files &&
-					files.length > 0 &&
-					!props.multiple && (
-						<C.FilePreview
-							file={files.last()}
-							onDelete={() => handleDelete(files.last())}
-						/>
-					)}
+				{preview && files && files.length > 0 && !multiple && (
+					<C.FilePreview
+						file={files.last()}
+						onDelete={() => handleDelete(files.last())}
+					/>
+				)}
 			</Dropzone>
 
-			{props.preview && files && files.length > 0 && props.multiple && (
+			{preview && files && files.length > 0 && multiple && (
 				<C.FileListPreview files={files} onDelete={handleDelete} />
 			)}
 		</UploadAreaContainer>
 	);
 }
-
-UploadArea.defaultProps = T.defaultPropsUploadArea;
 
 export * from './UploadArea.types';
 
