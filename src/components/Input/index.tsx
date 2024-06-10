@@ -37,6 +37,7 @@ export function Input({
 
 	loading,
 	disabled,
+	required = true,
 
 	errorPrefix = '',
 	disableValidations,
@@ -242,7 +243,7 @@ export function Input({
 					inputRef={inputRef}
 					alwaysShowMask={false}
 					maskChar={null} // If you want don't show the characters, just set `null`.;
-					required
+					required={required}
 					readOnly={disabled}
 					disabled={disabled}
 					// --

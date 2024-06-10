@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import { ComponentProps } from 'react';
 
-export type HTMLProps = React.HTMLAttributes<HTMLElement>;
+export type HTMLProps = ComponentProps<'div'> &
+	ComponentProps<'input'> &
+	ComponentProps<'textarea'> &
+	ComponentProps<'button'>;
 
 export const htmlProps: (keyof HTMLProps)[] = [
 	'aria-activedescendant',
@@ -90,6 +93,7 @@ export const htmlProps: (keyof HTMLProps)[] = [
 	'resource',
 	'rev',
 	'typeof',
+	'type',
 	'vocab',
 	'autoCapitalize',
 	'autoCorrect',
@@ -268,7 +272,7 @@ export const htmlProps: (keyof HTMLProps)[] = [
 	'onTransitionEndCapture',
 ];
 
-export function filterHTMLProps<P extends HTMLProps>(props: P): HTMLProps {
+export function filterHTMLProps(props: any): any {
 	const filteredProps: HTMLProps = {};
 
 	for (const key in props) {
