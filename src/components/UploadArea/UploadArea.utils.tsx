@@ -15,12 +15,16 @@ export function getPreviewContentByFile(file: File | Blob) {
 		return (
 			<Image
 				src={URL.createObjectURL(file)}
-				alt={file.name}
+				alt={(file as File)?.name ?? ''}
 				width={100}
 				height={100}
 			/>
 		);
 	}
 
-	return null;
+	return (
+		<div className="file">
+			<span>{(file as File)?.name ?? 'Arquivo'}</span>
+		</div>
+	);
 }

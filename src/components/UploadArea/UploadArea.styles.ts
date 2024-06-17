@@ -15,8 +15,11 @@ interface Props {
 export const UploadAreaContainer = styled.div`
 	${(props: Props) => globalStyle(props.$theme)}
 
-	--side-preview-size: 72.00px;
+	--width: ${({ $width }) =>
+		typeof $width === 'string' ? $width : $width + 'px'};
+	--side-preview-size: 72px;
 	--dropzone-height: 200px;
+	--file-preview-content-surface: ${H.transparentize('primary', 0.95)};
 
 	position: relative;
 
@@ -130,23 +133,47 @@ export const FilePreviewContainer = styled.div`
 	justify-content: center;
 	flex-shrink: 0;
 
-	width: 120px;
-	height: 120px;
-
 	cursor: pointer;
 
 	.${classBase('file-preview-content')} {
-		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		width: fit-content;
 		height: 100%;
 		overflow: hidden;
 		border-radius: var(--border-radius);
 
 		svg,
 		img {
-			width: 100%;
-			height: 100%;
+			width: 120px;
+			height: 120px;
 			object-fit: contain;
 			background: var(--color-line);
+		}
+
+		.file {
+            display: flex;
+
+			max-width: calc(var(--width) - 80px);
+			width: 100%;
+
+			padding: 0.5rem 0.75rem;
+			border-radius: var(--borde-radius);
+			background: var(--file-preview-content-surface);
+
+			span {
+				white-space: nowrap;
+				display: inline-flex;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				-webkit-line-clamp: 1;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				white-space: normal;
+				overflow-wrap: anywhere;
+			}
 		}
 	}
 
