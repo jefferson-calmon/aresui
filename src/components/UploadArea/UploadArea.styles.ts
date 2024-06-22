@@ -6,6 +6,7 @@ import { globalStyle } from 'styles/global/components';
 import { Theme } from 'contexts';
 import { classBase } from './UploadArea.utils';
 import { UploadAreaProps } from './UploadArea.types';
+import { extractNumbers } from 'codekit';
 
 interface Props {
 	$theme: Theme;
@@ -16,10 +17,10 @@ export const UploadAreaContainer = styled.div`
 	${(props: Props) => globalStyle(props.$theme)}
 
 	--width: ${({ $width }) =>
-		typeof $width === 'string' ? $width : $width + 'px'};
+		Number(extractNumbers(String($width))) > 0 ? $width + 'px' : $width};
 	--side-preview-size: 72px;
 	--dropzone-height: 200px;
-	--file-preview-content-surface: ${H.transparentize('primary', 0.95)};
+	--file-preview-content-surface: ${H.transparentize('primary', 0.96)};
 
 	position: relative;
 
@@ -69,7 +70,7 @@ export const UploadAreaContainer = styled.div`
 			text-align: center;
 			gap: 12px;
 
-			padding: 28px;
+			padding: 28px 40px;
 
 			.${classBase('icon')} {
 				width: 44px;
@@ -87,10 +88,11 @@ export const UploadAreaContainer = styled.div`
 			p {
 				display: inline-block;
 
-				max-width: 170px;
+				max-width: 200px;
+				max-width: 256px;
 
 				font-size: 16px;
-				opacity: 0.8;
+				opacity: 0.6;
 				line-height: 1.4;
 			}
 		}
@@ -135,17 +137,19 @@ export const FilePreviewContainer = styled.div`
 
 	cursor: pointer;
 
+	padding: 32px 40px;
+
 	.${classBase('file-preview-content')} {
+		position: relative;
+
 		display: flex;
 		align-items: center;
 		justify-content: center;
 
 		width: fit-content;
 		height: 100%;
-		overflow: hidden;
 		border-radius: var(--border-radius);
 
-		svg,
 		img {
 			width: 120px;
 			height: 120px;
@@ -154,16 +158,33 @@ export const FilePreviewContainer = styled.div`
 		}
 
 		.file {
-            display: flex;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 0.75rem;
 
-			max-width: calc(var(--width) - 80px);
-			width: 100%;
+			width: fit-content;
 
-			padding: 0.5rem 0.75rem;
-			border-radius: var(--borde-radius);
-			background: var(--file-preview-content-surface);
+			svg {
+				width: 44px;
+				height: 44px;
+				object-fit: contain;
+				stroke-width: 0.7px;
+				opacity: 0.8;
+				color: var(--color-primary);
 
-			span {
+				path {
+					stroke-width: 1.25px !important;
+				}
+			}
+
+			small {
+				font-size: 0.875rem;
+				opacity: 0.5;
+			}
+
+			p {
 				white-space: nowrap;
 				display: inline-flex;
 				overflow: hidden;
@@ -173,6 +194,16 @@ export const FilePreviewContainer = styled.div`
 				-webkit-box-orient: vertical;
 				white-space: normal;
 				overflow-wrap: anywhere;
+
+				/* max-width: calc(100% - 80px); */
+				width: 100%;
+
+				font-size: 0.875rem;
+
+				padding: 0.5rem 0.75rem;
+				border-radius: var(--borde-radius);
+				background: var(--file-preview-content-surface);
+				color: var(--color-primary);
 			}
 		}
 	}

@@ -2,6 +2,8 @@ import React from 'react';
 
 import Image from 'components/Image';
 import { baseClass } from 'helpers/baseClass';
+import { IconFileUploaded } from 'icons';
+import { formatFileSize } from 'utils/formatFileSize';
 
 export { buildClassName } from 'helpers/buildClassName';
 
@@ -24,7 +26,13 @@ export function getPreviewContentByFile(file: File | Blob) {
 
 	return (
 		<div className="file">
-			<span>{(file as File)?.name ?? 'Arquivo'}</span>
+			{<IconFileUploaded />}
+
+			<small>
+				{file.type} • {formatFileSize(file.size)}
+			</small>
+
+			<p>{(file as File)?.name ?? 'Arquivo'}</p>
 		</div>
 	);
 }

@@ -104,7 +104,7 @@ export function UploadArea({
 				{showDropzoneContent && (
 					<div className={U.classBase('dz-content')}>
 						<div className={U.classBase('icon')}>
-							{!props.uploadIcon && <C.UploadIcon />}
+							{!props.uploadIcon && <C.IconUpload />}
 							{props.uploadIcon && props.uploadIcon}
 						</div>
 

@@ -23,10 +23,10 @@ export function FilePreview(props: FilePreviewProps) {
 		<FilePreviewContainer className={classBase('file-preview')}>
 			<div className={classBase('file-preview-content')}>
 				{getPreviewContentByFile(props.file.file)}
-			</div>
-
-			<div className={classBase('remove')} onClick={props.onDelete}>
-				<IconTimes />
+                
+				<div className={classBase('remove')} onClick={props.onDelete}>
+					<IconTimes />
+				</div>
 			</div>
 		</FilePreviewContainer>
 	);
@@ -74,7 +74,7 @@ export function IconTimes(): JSX.Element {
 	);
 }
 
-export function UploadIcon() {
+export function IconUpload() {
 	return (
 		<svg
 			width={24}
