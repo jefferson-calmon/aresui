@@ -84,6 +84,7 @@ export const htmlProps: (keyof HTMLProps)[] = [
 	'radioGroup',
 	'role',
 	'about',
+    'form',
 	'content',
 	'datatype',
 	'inlist',
