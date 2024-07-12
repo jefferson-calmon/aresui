@@ -42,6 +42,10 @@ export interface TableProps<T> {
 	customHeadingHandlers?: (props: TablePropsCompiled<T>) => JSX.Element;
 
 	onCompleteSelection?: (selected: T[]) => void;
+
+	labels?: {
+		selectionConfirm?: string;
+	};
 }
 
 export interface TablePropsCompiled<T> extends TableProps<T> {

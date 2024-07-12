@@ -22,7 +22,9 @@ function TableHeadingSelecting<T extends Types.TableBaseData>() {
 			<div className="handlers">
 				<button onClick={table.onEndSelecting}>Cancelar seleção</button>
 
-				<button onClick={handleConfirm}>Confirmar</button>
+				<button onClick={handleConfirm}>
+					{table.props.labels?.selectionConfirm ?? 'Confirmar'}
+				</button>
 			</div>
 		</TableHeadingSelectingContainer>
 	);
