@@ -106,7 +106,14 @@ export function Input({
 	}, [autoComplete, mask, mode, name, placeholder, role, type]);
 
 	const optionsFiltered = useMemo(() => {
-		return options.search('value', String(value));
+		const valueFiltered = String(value)
+			.split('')
+			.filter((chart) => {
+				return !['[', ']', '(', ')', '{', '}'].includes(chart);
+			})
+			.join('');
+
+		return options.search('value', valueFiltered);
 	}, [value, options]);
 
 	const className = useMemo(() => {
