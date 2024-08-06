@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 
 import Skeleton from 'react-loading-skeleton';
 import { motion } from 'framer-motion';
+import { useKeyPress } from 'codekit';
 
 import * as Types from '../../Table.types';
 import * as Utils from '../../Table.utils';
@@ -13,12 +14,16 @@ import { TableRowContainer } from './styles';
 
 export interface TableRowProps<T> {
 	data: T;
+	index: number;
 	header?: boolean;
 }
 
 function TableRow<T extends Types.TableBaseData>(props: TableRowProps<T>) {
 	// Hooks
 	const table = useTable<T>();
+
+	// Event listeners
+	const shiftKeyPressed = useKeyPress('Control');
 
 	// Memo vars
 	const columns = useMemo(() => {
@@ -52,7 +57,28 @@ function TableRow<T extends Types.TableBaseData>(props: TableRowProps<T>) {
 	function handleSelectRow() {
 		if (props.header) return table.onSelectAll();
 
-		return table.onSelect(props.data);
+		const index = props.index;
+		const lastSelected = table.lastSelected;
+
+		// return table.onSelect({ ...props.data, index });
+
+		if (shiftKeyPressed && lastSelected !== null) {
+			const start = Math.min(lastSelected.index, index);
+			const end = Math.max(lastSelected.index, index);
+			const range = Array.from(
+				{ length: end - start + 1 },
+				(_, i) => start + i
+			);
+
+			table.onSelect(lastSelected);
+
+			table.data
+				.filter((data, index) => range.includes(index))
+				.map((data, index) => ({ ...data, index }))
+				.map((data) => table.onSelect(data));
+		} else {
+			table.onSelect({ ...props.data, index });
+		}
 	}
 
 	return (

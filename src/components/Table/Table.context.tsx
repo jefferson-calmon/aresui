@@ -32,17 +32,20 @@ export interface TableContextData<T>
 		ReturnType<typeof usePagination<T>>;
 
 	search: string;
-	selected: T[];
+	selected: Selected<T>[];
+	lastSelected: Selected<T>;
 	selectable: Required<Types.TableProps<T>>['selectable'];
 	isSelecting: boolean;
 	sort: { item: keyof T | undefined; direction: 'asc' | 'desc' | undefined };
 
 	onSearch: (value: string) => void;
 	onSort: (key: keyof T) => void;
-	onSelect: (data: T) => void;
+	onSelect: (data: Selected<T>) => void;
 	onSelectAll: () => void;
 	onEndSelecting: () => void;
 }
+
+type Selected<T> = T & { index: number };
 
 export const TableContext = createContext<any>({} as TableContextData<any>);
 
@@ -61,7 +64,8 @@ export function TableProvider<T extends Types.TableBaseData>({
 	// States
 	const [search, setSearch] = useState<string>('');
 	const [sort, setSort] = useState<[keyof T, 'asc' | 'desc']>();
-	const [selected, setSelected] = useState<T[]>([]);
+	const [selected, setSelected] = useState<Selected<T>[]>([]);
+	const [lastSelected, setLastSelected] = useState<Selected<T> | null>(null);
 
 	// Memo vars
 	const style = useMemo(() => {
@@ -143,12 +147,15 @@ export function TableProvider<T extends Types.TableBaseData>({
 		setSearch(value);
 	}
 
-	function handleSelect(data: T) {
+	function handleSelect(data: Selected<T>) {
+		setLastSelected(data);
+
 		return setSelected((prev) => {
 			const alreadySelected = prev.find((p) => p.id === data.id);
 
 			if (!alreadySelected) return [...prev, data];
 
+			setLastSelected(null);
 			return prev.filter((p) => p.id !== data.id);
 		});
 	}
@@ -156,13 +163,15 @@ export function TableProvider<T extends Types.TableBaseData>({
 	function handleSelectAll() {
 		setSelected((prev) => {
 			const alreadySelected = prev.length === data.length;
+			const newData = data.map((data, index) => ({ ...data, index }));
 
-			return alreadySelected ? [] : [...data];
+			return alreadySelected ? [] : [...newData];
 		});
 	}
 
 	function handleEndSelecting() {
 		setSelected([]);
+        setLastSelected(null);
 	}
 
 	return (
@@ -183,6 +192,8 @@ export function TableProvider<T extends Types.TableBaseData>({
 					data,
 					render,
 					selected,
+					lastSelected,
+					search,
 
 					isSelecting,
 

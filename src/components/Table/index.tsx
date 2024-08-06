@@ -32,7 +32,11 @@ function TableContent<T extends Types.TableBaseData>() {
 			{table.render.heading && <Components.TableHeading<T> />}
 
 			<div className={Utils.classBase('heading-container')}>
-				<Components.TableRow<T> data={table.data[0] ?? {}} header />
+				<Components.TableRow<T>
+					data={table.data[0] ?? {}}
+					index={-1}
+					header
+				/>
 			</div>
 
 			<div
@@ -42,8 +46,12 @@ function TableContent<T extends Types.TableBaseData>() {
 				}}
 			>
 				{table.render.data &&
-					table.pagination.page.items.map((data) => (
-						<Components.TableRow<T> key={data.id} data={data} />
+					table.pagination.page.items.map((data, index) => (
+						<Components.TableRow<T>
+							key={data.id}
+							index={index}
+							data={data}
+						/>
 					))}
 
 				{table.render.skeleton &&

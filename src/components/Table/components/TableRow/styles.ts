@@ -50,6 +50,11 @@ export const TableRowContainer = styled(motion.div)`
 			}
 		}
 
+		.aresui-checkbox {
+			position: relative;
+			z-index: 100;
+		}
+
 		&.${Utils.classBase('row-header')} {
 			align-items: flex-start;
 			background: transparent !important;
