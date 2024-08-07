@@ -82,7 +82,7 @@ export function PaginationProvider({
 
 				currentPage: current
 					? current > props.pages
-						? 1
+						? props.pages || 1
 						: current
 					: 1,
 				canPrev,
