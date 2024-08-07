@@ -37,6 +37,7 @@ export function Pagination({
 		<Ctx.PaginationProvider
 			props={{
 				pages,
+				pageData: props.pageData,
 				current,
 				next,
 				prev,
