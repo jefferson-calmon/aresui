@@ -3949,10 +3949,10 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
 
-codekit@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/codekit/-/codekit-2.0.0.tgz#0769770769e953d826d07177cffddf0cc5e0a999"
-  integrity sha512-2JK8D933wkMEzAfozj/FAM3/51/qUndECqA+xk20yAb7USuliGERS9wUsIq1Ey4UhgFnliUAHPSRqHastV8Jhg==
+codekit@^2.0.31:
+  version "2.0.31"
+  resolved "https://registry.yarnpkg.com/codekit/-/codekit-2.0.31.tgz#3a94af7736d88e78c66bd26cd2abd8859e6765f3"
+  integrity sha512-YQNZPj8dl0bkz/ZTuc1/3xpAJbkT8cDyASBU3dIcCX5sT/8SlTPfKtevE4dlHj48xwMS4iR9pylNMpzxUK78uQ==
   dependencies:
     crypto-js "^4.1.1"
 
