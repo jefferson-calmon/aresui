@@ -55,6 +55,12 @@ export function PaginationProvider({
 
 	// Effects
 	useEffect(() => {
+		console.log({
+			pageData: props.pageData,
+			previousPages,
+			current,
+		});
+
 		if (typeof props.pageData === 'undefined') return;
 		if (previousPages === props.pages) return;
 		if (props.pageData.length > 0) return;
