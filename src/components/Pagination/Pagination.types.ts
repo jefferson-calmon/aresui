@@ -6,6 +6,9 @@ export interface PaginationProps extends BasePropsWithoutComponentProps {
 	current?: number;
 	pages: number;
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	pageData?: any[];
+
 	next?: boolean;
 	prev?: boolean;
 

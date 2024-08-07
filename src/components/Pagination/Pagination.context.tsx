@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { createContext, useContext, useMemo } from 'react';
+import React, { createContext, useContext, useEffect, useMemo } from 'react';
 
 import * as T from './Pagination.types';
 import { useControlledState } from 'hooks/useControlledState';
 import { Theme } from 'contexts';
+import { usePrevious } from 'codekit';
 
 interface PaginationContextProps {
 	children: React.ReactNode;
@@ -48,6 +49,19 @@ export function PaginationProvider({
 	const canNext = useMemo(() => {
 		return Number(current) < props.pages;
 	}, [current, props.pages]);
+
+	// Previous states
+	const previousPages = usePrevious(props.pages);
+
+	// Effects
+	useEffect(() => {
+		if (typeof props.pageData === 'undefined') return;
+		if (previousPages === props.pages) return;
+		if (props.pageData.length > 0) return;
+		if (props.pageData.length === 0 && current === 1) return;
+
+		setCurrent(1);
+	}, [current, previousPages, props.pageData, props.pages, setCurrent]);
 
 	// Functions
 	function handleChangePage(page: number) {
