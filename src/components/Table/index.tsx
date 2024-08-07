@@ -65,6 +65,7 @@ function TableContent<T extends Types.TableBaseData>() {
 			{table.render.pagination && (
 				<Pagination
 					pages={table.pagination.pages.length}
+					pageData={table.pagination.page.items}
 					current={table.pagination.page.number}
 					onChange={table.pagination.changePage}
 				/>
